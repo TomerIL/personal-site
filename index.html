@@ -3,91 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tomer Yona - Wearable Sensors • Human Movement • Applied R&D</title>
+    <title>Tomer Yona - Scientific Consultant • RWE • R&D Strategy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --primary: #2563eb;
-            --secondary: #0f172a;
-            --accent: #3b82f6;
-            --text: #1e293b;
+            /* Corporate/Strategic Palette: Navy, Slate, and Clean White */
+            --primary: #1e3a8a; /* Deep Royal Blue - Trust/Medical */
+            --accent: #2563eb;  /* Brighter Blue for interactions */
+            --secondary: #0f172a; /* Dark Slate - Text/Headings */
+            --text: #334155;
             --text-light: #64748b;
             --bg: #ffffff;
-            --bg-light: #f8fafc;
+            --bg-alt: #f8fafc;
             --border: #e2e8f0;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; } /* Makes the jump to sections smooth */
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: var(--text);
             background: var(--bg);
         }
 
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .section-padding { padding: 6rem 0; }
+        
         /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98);
             border-bottom: 1px solid var(--border);
             z-index: 1000;
-            padding: 1.25rem 0;
+            padding: 1rem 0;
         }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { 
+            font-size: 1.1rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            text-decoration: none; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
         }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--secondary);
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { 
+            color: var(--text); 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            transition: color 0.2s;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover { color: var(--accent); }
 
         /* Hero Section */
         .hero {
-            margin-top: 80px;
-            padding: 6rem 2rem 4rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            padding-top: 180px;
+            padding-bottom: 6rem;
+            background: radial-gradient(circle at top right, #f1f5f9 0%, #ffffff 60%);
         }
+        
+        .hero-content { max-width: 850px; }
 
-        .hero-content { max-width: 900px; }
-
-        .hero-tag {
+        .role-pill {
             display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 500;
+            background: #eff6ff;
             color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid #dbeafe;
         }
 
         h1 {
@@ -96,492 +90,267 @@
             line-height: 1.1;
             color: var(--secondary);
             margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
         }
-
+        
         .hero-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             color: var(--text-light);
-            margin-bottom: 2.5rem;
-            line-height: 1.7;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            max-width: 720px;
+            font-weight: 400;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-            font-size: 1rem;
-        }
-
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        .btn-secondary:hover { background: var(--bg-light); }
-
-        /* Expertise Section */
-        .expertise {
-            padding: 5rem 2rem;
-            background: var(--bg-light);
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 1.125rem;
-            margin-bottom: 4rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .expertise-grid {
+        /* Value Props Grid (Expertise) */
+        .value-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .expertise-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
-
-        .expertise-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .expertise-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .expertise-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-        }
-
-        .expertise-card ul { list-style: none; color: var(--text-light); }
-
-        .expertise-card li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .expertise-card li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-        }
-
-        /* Projects Section */
-        .projects { padding: 5rem 2rem; background: white; }
-
-        .project-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-        }
-
-        .project-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
-        }
-
-        .project-header { margin-bottom: 1.5rem; }
-
-        .project-card h3 {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
-        }
-
-        .project-meta {
-            color: var(--text-light);
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-card p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .tag {
-            padding: 0.375rem 0.875rem;
-            background: var(--bg-light);
-            border-radius: 50px;
-            font-size: 0.875rem;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 4rem 2rem;
-            background: var(--secondary);
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
-        }
-
-        /* Contact Section */
-        .contact { padding: 5rem 2rem; background: var(--bg-light); }
-
-        .contact-content {
-            max-width: 650px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-content p {
-            color: var(--text-light);
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            padding: 0.875rem 2rem;
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        /* Footer */
-        footer {
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-light);
-            background: white;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 5rem;
             border-top: 1px solid var(--border);
+            padding-top: 3rem;
         }
+
+        .value-item h3 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--secondary); font-weight: 700; }
+        .value-item p { font-size: 0.95rem; color: var(--text-light); line-height: 1.6; }
+        .value-icon { font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem; }
+
+        /* Case Studies */
+        .work-section { background: var(--bg-alt); }
+        
+        .case-study {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        
+        .case-study:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--accent);
+        }
+
+        .case-meta {
+            min-width: 180px;
+            padding-right: 2rem;
+            border-right: 1px solid var(--border);
+        }
+        .meta-tag { 
+            display: block; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem; 
+        }
+        .meta-stat {
+            font-size: 0.95rem;
+            color: var(--secondary);
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .meta-sub { font-size: 0.85rem; color: var(--text-light); }
+
+        .case-content { flex: 1; }
+        .case-title { font-size: 1.5rem; margin-bottom: 1rem; color: var(--secondary); font-weight: 700; }
+        .case-desc { color: var(--text-light); font-size: 1.05rem; margin-bottom: 1.5rem; }
+
+        .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto; }
+        .ttag { 
+            background: #f1f5f9; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-size: 0.8rem; 
+            color: var(--text);
+            font-weight: 500;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* CTA Section */
+        .cta { text-align: center; max-width: 700px; margin: 0 auto; }
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
+        }
+        .btn:hover { background: var(--accent); transform: translateY(-1px); }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .hero-subtitle { font-size: 1.125rem; }
-            .nav-links { gap: 1rem; }
-            .expertise-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-            .cta-buttons, .contact-buttons { flex-direction: column; }
-            .btn, .social-link { width: 100%; }
+        @media (max-width: 900px) {
+            .value-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .case-study { flex-direction: column; gap: 1.5rem; padding: 2rem; }
+            .case-meta { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 1rem; padding-right: 0; width: 100%; display: flex; gap: 2rem; align-items: baseline; }
+            h1 { font-size: 2.75rem; }
+            .nav-links { display: none; } /* Simplified for mobile */
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav>
-        <div class="nav-container">
-            <div class="logo">Tomer Yona</div>
+        <div class="container nav-container">
+            <a href="#" class="logo">Tomer Yona <span style="font-weight:400; opacity:0.6;">| PhD</span></a>
             <ul class="nav-links">
                 <li><a href="#expertise">Expertise</a></li>
-                <li><a href="#projects">Work</a></li>
+                <li><a href="#cases">Case Studies</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <span class="hero-tag"><strong>📍 Aachen, Germany • open to remote/hybrid</strong></span>
-            <h1><strong>Wearable Sensors • Human Movement • Applied R&amp;D</strong></h1>
+        <div class="container hero-content">
+            <span class="role-pill">Scientific Consultant & RWE Strategist</span>
+            <h1>Turning clinical data into <br>actionable evidence.</h1>
             <p class="hero-subtitle">
-                <strong>I work at the intersection of biomechanics, physiology, and wearable sensor systems.</strong>
-                <strong>I design studies, validate measurement approaches, and translate sensor data into decisions teams can act on.</strong>
-                <strong>My ML experience is beginner-level; my strength is human-centered measurement, rigor, and delivery.</strong>
+                Bridging the gap between sensor capability and clinical reality.</strong> I translate complex real-world data into actionable evidence, ensuring digital health products are valid, usable, and scientifically robust.
             </p>
-            <div class="cta-buttons">
-                <a href="#projects" class="btn btn-primary"><strong>View Selected Work</strong></a>
-                <a href="cv.pdf" class="btn btn-secondary" download><strong>Download CV</strong></a>
-                <a href="mailto:hello@tomeryona.com" class="btn btn-secondary"><strong>hello@tomeryona.com</strong></a>
+            
+            <div class="value-grid" id="expertise">
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-globe-europe"></i></div>
+                    <h3>Real World Evidence (RWE)</h3>
+                    <p>Experience analyzing population-scale datasets (10k+ participants) to identify digital phenotypes and progression markers. I translate "messy" real-world data into defensible insights.</p>
+                </div>
+
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-file-contract"></i></div>
+                    <h3>Clinical Outcome Assessment</h3>
+                    <p>Expertise in validating Patient-Reported Outcome Measures (PROMs). I handle the cross-cultural adaptation and psychometric validation required for regulatory acceptance.</p>
+                </div>
+
+                <div class="value-item">
+                    <div class="value-icon"><i class="fas fa-microscope"></i></div>
+                    <h3>Tech Validation Strategy</h3>
+                    <p>Defining "Gold Standard" comparison protocols for novel sensors (wearables, AR, rings). I ensure your technology holds up against rigorous clinical scrutiny.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Expertise Section -->
-    <section id="expertise" class="expertise">
+    <section id="cases" class="section-padding work-section">
         <div class="container">
-            <h2 class="section-title"><strong>What I do</strong></h2>
-            <p class="section-subtitle">
-                <strong>Human-centered sensing and validation — from lab protocols to real-world deployment — with clear reporting for mixed clinical/engineering teams.</strong>
+            <h2 style="margin-bottom: 3rem; font-size: 2.25rem; color: var(--secondary);">Evidence Portfolio</h2>
+
+            <div class="case-study">
+                <div class="case-meta">
+                    <span class="meta-tag">Population Health</span>
+                    <div class="meta-stat">N ≈ 10,000</div>
+                    <div class="meta-sub">Participants</div>
+                    <div class="meta-stat">Longitudinal</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">RWE Strategy: Population-Scale Digital Phenotyping</h3>
+                    <p class="case-desc">
+                        <strong>The Challenge:</strong> Identifying meaningful behavioral patterns in large-scale accelerometer datasets regarding cardiometabolic health.<br><br>
+                        <strong>My Role:</strong> Developed reproducible Python pipelines to extract fragmentation and intensity metrics from thousands of participants, translating raw sensor data into "Digital Biomarkers" that predict health outcomes beyond simple step counts.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="ttag">Big Data Analysis</span>
+                        <span class="ttag">Python Pipelines</span>
+                        <span class="ttag">Epidemiology</span>
+                        <span class="ttag">Automated Reporting</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-meta">
+                    <span class="meta-tag">Validation Strategy</span>
+                    <div class="meta-stat">Multi-Modal</div>
+                    <div class="meta-sub">Sensor Fusion</div>
+                    <div class="meta-stat">Decentralized</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">Validating Remote Patient Monitoring Ecosystems</h3>
+                    <p class="case-desc">
+                        <strong>The Challenge:</strong> Can consumer form-factors (Smart Rings/AR) replace lab equipment in clinical trials?<br><br>
+                        <strong>My Role:</strong> Designed a rigorous "Lab-to-Life" validation protocol comparing wearable metrics against gold-standard references (MoCap/Force Plates/EMG). Created a framework for using lightweight sensors in decentralized clinical trials.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="ttag">Study Design</span>
+                        <span class="ttag">AR & Wearables</span>
+                        <span class="ttag">Protocol Development</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-meta">
+                    <span class="meta-tag">Clinical Outcomes</span>
+                    <div class="meta-stat">Psychometrics</div>
+                    <div class="meta-sub">Validation</div>
+                    <div class="meta-stat">Regulatory</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">Clinical Outcome Assessment (COA)</h3>
+                    <p class="case-desc">
+                        <strong>The Challenge:</strong> Ensuring subjective patient data (PROMs) is reliable enough for regulatory submissions.<br><br>
+                        <strong>My Role:</strong> Led the translation, cultural adaptation, and psychometric validation of key outcome measures (IKDC, TSK, NMQ). Delivered validated instruments that ensure data integrity in multi-national clinical studies.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="ttag">PROMs</span>
+                        <span class="ttag">Reliability Statistics</span>
+                        <span class="ttag">Survey Design</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="case-study">
+                <div class="case-meta">
+                    <span class="meta-tag">Consulting</span>
+                    <div class="meta-stat">Synthesis</div>
+                    <div class="meta-sub">Landscape Analysis</div>
+                    <div class="meta-stat">Strategic</div>
+                </div>
+                <div class="case-content">
+                    <h3 class="case-title">Evidence Synthesis & Best Practices</h3>
+                    <p class="case-desc">
+                        <strong>The Challenge:</strong> Navigating the complex landscape of advanced statistical methods in biomechanics and clinical data.<br><br>
+                        <strong>My Role:</strong> Conducted systematic scoping reviews (e.g., of 1D Statistical Parametric Mapping) to establish best-practice guidelines. I help R&D teams select the right statistical tools for time-series data to avoid regulatory pushback.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="ttag">Systematic Review</span>
+                        <span class="ttag">Gap Analysis</span>
+                        <span class="ttag">Methodology</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding cta">
+        <div class="container">
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary);">Ready to elevate your evidence strategy?</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem; font-size: 1.1rem;">
+                I am currently open to opportunities in <strong>R&D Strategy</strong>, <strong>RWE Science</strong>, and <strong>Technical Consulting</strong>.
             </p>
-
-            <div class="expertise-grid">
-                <div class="expertise-card">
-                    <div class="expertise-icon">📡</div>
-                    <h3><strong>Wearable sensor systems</strong></h3>
-                    <ul>
-                        <li><strong>IMU-based movement &amp; gait analysis (lab + field)</strong></li>
-                        <li><strong>Multi-modal signals: EMG / ECG / PPG-style streams</strong></li>
-                        <li><strong>Emerging form factors: smart glasses &amp; earables</strong></li>
-                        <li><strong>Validation, reliability, and feasibility in real humans</strong></li>
-                    </ul>
-                </div>
-
-                <div class="expertise-card">
-                    <div class="expertise-icon">🧪</div>
-                    <h3><strong>Applied research &amp; R&amp;D</strong></h3>
-                    <ul>
-                        <li><strong>Study &amp; protocol design (including clinical contexts)</strong></li>
-                        <li><strong>Defining outcomes, endpoints, and QA checks</strong></li>
-                        <li><strong>Interpreting results with domain context (not hype)</strong></li>
-                        <li><strong>Turning findings into practical recommendations</strong></li>
-                    </ul>
-                </div>
-
-                <div class="expertise-card">
-                    <div class="expertise-icon">🧩</div>
-                    <h3><strong>Technical coordination</strong></h3>
-                    <ul>
-                        <li><strong>Cross-discipline communication (clinicians ↔ engineers)</strong></li>
-                        <li><strong>Project planning, documentation, deliverables</strong></li>
-                        <li><strong>Reproducible analysis workflows (Python-based)</strong></li>
-                        <li><strong>Evidence synthesis (systematic reviews / structured appraisal)</strong></li>
-                    </ul>
-                </div>
+            
+            <a href="mailto:hello@tomeryona.com" class="btn">Get in Touch</a>
+            
+            <div style="margin-top: 2rem;">
+                <a href="https://linkedin.com/in/tomerpt" target="_blank" style="color: var(--text-light); text-decoration: none; font-weight: 500; font-size: 0.95rem;">
+                    <i class="fab fa-linkedin" style="margin-right: 5px;"></i> Connect on LinkedIn
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Projects / Work Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title"><strong>Selected work</strong></h2>
-            <p class="section-subtitle">
-                <strong>Short, outcome-focused examples (Problem → Approach → Output). I can share deeper case-study PDFs on request.</strong>
-            </p>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <h3><strong>Real-world gait monitoring after ACL injury / reconstruction</strong></h3>
-                    <div class="project-meta"><strong>Wearable IMU workflows • protocol + analysis • longitudinal perspective</strong></div>
-                </div>
-                <p><strong>Problem:</strong> <strong>Lab snapshots often miss how people actually move day-to-day.</strong></p>
-                <p><strong>Approach:</strong> <strong>Designed measurement workflow and analysis pipeline for multi-pace walking and functional tasks, focusing on signal quality, event logic, and interpretable outputs.</strong></p>
-                <p><strong>Output:</strong> <strong>Reusable dataset/pipeline components and figures suitable for publication and stakeholder reporting.</strong></p>
-                <div class="project-tags">
-                    <span class="tag"><strong>IMU</strong></span>
-                    <span class="tag"><strong>Validation</strong></span>
-                    <span class="tag"><strong>Python</strong></span>
-                    <span class="tag"><strong>Rehabilitation</strong></span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <h3><strong>Intervention trials using wearable endpoints</strong></h3>
-                    <div class="project-meta"><strong>Clinical study design • kinematic outcomes • reporting &amp; QA</strong></div>
-                </div>
-                <p><strong>Problem:</strong> <strong>Can wearable-derived kinematics serve as credible endpoints in intervention studies?</strong></p>
-                <p><strong>Approach:</strong> <strong>Sham-controlled design with predefined outcomes, data-quality checks, and interpretable reporting (focused on what the sensor can and cannot claim).</strong></p>
-                <p><strong>Output:</strong> <strong>Evidence that wearables can be used responsibly as outcomes when the measurement model is explicit and validated.</strong></p>
-                <div class="project-tags">
-                    <span class="tag"><strong>RCT/Trials</strong></span>
-                    <span class="tag"><strong>Wearable Endpoints</strong></span>
-                    <span class="tag"><strong>QA</strong></span>
-                    <span class="tag"><strong>Biomechanics</strong></span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <h3><strong>Smart glasses + earables validation (newest funding)</strong></h3>
-                    <div class="project-meta"><strong>Protocol + integration planning • multi-device synchronization • real-world feasibility</strong></div>
-                </div>
-                <p><strong>Problem:</strong> <strong>Emerging wearables need credible validation against reference measures in realistic conditions.</strong></p>
-                <p><strong>Approach:</strong> <strong>Designed a synchronized data-collection protocol spanning daily activities; focused on practical constraints (comfort, adherence, time alignment, artifact handling).</strong></p>
-                <p><strong>Output:</strong> <strong>Validation-ready protocol and a roadmap for analysis + reporting that engineering and clinical stakeholders can use.</strong></p>
-                <div class="project-tags">
-                    <span class="tag"><strong>Smart Glasses</strong></span>
-                    <span class="tag"><strong>Earables</strong></span>
-                    <span class="tag"><strong>PPG/ECG</strong></span>
-                    <span class="tag"><strong>Protocol Design</strong></span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <h3><strong>Physical activity pattern analysis at scale</strong></h3>
-                    <div class="project-meta"><strong>Large datasets • reproducible pipelines • health interpretation</strong></div>
-                </div>
-                <p><strong>Problem:</strong> <strong>Move beyond “steps/day” to patterns that matter for health (bouts, fragmentation, transitions, intensity distribution).</strong></p>
-                <p><strong>Approach:</strong> <strong>Built reproducible Python workflows to derive pattern metrics and support interpretable modeling (ML optional, not the core identity).</strong></p>
-                <p><strong>Output:</strong> <strong>Analysis-ready features and clear visual summaries designed for decision-making, not just p-values.</strong></p>
-                <div class="project-tags">
-                    <span class="tag"><strong>Time-series</strong></span>
-                    <span class="tag"><strong>Python</strong></span>
-                    <span class="tag"><strong>Health Outcomes</strong></span>
-                    <span class="tag"><strong>Interpretability</strong></span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <h3><strong>Portable device validation for clinical measurement</strong></h3>
-                    <div class="project-meta"><strong>Reliability • standardized setups • practical clinical tools</strong></div>
-                </div>
-                <p><strong>Problem:</strong> <strong>Can accessible devices produce research-grade measurements when the protocol is standardized?</strong></p>
-                <p><strong>Approach:</strong> <strong>Reliability testing with standardized positioning and clear reporting of measurement error and constraints.</strong></p>
-                <p><strong>Output:</strong> <strong>Clinically usable measurement approach with transparent limitations and reproducible procedures.</strong></p>
-                <div class="project-tags">
-                    <span class="tag"><strong>Validation</strong></span>
-                    <span class="tag"><strong>Reliability</strong></span>
-                    <span class="tag"><strong>Clinical</strong></span>
-                    <span class="tag"><strong>Methods</strong></span>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <h3><strong>Future direction: wearables × exoskeletons</strong></h3>
-                    <div class="project-meta"><strong>Human-in-the-loop evaluation • sensing + assistance • deployment constraints</strong></div>
-                </div>
-                <p><strong>Goal:</strong> <strong>Work on systems that combine sensing and assistance—especially where success depends on biomechanics, comfort, adherence, and real-world evaluation.</strong></p>
-                <p><strong>What I bring:</strong> <strong>Human movement expertise + sensor realism + rigorous evaluation + cross-discipline coordination.</strong></p>
-                <div class="project-tags">
-                    <span class="tag"><strong>Exoskeletons</strong></span>
-                    <span class="tag"><strong>Wearables</strong></span>
-                    <span class="tag"><strong>Human Factors</strong></span>
-                    <span class="tag"><strong>R&amp;D</strong></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section (kept but made honest/optional) -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number"><strong>20+</strong></div>
-                    <div class="stat-label"><strong>Peer-reviewed publications</strong></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number"><strong>10+</strong></div>
-                    <div class="stat-label"><strong>International presentations</strong></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number"><strong>Grants</strong></div>
-                    <div class="stat-label"><strong>Funding secured / contributed to</strong></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number"><strong>10k+</strong></div>
-                    <div class="stat-label"><strong>Participants (large cohort analysis)</strong></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="contact-content">
-                <h2 class="section-title"><strong>Let’s connect</strong></h2>
-                <p>
-                    <strong>I’m interested in opportunities in wearable sensing, assistive robotics/exoskeletons, and human-centered R&amp;D—across research, R&amp;D, research engineering, or technical project coordination.</strong>
-                </p>
-
-                <div class="contact-buttons">
-                    <a href="mailto:hello@tomeryona.com" class="social-link"><strong>📧 hello@tomeryona.com</strong></a>
-                    <a href="https://www.linkedin.com/in/tomerpt/" target="_blank" class="social-link" rel="noreferrer"><strong>💼 LinkedIn (/in/tomerpt)</strong></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>
-            <strong>© 2026 Tomer Yona.</strong>
-            <strong>PhD (Biomedical Engineering) • Physiotherapist • Postdoctoral researcher (Maastricht University).</strong>
-            <strong>Website: www.tomeryona.com</strong>
-        </p>
-    </footer>
 </body>
 </html>
