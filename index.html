@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tomer Yona — Work in Progress</title>
+  <meta name="description" content="Tomer Yona — Health × data × wearable systems. Website under construction." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111a26;
+      --text:#e6edf3;
+      --muted:#9fb0c0;
+      --line:#1c2a3a;
+      --accent:#5cc8ff;
+      --ok:#69f0ae;
+      --warn:#ffd166;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 10% 10%, #13233a 0%, var(--bg) 55%);
+      line-height:1.55;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:980px; margin:0 auto; padding:28px 18px 64px}
+    header{
+      display:flex; gap:14px; justify-content:space-between; align-items:flex-start; flex-wrap:wrap;
+      padding: 10px 0 16px;
+    }
+    .title h1{margin:0; font-size:28px; letter-spacing:0.2px}
+    .title p{margin:6px 0 0; color:var(--muted); max-width:75ch}
+    .links{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(17,26,38,0.65);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:14px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background: rgba(17,26,38,0.65);
+      border-radius:16px;
+      padding:18px;
+      margin-top:14px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:13px;
+      color:var(--muted);
+      background: rgba(0,0,0,0.12);
+      margin-bottom:10px;
+    }
+    .dot{width:10px; height:10px; border-radius:999px; background:var(--warn)}
+    .dot.ok{background:var(--ok)}
+    h2{margin:0 0 8px; font-size:18px}
+    p{margin:0 0 12px}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width:860px){ .grid{grid-template-columns:1fr} }
+
+    .mini{color:var(--muted); font-size:14px}
+    ul{margin:10px 0 0; padding-left:18px; color:var(--muted)}
+    li{margin:6px 0}
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .btn{
+      display:inline-block;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      padding:10px 14px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:600;
+    }
+    .btn.primary{
+      background: rgba(92,200,255,0.12);
+      border-color: rgba(92,200,255,0.35);
+    }
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--line);
+      padding-top:14px;
+    }
+    .kpi{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .kpi .pill{padding:7px 10px}
+    .smallcaps{font-variant: all-small-caps; letter-spacing:0.6px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Tomer Yona</h1>
+        <p>Health × data × wearable systems — applied R&amp;D, analytics, and technical project coordination (non-sales). Website currently under construction.</p>
+      </div>
+      <div class="links">
+        <!-- Replace these with your real links -->
+        <a class="pill" href="mailto:tomeryona@gmail.com">tomeryona@gmail.com</a>
+        <a class="pill" href="https://www.linkedin.com/in/tomerpt/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a class="pill" href="https://github.com/TomerIL" target="_blank" rel="noreferrer">GitHub</a>
+        <!-- Optional later: <a class="pill" href="/cv.pdf" target="_blank" rel="noreferrer">CV (PDF)</a> -->
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="badge"><span class="dot"></span><span class="smallcaps">Work in progress</span> — basic site is live while I build case studies and a clearer portfolio.</div>
+      <h2>What you’ll find here (soon)</h2>
+      <p class="mini">A short, industry-friendly view of what I build and how I work — focused on deliverables, not academic titles.</p>
+
+      <div class="kpi">
+        <span class="pill">Focus: <strong>wearables</strong>, <strong>movement/biomechanics</strong>, <strong>health data</strong></span>
+        <span class="pill">Strength: <strong>rigor + translation</strong> (technical → actionable)</span>
+        <span class="pill">Open to: <strong>R&amp;D</strong>, <strong>data analytics</strong>, <strong>technical PM</strong></span>
+      </div>
+
+      <div class="cta">
+        <a class="btn primary" href="#contact">Contact</a>
+        <a class="btn" href="#capabilities">Capabilities</a>
+        <a class="btn" href="#status">Build status</a>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card" id="capabilities">
+        <div class="badge"><span class="dot ok"></span><span class="smallcaps">Draft</span> — will be refined</div>
+        <h2>Capabilities</h2>
+        <ul>
+          <li><strong>Applied R&amp;D:</strong> translate real problems into measurable outcomes and testable plans</li>
+          <li><strong>Data &amp; analytics:</strong> Python pipelines, time-series/sensor data processing, interpretation</li>
+          <li><strong>Technical coordination:</strong> scope, timelines, documentation, stakeholder communication</li>
+          <li><strong>Communication:</strong> clear reporting for mixed technical/non-technical audiences</li>
+        </ul>
+        <p class="mini" style="margin-top:12px;">
+          Next: add 2–3 “case study” pages (Problem → Role → Methods → Outcome).
+        </p>
+      </section>
+
+      <section class="card" id="status">
+        <div class="badge"><span class="dot"></span><span class="smallcaps">Checklist</span></div>
+        <h2>Build status</h2>
+        <ul>
+          <li>✅ Domain purchased</li>
+          <li>✅ GitHub repo created</li>
+          <li>⬜ GitHub Pages enabled</li>
+          <li>⬜ Custom domain connected (DNS + HTTPS)</li>
+          <li>⬜ Add CV PDF</li>
+          <li>⬜ Add first case study</li>
+        </ul>
+        <p class="mini" style="margin-top:12px;">
+          Once the site is live, I’ll iterate quickly and keep it simple + professional.
+        </p>
+      </section>
+    </div>
+
+    <section class="card" id="contact">
+      <h2>Contact</h2>
+      <p class="mini">If you’re hiring or want to discuss applied R&amp;D / data work in health tech or wearables, email is best.</p>
+      <ul>
+        <li>Email: <a href="mailto:tomeryona@gmail.com">tomeryona@gmail.com</a> </li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">https://www.linkedin.com/in/tomerpt/</a></li>
+        <li>GitHub: <a href="https://github.com/TomerIL" target="_blank" rel="noreferrer">github.com/TomerIL</a></li>
+      </ul>
+      <p class="mini" style="margin-top:12px;">
+        <strong>Note:</strong> I’m intentionally keeping this minimal until the domain + HTTPS are fully connected.
+      </p>
+    </section>
+
+    <footer>
+      <div>© <span id="y"></span> Tomer Yona</div>
+      <div>Built on GitHub Pages (static site)</div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
