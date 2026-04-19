@@ -1,0 +1,7 @@
+# robots.txt for https://www.tomeryona.com/
+# All well-behaved crawlers are welcome, including search engines and AI/LLM agents.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.tomeryona.com/sitemap.xml
