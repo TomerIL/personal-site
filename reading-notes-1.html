@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reading Notes №1 — When the verbs outrun the design</title>
 <meta name="description" content="Reading notes on Machado et al. (2024), a cross-sectional rugby study whose claims outrun its design.">
-
+ 
 <!-- Social -->
 <meta property="og:type" content="article">
 <meta property="og:title" content="When the verbs outrun the design">
@@ -15,7 +15,7 @@
 <meta name="twitter:title" content="When the verbs outrun the design">
 <meta name="twitter:description" content="Reading Notes №1 — thirteen rugby players, thirteen sedentary adults, and a stack of causal verbs.">
 <meta name="twitter:image" content="https://placehold.co/1200x630/1e3a8a/fef3c7?text=Reading+Notes+%E2%84%961">
-
+ 
 <template id="__bundler_thumbnail" data-bg-color="#1e3a8a">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
     <rect width="1200" height="800" fill="#1e3a8a"/>
@@ -25,7 +25,7 @@
     <text x="120" y="600" font-family="Helvetica, Arial, sans-serif" font-size="110" font-weight="900" fill="#ffffff" letter-spacing="-3">the design.</text>
   </svg>
 </template>
-
+ 
 <style>
   :root{
     --navy:#1e3a8a;
@@ -39,10 +39,10 @@
     --mustard:#d4a017;
     --mustard-wash:#fef3c7;
   }
-
+ 
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--body);overflow-x:hidden}
-
+ 
   body{
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size:17px;
@@ -50,7 +50,7 @@
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
   }
-
+ 
   /* ---------- COVER / HERO ---------- */
   .cover{
     background:var(--navy);
@@ -102,7 +102,7 @@
     margin:0 0 40px;
     font-weight:400;
   }
-
+ 
   .cover-citation{
     border-top:1px solid rgba(255,255,255,0.22);
     padding-top:22px;
@@ -130,7 +130,7 @@
   .cover-citation .venue{
     color:#c7d1e8;
   }
-
+ 
   /* ---------- ORIENTATION ---------- */
   .orient{
     background:var(--mustard-wash);
@@ -154,14 +154,14 @@
     font-weight:500;
     max-width:32em;
   }
-
+ 
   /* ---------- READING AREA ---------- */
   .read{
     max-width:720px;
     margin:0 auto;
     padding:0 22px;
   }
-
+ 
   /* ---------- SECTION OPENER ---------- */
   .section-opener{
     padding:80px 0 28px;
@@ -193,7 +193,7 @@
     max-width:28em;
     font-style:italic;
   }
-
+ 
   /* ---------- POINT ---------- */
   .point{
     padding:44px 0 8px;
@@ -248,7 +248,7 @@
     display:block;
     margin-bottom:4px;
   }
-
+ 
   /* ---------- PULL QUOTE ---------- */
   .pull{
     margin:36px 0 8px;
@@ -280,7 +280,7 @@
     margin-top:14px;
     font-weight:700;
   }
-
+ 
   /* ---------- FOOTER ---------- */
   .foot{
     margin-top:80px;
@@ -310,7 +310,7 @@
     text-decoration-thickness:2px;
     text-underline-offset:3px;
   }
-
+ 
   /* ---------- RESPONSIVE ---------- */
   @media (min-width:560px){
     .cover{padding:80px 40px 72px}
@@ -318,21 +318,21 @@
     .read{padding:0 40px}
     .plain{padding-left:18px}
   }
-
+ 
   @media (min-width:820px){
     .cover{padding:120px 60px 96px}
     .cover-eyebrow{margin-bottom:56px}
     .cover-hook{font-size:20px;margin-bottom:56px}
     .cover-citation{max-width:640px}
-
+ 
     .orient{padding:40px 60px}
     .orient p{font-size:19px}
-
+ 
     .read{padding:0 60px; max-width:820px}
-
+ 
     .section-opener{padding:120px 0 36px}
     .point{padding:72px 0 12px;}
-
+ 
     /* asymmetric numeral in margin on desktop */
     .point{
       display:grid;
@@ -347,7 +347,7 @@
     }
     .point-title,.point-body,.plain,.pull{grid-column:2}
     .pull{margin-top:40px}
-
+ 
     .section-opener{
       display:grid;
       grid-template-columns:220px 1fr;
@@ -358,32 +358,32 @@
     .section-title, .section-kicker{grid-column:2}
     .section-kicker{padding-bottom:6px}
   }
-
+ 
   /* accessibility focus */
   a:focus-visible{outline:2px solid var(--mustard); outline-offset:3px; border-radius:2px}
 </style>
 </head>
 <body>
-
+ 
 <header class="cover" role="banner">
   <div class="cover-eyebrow"><span class="dash" aria-hidden="true"></span>Reading Notes №1</div>
   <h1 class="cover-headline">When the verbs <span class="mustard">outrun</span> the design.</h1>
   <p class="cover-hook">Thirteen rugby players, thirteen sedentary adults, one cross-sectional snapshot — and a stack of causal verbs. Reading the methods, slowly.</p>
-
+ 
   <div class="cover-citation" aria-label="Paper under review">
     <div class="authors">The Paper · Machado et al. (2024)</div>
     <div class="paper">Lower limb balance, ankle dorsiflexion, orofacial tissue pressure, and occlusal force of rugby players</div>
     <div class="venue">Sports Medicine and Health Science, 6: 173–178</div>
   </div>
 </header>
-
+ 
 <aside class="orient" aria-label="Orientation">
   <span class="label">What this critique examines</span>
   <p>The paper's ambition outruns its design — a cross-sectional snapshot of twenty-six people is asked to carry causal claims, invented mechanisms, and dozens of uncorrected comparisons.</p>
 </aside>
-
+ 
 <main class="read">
-
+ 
   <!-- ============= SECTION 01 ============= -->
   <section aria-labelledby="s1">
     <div class="section-opener">
@@ -391,53 +391,53 @@
       <h2 class="section-title" id="s1">Claims &amp; Bias</h2>
       <p class="section-kicker">Where the language of the paper quietly outpaces what the data can say.</p>
     </div>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">1</span>
       <h3 class="point-title">Causal verbs, correlational design.</h3>
       <p class="point-body">The authors write that rugby "reduces," "causes," "leads to," and "promotes" physical changes — verbs that a cross-sectional study cannot support. Self-selection, a 6-year age gap, and body-composition differences offer simpler explanations. The language claims what the design cannot prove.</p>
       <p class="plain"><span class="label">In plain terms</span>Comparing two groups at a single point in time can show they differ, but not that one activity caused the difference — the study's wording treats correlation as cause.</p>
-
+ 
       <figure class="pull">
         <blockquote>“The language claims <span class="u">what the design cannot prove.</span>”</blockquote>
         <cite>Point 01 · Claims &amp; Bias</cite>
       </figure>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">2</span>
       <h3 class="point-title">"Clinically observed" smuggles in a null result.</h3>
       <p class="point-body">When the p-value failed, the authors declared the effect "clinically observed" instead. A genuine clinical-significance argument requires pre-specified effect sizes and thresholds — not a quiet swap of vocabulary after the statistics disappoint.</p>
       <p class="plain"><span class="label">In plain terms</span>If a result isn't statistically meaningful, you can't relabel it as "clinically meaningful" after the fact and carry on as though it worked.</p>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">3</span>
       <h3 class="point-title">Significant findings get the spotlight; null findings get the basement.</h3>
       <p class="point-body">Near-significant results are discussed at length and framed causally. Null findings, including bite force, barely register. The narrative reflects the authors' hypothesis, not the full dataset.</p>
       <p class="plain"><span class="label">In plain terms</span>Results that support the authors' idea get paragraphs of discussion; results that don't get a sentence or none at all.</p>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">4</span>
       <h3 class="point-title">Mechanisms invented in the discussion.</h3>
       <p class="point-body">The discussion invokes sleep apnea, serotonin pathways, and compensatory muscle mechanisms — none of which were measured. These untested ideas carry the confidence of findings, blurring the line between evidence and speculation.</p>
       <p class="plain"><span class="label">In plain terms</span>The paper explains its results by naming biological processes it never actually measured, and presents those guesses with the weight of data.</p>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">5</span>
       <h3 class="point-title">A four-link causal chain with zero links measured.</h3>
       <p class="point-body">The authors propose: rugby → muscle imbalance → shoulder changes → orofacial changes. They measure only the first and last step, skipping every intermediate link. The premise connecting ankle mobility to tongue pressure is claimed, not demonstrated.</p>
       <p class="plain"><span class="label">In plain terms</span>The story has four steps connecting rugby to changes in the mouth, but only the first and last were actually checked — the middle is assumed.</p>
-
+ 
       <figure class="pull">
         <blockquote>“Ankle mobility to tongue pressure is <span class="u">claimed, not demonstrated.</span>”</blockquote>
         <cite>Point 05 · Claims &amp; Bias</cite>
       </figure>
     </article>
   </section>
-
+ 
   <!-- ============= SECTION 02 ============= -->
   <section aria-labelledby="s2">
     <div class="section-opener">
@@ -445,61 +445,61 @@
       <h2 class="section-title" id="s2">Statistics &amp; Methodology</h2>
       <p class="section-kicker">Where the numbers underneath the narrative start to give way.</p>
     </div>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">1</span>
       <h3 class="point-title">Underpowered, then rescued with invalid math.</h3>
       <p class="point-body">With n=13 per group, most comparisons could not detect real effects. The authors ran post hoc power analysis — a method that simply restates the p-value — on the one variable that gave a flattering result. The less convenient outcomes went unexamined.</p>
       <p class="plain"><span class="label">In plain terms</span>With only 13 people per group, the study is too small to reliably find real differences, and the statistical rescue the authors use doesn't actually fix that.</p>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">2</span>
       <h3 class="point-title">~30 tests, zero corrections.</h3>
       <p class="point-body">The paper runs roughly 30–40 comparisons without Bonferroni, FDR, or any other correction. At α=0.05, chance alone predicts ~1.5 false positives. Most "significant" findings sit near p=0.05 and dissolve under any adjustment.</p>
       <p class="plain"><span class="label">In plain terms</span>Run dozens of statistical tests and a couple will look meaningful by pure chance — the paper doesn't account for that, and its positive results sit right at the borderline.</p>
-
+ 
       <figure class="pull">
         <blockquote>“Most significant findings <span class="u">dissolve under any adjustment.</span>”</blockquote>
         <cite>Point 02 · Statistics &amp; Methodology</cite>
       </figure>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">3</span>
       <h3 class="point-title">The data statement contradicts the paper.</h3>
       <p class="point-body">The authors declare "no datasets were generated or analyzed," then report data from 26 participants on four outcome measures. Nine authors, peer reviewers, and the editor all missed the contradiction. The statement blocks replication and signals absent quality control.</p>
       <p class="plain"><span class="label">In plain terms</span>The paper formally states that no data were collected, while its own tables show measurements from 26 people — a contradiction no one in the review chain caught.</p>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">4</span>
       <h3 class="point-title">Snapshot, not story.</h3>
       <p class="point-body">A one-time comparison of two groups cannot show that rugby caused anything. The observed differences could equally reflect who chooses rugby, body composition, training history, or unmeasured confounders. The causal framing outruns the design.</p>
       <p class="plain"><span class="label">In plain terms</span>A single measurement of two different groups can describe how they differ today, but not what made them that way.</p>
     </article>
-
+ 
     <article class="point">
       <span class="point-num" aria-hidden="true">5</span>
       <h3 class="point-title">Two covariates cannot bridge a lifestyle gap.</h3>
       <p class="point-body">The authors adjust for age and weight but leave BMI, training history, activity level, injury history, and dental status uncontrolled. Athletes and sedentary adults differ on every dimension that matters. Two variables cannot close the gap.</p>
       <p class="plain"><span class="label">In plain terms</span>Adjusting only for age and weight leaves out most of the ways athletes and non-athletes actually differ, so the comparison can't isolate rugby's effect.</p>
-
+ 
       <figure class="pull">
         <blockquote>“Two variables cannot <span class="u">close the gap.</span>”</blockquote>
         <cite>Point 05 · Statistics &amp; Methodology</cite>
       </figure>
     </article>
   </section>
-
+ 
 </main>
-
+ 
 <footer class="foot">
   <div class="foot-inner">
     <div class="colophon">Reading Notes №1</div>
-    <p>Views expressed here are my own and do not represent my employer, collaborators, or any editorial board I serve on. &nbsp;·&nbsp; <a href="#" rel="author">tomeryona.com</a></p>
+    <p>Views expressed here are my own and do not represent my employer, collaborators, or any editorial board I serve on. &nbsp;·&nbsp; <a href="/" rel="author">tomeryona.com</a></p>
   </div>
 </footer>
-
+ 
 </body>
 </html>
