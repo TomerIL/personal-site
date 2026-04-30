@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fascial Manipulation — A Bibliometric Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f6f3;             /* very subtle warm light, not beige */
+    --surface: #ffffff;
+    --surface-2: #fafaf7;
+    --border: #e5e5df;
+    --border-soft: #efefe9;
+
+    --ink: #0e1116;            /* deep slate-black */
+    --ink-2: #3a4150;
+    --ink-3: #6b7280;
+    --muted: #9aa0ad;
+
+    --accent: #0d5d62;         /* deep petrol / teal — academic */
+    --accent-deep: #07383b;
+    --accent-mid: #2d8a8d;
+    --accent-tint: #e8f0f0;
+
+    --neutral: #c8ccd1;        /* soft cool slate for non-highlighted bars */
+    --neutral-deep: #6b7280;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, system-ui, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 32px 16px 48px;
+  }
+
+  .frame {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ───────────  HERO  ─────────── */
+  .hero {
+    padding: 8px 4px 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(34px, 8vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  h1 .accent {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    display: block;
+    font-size: 0.78em;
+    margin-top: 2px;
+  }
+
+  .lede {
+    font-size: clamp(15px, 3.5vw, 17px);
+    color: var(--ink-2);
+    line-height: 1.55;
+    max-width: 640px;
+    margin-bottom: 18px;
+    font-weight: 400;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.01em;
+  }
+  .meta-row span b {
+    color: var(--ink);
+    font-weight: 500;
+    margin-left: 6px;
+  }
+
+  /* ───────────  STATS  ─────────── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .stat {
+    padding: 22px 18px;
+    background: var(--surface);
+    position: relative;
+  }
+  .stat.hot { background: var(--surface); }
+  .stat.hot::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+  .stat-num {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-weight: 200;
+    font-size: clamp(40px, 11vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .stat.hot .stat-num { color: var(--accent); }
+  .stat-num .unit {
+    font-size: 0.45em;
+    font-weight: 300;
+    color: var(--muted);
+    margin-left: 2px;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 14px;
+    line-height: 1.4;
+  }
+  .stat-note {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ───────────  BENTO  ─────────── */
+  .bento {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px 20px 26px;
+    position: relative;
+  }
+
+  .card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .card-tag::before {
+    content: "";
+    width: 14px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .card-title {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .card-sub {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    margin-bottom: 22px;
+    line-height: 1.5;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  /* ───────────  YEAR CHART  ─────────── */
+  .year-chart {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 4px;
+    align-items: end;
+    height: 200px;
+    padding-top: 24px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .ybar {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .ybar .stack {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    transform-origin: bottom;
+    animation: grow 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+  @keyframes grow {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+  .ybar .seg-other { background: var(--neutral); }
+  .ybar .seg-stecco { background: var(--accent); }
+  .ybar .total {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .year-axis {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .year-axis span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    text-align: center;
+    font-weight: 400;
+  }
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .legend-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .swatch.stecco { background: var(--accent); }
+  .swatch.other { background: var(--neutral); }
+
+  /* ───────────  BAR LISTS  ─────────── */
+  .bar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 32px;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    animation: slidein 0.6s ease-out backwards;
+  }
+  @keyframes slidein {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .bar-row .label {
+    font-weight: 400;
+    color: var(--ink);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 13px;
+  }
+  .bar-row.highlight .label {
+    color: var(--accent-deep);
+    font-weight: 500;
+  }
+  .bar-row .label .role {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-left: 6px;
+    font-style: italic;
+  }
+  .bar-track {
+    height: 8px;
+    background: var(--border-soft);
+    border-radius: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--neutral);
+    border-radius: 100px;
+    transform-origin: left;
+    animation: fillIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+  @keyframes fillIn {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  .bar-row.highlight .bar-fill { background: var(--accent); }
+  .bar-row .count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    text-align: right;
+    font-weight: 500;
+  }
+  .bar-row.highlight .count { color: var(--accent); font-weight: 600; }
+
+  /* ───────────  CALLOUT  ─────────── */
+  .callout {
+    margin-top: 22px;
+    padding: 14px 16px 14px 18px;
+    background: var(--accent-tint);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 4px 4px 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .callout strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ───────────  DESKTOP  ─────────── */
+  @media (min-width: 720px) {
+    body { padding: 56px 32px 64px; }
+    .hero { padding: 12px 4px 36px; margin-bottom: 36px; }
+    .stats { grid-template-columns: repeat(4, 1fr); margin-bottom: 36px; }
+    .bento {
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .bento .card.year { grid-column: span 12; }
+    .bento .card.authors { grid-column: span 7; }
+    .bento .card.countries { grid-column: span 5; }
+    .bento .card.journals { grid-column: span 12; }
+    .card { padding: 30px 32px 32px; }
+    .bar-row { grid-template-columns: 150px 1fr 40px; font-size: 14px; }
+    .bar-row .label { font-size: 14px; }
+    .year-chart { height: 240px; }
+    .year-axis span { font-size: 10.5px; }
+    .stat { padding: 26px 24px; }
+    .card-title { font-size: 24px; }
+  }
+
+  @media (min-width: 1000px) {
+    .stat-num { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Fascial Manipulation<span class="accent">a literature in one family's hands</span></h1>
+    <p class="lede">A 17-year audit of every PubMed-indexed paper on "Fascial Manipulation" reveals a corpus dominated by its inventors, concentrated in one journal, and largely absent from the venues where physiotherapy interventions are stress-tested.</p>
+    <div class="meta-row">
+      <span>n<b>73 papers</b></span>
+      <span>span<b>2009–2026</b></span>
+      <span>authors<b>280 unique</b></span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">73</div>
+      <div class="stat-label">Indexed papers</div>
+      <div class="stat-note">over 17 years</div>
+    </div>
+    <div class="stat hot">
+      <div class="stat-num">49<span class="unit">%</span></div>
+      <div class="stat-label">w/ Stecco-school author</div>
+      <div class="stat-note">36 of 73 papers</div>
+    </div>
+    <div class="stat hot">
+      <div class="stat-num">36<span class="unit">%</span></div>
+      <div class="stat-label">in one journal</div>
+      <div class="stat-note">J Bodyw Mov Ther</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">~10</div>
+      <div class="stat-label">RCTs total</div>
+      <div class="stat-note">vs. 8 cases, 8 pilots</div>
+    </div>
+  </div>
+
+  <!-- BENTO -->
+  <div class="bento">
+
+    <div class="card year">
+      <div class="card-tag">§ I — Output by year</div>
+      <div class="card-title">Tripled after 2019, on a tiny base</div>
+      <div class="card-sub">The Stecco-school footprint stays steady throughout the 17-year window.</div>
+      <div class="year-chart" id="year-chart"></div>
+      <div class="year-axis" id="year-axis"></div>
+      <div class="legend">
+        <span class="legend-key"><span class="swatch stecco"></span>With Stecco-school author</span>
+        <span class="legend-key"><span class="swatch other"></span>Independent</span>
+      </div>
+    </div>
+
+    <div class="card authors">
+      <div class="card-tag">§ II — Authorship</div>
+      <div class="card-title">The inner circle</div>
+      <div class="card-sub">Inventors and certified students dominate the corpus.</div>
+      <div class="bar-list" id="author-list"></div>
+      <div class="callout">
+        <strong>Carla &amp; Antonio Stecco co-authored 41 paper-slots</strong> — the family that invented and trademarked the technique is also its most prolific evaluator.
+      </div>
+    </div>
+
+    <div class="card countries">
+      <div class="card-tag">§ III — Geography</div>
+      <div class="card-title">One network, two cities</div>
+      <div class="card-sub">"Padova" appears 66× in affiliations. NYU 16×.</div>
+      <div class="bar-list" id="country-list"></div>
+    </div>
+
+    <div class="card journals">
+      <div class="card-tag">§ IV — Where it lives</div>
+      <div class="card-title">A single specialty journal</div>
+      <div class="card-sub">Heavily concentrated in one bodywork venue. Absent from mainstream rehab and pain journals.</div>
+      <div class="bar-list" id="journal-list"></div>
+      <div class="callout">
+        Zero appearances in <strong>Br J Sports Med</strong>, <strong>JOSPT</strong>, <strong>Phys Ther</strong>, <strong>Pain</strong>, or <strong>Spine</strong> — the journals where physiotherapy interventions are stress-tested.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // YEAR CHART
+  const years = [2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026];
+  const totals = [3,2,2,3,0,3,4,2,4,1,3,7,8,6,7,9,5,4];
+  const stecco = [2,2,2,1,0,2,2,1,3,0,1,4,3,4,3,3,3,0];
+  const max = Math.max(...totals);
+
+  const yc = document.getElementById('year-chart');
+  totals.forEach((t, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'ybar';
+    const stack = document.createElement('div');
+    stack.className = 'stack';
+    stack.style.height = (t / max * 100) + '%';
+    stack.style.animationDelay = (0.1 + i * 0.035) + 's';
+    const stecH = t > 0 ? (stecco[i] / t * 100) : 0;
+    const othH = 100 - stecH;
+    if (othH > 0) {
+      const seg = document.createElement('div');
+      seg.className = 'seg-other';
+      seg.style.height = othH + '%';
+      stack.appendChild(seg);
+    }
+    if (stecH > 0) {
+      const seg = document.createElement('div');
+      seg.className = 'seg-stecco';
+      seg.style.height = stecH + '%';
+      stack.appendChild(seg);
+    }
+    bar.appendChild(stack);
+    if (t > 0) {
+      const lab = document.createElement('div');
+      lab.className = 'total';
+      lab.textContent = t;
+      bar.appendChild(lab);
+    }
+    yc.appendChild(bar);
+  });
+
+  const ax = document.getElementById('year-axis');
+  years.forEach(y => {
+    const s = document.createElement('span');
+    s.textContent = "'" + String(y).slice(2);
+    ax.appendChild(s);
+  });
+
+  // AUTHORS
+  const authors = [
+    {name: 'Stecco A',     role: 'Padova/NYU', n: 22, hl: true},
+    {name: 'Stecco C',     role: 'Padova',     n: 19, hl: true},
+    {name: 'Pirri C',      role: 'Padova',     n: 10, hl: true},
+    {name: 'Day JA',       role: 'school',     n: 6,  hl: true},
+    {name: 'Pintucci M',   role: 'school',     n: 5,  hl: true},
+    {name: 'Branchini M',  role: 'school',     n: 4,  hl: true},
+    {name: 'Marchand AM',  role: 'school',     n: 4,  hl: true},
+    {name: 'Raja G P',     role: 'India',      n: 3,  hl: false},
+    {name: 'Prabhu A',     role: 'India',      n: 3,  hl: false},
+    {name: 'Masiero S',    role: 'Padova',     n: 3,  hl: true},
+  ];
+  const aList = document.getElementById('author-list');
+  authors.forEach((a, i) => {
+    const row = document.createElement('div');
+    row.className = 'bar-row' + (a.hl ? ' highlight' : '');
+    row.style.animationDelay = (0.15 + i * 0.04) + 's';
+    row.innerHTML = `<div class="label">${a.name}<span class="role">${a.role}</span></div><div class="bar-track"><div class="bar-fill" style="width:${a.n/22*100}%; animation-delay:${0.25 + i*0.04}s"></div></div><div class="count">${a.n}</div>`;
+    aList.appendChild(row);
+  });
+
+  // COUNTRIES
+  const countries = [
+    {name: 'Italy',   n: 30, hl: true},
+    {name: 'USA',     n: 19, hl: true},
+    {name: 'India',   n: 9,  hl: false},
+    {name: 'UK',      n: 6,  hl: false},
+    {name: 'Brazil',  n: 6,  hl: false},
+    {name: 'Turkey',  n: 5,  hl: false},
+    {name: 'Poland',  n: 5,  hl: false},
+    {name: 'Israel',  n: 4,  hl: false},
+    {name: 'Japan',   n: 4,  hl: false},
+    {name: 'China',   n: 3,  hl: false},
+  ];
+  const cList = document.getElementById('country-list');
+  countries.forEach((c, i) => {
+    const row = document.createElement('div');
+    row.className = 'bar-row' + (c.hl ? ' highlight' : '');
+    row.style.animationDelay = (0.15 + i * 0.04) + 's';
+    row.innerHTML = `<div class="label">${c.name}</div><div class="bar-track"><div class="bar-fill" style="width:${c.n/30*100}%; animation-delay:${0.25 + i*0.04}s"></div></div><div class="count">${c.n}</div>`;
+    cList.appendChild(row);
+  });
+
+  // JOURNALS
+  const journals = [
+    {name: 'J Bodyw Mov Ther',         n: 26, hl: true},
+    {name: 'Life (Basel)',              n: 4,  hl: false},
+    {name: 'Eur J Phys Rehabil Med',    n: 3,  hl: false},
+    {name: 'J Man Manip Ther',          n: 2,  hl: false},
+    {name: 'Eur J Transl Myol',         n: 2,  hl: false},
+    {name: 'J Clin Med',                n: 2,  hl: false},
+    {name: 'Int J Environ Res Pub Hlth',n: 2,  hl: false},
+    {name: 'Medicina (Kaunas)',         n: 2,  hl: false},
+  ];
+  const jList = document.getElementById('journal-list');
+  journals.forEach((j, i) => {
+    const row = document.createElement('div');
+    row.className = 'bar-row' + (j.hl ? ' highlight' : '');
+    row.style.animationDelay = (0.15 + i * 0.04) + 's';
+    row.innerHTML = `<div class="label">${j.name}</div><div class="bar-track"><div class="bar-fill" style="width:${j.n/26*100}%; animation-delay:${0.25 + i*0.04}s"></div></div><div class="count">${j.n}</div>`;
+    jList.appendChild(row);
+  });
+</script>
+</body>
+</html>
