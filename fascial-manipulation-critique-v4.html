@@ -1,0 +1,1924 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reading Between the Lines — A Methods Review</title>
+<meta name="description" content="A clinician-facing critical read of a 2025 RCT on Fascial Manipulation® versus eccentric training for patellar tendinopathy." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,300;0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ==============================================================
+     PALETTE — Deep slate · refined warmth
+     ============================================================== */
+  :root {
+    --surface:      #162133;
+    --surface-2:    #1F2C42;
+    --surface-3:    #283A55;
+
+    --ink-1:        #E8ECF1;
+    --ink-2:        #A9B4C4;
+    --ink-3:        #6E7B8E;
+
+    --rule:         #34435E;
+    --rule-bright:  #4A5C7A;
+
+    --accent:       #E8B36A;
+    --accent-soft:  #F0C385;
+    --accent-tint:  rgba(232, 179, 106, 0.14);
+
+    --flag:         #E5755C;
+    --flag-soft:    #EE8E78;
+    --flag-tint:    rgba(229, 117, 92, 0.14);
+
+    --ok:           #7DB89D;
+    --ok-tint:      rgba(125, 184, 157, 0.14);
+
+    --cool:         #7BA8C5;
+    --cool-tint:    rgba(123, 168, 197, 0.12);
+
+    --display: "Bricolage Grotesque", "Helvetica Neue", -apple-system, sans-serif;
+    --body:    "Spectral", "Iowan Old Style", Georgia, serif;
+    --mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    --max:    74rem;
+    --col:    40rem;
+    --col-wide: 52rem;
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    background: var(--surface);
+  }
+  body {
+    margin: 0;
+    background: var(--surface);
+    background-image:
+      radial-gradient(ellipse at 18% 0%, rgba(232, 179, 106, 0.05) 0%, transparent 55%),
+      radial-gradient(ellipse at 82% 100%, rgba(123, 168, 197, 0.04) 0%, transparent 55%);
+    background-attachment: fixed;
+    color: var(--ink-1);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-weight: 400;
+    font-feature-settings: "kern", "liga", "onum";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--surface); }
+
+  .shell {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+  }
+  .col { max-width: var(--col); margin: 0 auto; }
+  .col-wide { max-width: var(--col-wide); margin: 0 auto; }
+
+  a { color: inherit; }
+
+  /* ==============================================================
+     EYEBROW STRIP — minimal, unbranded
+     ============================================================== */
+  .strip {
+    padding: 1.4rem 0 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .22em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .strip span { display: inline-block; }
+  .strip__left::before {
+    content: "";
+    display: inline-block;
+    width: 1.6rem;
+    height: 1px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: .9rem;
+    transform: translateY(-2px);
+  }
+
+  /* ==============================================================
+     STICKY MINI-NAV
+     ============================================================== */
+  .navstrip {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(22, 33, 51, 0.86);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 0 calc(-1 * var(--gutter));
+    padding: .85rem var(--gutter);
+    display: flex;
+    gap: 1.6rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .navstrip::-webkit-scrollbar { display: none; }
+  .navstrip__link {
+    color: var(--ink-3);
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    gap: .55rem;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    padding: .15rem 0 .35rem;
+    border-bottom: 1.5px solid transparent;
+    transition: color .25s ease, border-color .25s ease;
+  }
+  .navstrip__link::before {
+    content: attr(data-num);
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: .04em;
+  }
+  .navstrip__link:hover { color: var(--ink-1); }
+  .navstrip__link.active {
+    color: var(--ink-1);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ==============================================================
+     HERO
+     ============================================================== */
+  .hero {
+    padding: clamp(3rem, 8vh, 5.5rem) 0 clamp(2.6rem, 6vh, 4rem);
+    position: relative;
+  }
+  .hero__overline {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.2rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: .9rem;
+    animation: rise 1.0s .05s both cubic-bezier(.2,.7,.2,1);
+  }
+  .hero__overline::before {
+    content: "";
+    display: inline-block;
+    width: 2.2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+  .hero__title {
+    font-family: var(--display);
+    font-weight: 350;
+    font-size: clamp(2.8rem, 8.6vw, 6.4rem);
+    line-height: .98;
+    letter-spacing: -.028em;
+    margin: 0 0 1.6rem;
+    max-width: 16ch;
+    color: var(--ink-1);
+    font-variation-settings: "opsz" 96;
+    animation: rise 1.1s .15s both cubic-bezier(.2,.7,.2,1);
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero__deck {
+    font-family: var(--body);
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 50ch;
+    margin: 0 0 2.5rem;
+    animation: rise 1.0s .25s both cubic-bezier(.2,.7,.2,1);
+  }
+  .hero__paper {
+    margin-top: 2rem;
+    padding: 1.4rem 1.6rem 1.5rem;
+    background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 120%);
+    border: 1px solid var(--rule-bright);
+    border-left: 3px solid var(--accent);
+    max-width: 48rem;
+    box-shadow: 0 24px 48px -22px rgba(0, 0, 0, 0.5);
+    animation: rise 1.0s .35s both cubic-bezier(.2,.7,.2,1);
+  }
+  .hero__paper__label {
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .22em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: .65rem;
+    font-weight: 600;
+  }
+  .hero__paper__title {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    line-height: 1.4;
+    color: var(--ink-1);
+    margin: 0 0 .45rem;
+    font-weight: 460;
+    font-variation-settings: "opsz" 24;
+    letter-spacing: -.005em;
+  }
+  .hero__paper__meta {
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--ink-3);
+    margin: 0;
+    letter-spacing: .04em;
+  }
+  .hero__paper__meta a {
+    color: var(--ink-3);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: color .2s, border-color .2s;
+  }
+  .hero__paper__meta a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ==============================================================
+     INTRO
+     ============================================================== */
+  .intro {
+    padding: clamp(2.2rem, 5.5vh, 3.4rem) 0 clamp(1.8rem, 4.5vh, 2.6rem);
+    border-top: 1px solid var(--rule);
+  }
+  .intro p {
+    font-family: var(--body);
+    font-size: clamp(1.18rem, 1.65vw, 1.42rem);
+    line-height: 1.5;
+    color: var(--ink-1);
+    margin: 0;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .intro p em { font-style: normal; color: var(--accent); }
+
+  /* ==============================================================
+     FINDINGS
+     ============================================================== */
+  .findings { padding-bottom: 4rem; }
+
+  .finding {
+    padding: clamp(2.8rem, 7vh, 4.8rem) 0 clamp(2.4rem, 6vh, 4.2rem);
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .finding.in {
+    opacity: 1;
+    transform: none;
+  }
+  .finding + .finding { border-top: 1px solid var(--rule); }
+  .finding__inner {
+    max-width: var(--col);
+    margin: 0 auto;
+    position: relative;
+  }
+  .finding--wide .finding__inner { max-width: var(--col-wide); }
+
+  .finding__numeral {
+    font-family: var(--display);
+    font-weight: 220;
+    font-variation-settings: "opsz" 96;
+    font-size: clamp(6rem, 14vw, 10rem);
+    line-height: .85;
+    letter-spacing: -.04em;
+    color: var(--accent);
+    opacity: 0.14;
+    position: absolute;
+    left: -.4rem;
+    top: -2.8rem;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  @media (min-width: 1100px) {
+    .finding__numeral {
+      left: -7.5rem;
+      top: -.8rem;
+      font-size: 9rem;
+      opacity: 0.20;
+    }
+  }
+
+  .finding__tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+  }
+  .finding__title {
+    font-family: var(--display);
+    font-weight: 420;
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    line-height: 1.08;
+    letter-spacing: -.022em;
+    margin: 0 0 1.3rem;
+    color: var(--ink-1);
+    position: relative;
+    z-index: 1;
+    max-width: 26ch;
+    font-variation-settings: "opsz" 60;
+  }
+  .finding__title em {
+    font-style: italic;
+    color: var(--flag);
+    font-weight: 460;
+  }
+
+  .finding__plain {
+    font-family: var(--body);
+    font-size: 1.08rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: var(--ink-1);
+    margin: 0 0 1.4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* "What this means" — pull-quote */
+  .finding__meaning {
+    margin: 2.2rem auto 1.6rem;
+    padding: 1.7rem 0 0;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 36rem;
+  }
+  .finding__meaning__label {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .9rem;
+    font-weight: 600;
+  }
+  .finding__meaning p {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: clamp(1.16rem, 1.7vw, 1.35rem);
+    line-height: 1.45;
+    color: var(--ink-1);
+    margin: 0 auto;
+    font-weight: 400;
+    max-width: 40ch;
+  }
+  .finding__meaning p + p { margin-top: .8rem; }
+  .finding__meaning p strong {
+    font-style: normal;
+    color: var(--flag);
+    font-weight: 500;
+  }
+
+  /* Always-visible Evidence/Notes block */
+  .finding__notes {
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    z-index: 1;
+  }
+  .finding__notes__label {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: .9rem;
+    font-weight: 500;
+  }
+  .finding__notes__label::before {
+    content: "→ ";
+    color: var(--accent);
+    margin-right: .15em;
+  }
+  .finding__notes__body p {
+    margin: 0 0 1rem;
+    color: var(--ink-2);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .finding__notes__body p:last-child { margin-bottom: 0; }
+  .finding__notes__body strong { color: var(--ink-1); font-weight: 600; }
+  .finding__notes__body em { color: var(--ink-1); font-style: italic; }
+  .finding__notes__body code {
+    font-family: var(--mono);
+    font-size: .82em;
+    background: var(--surface-3);
+    padding: .08em .42em;
+    border-radius: 2px;
+    color: var(--ink-1);
+    border: 1px solid var(--rule);
+  }
+  .finding__notes__body code.flag {
+    color: var(--flag);
+    background: var(--flag-tint);
+    border-color: rgba(229, 117, 92, 0.35);
+    font-weight: 500;
+  }
+
+  /* ==============================================================
+     LUMINOUS PANELS — viz containers
+     ============================================================== */
+  .viz {
+    margin: 2.2rem 0 1.5rem;
+    padding: 1.8rem 1.7rem 1.5rem;
+    background: linear-gradient(180deg, var(--surface-2) 0%, color-mix(in srgb, var(--surface-2) 88%, var(--surface) 12%) 100%);
+    border: 1px solid var(--rule-bright);
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.025) inset,
+      0 28px 56px -28px rgba(0, 0, 0, 0.55);
+  }
+  .viz__head { margin-bottom: 1.2rem; max-width: 56ch; }
+  .viz__eyebrow {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .55rem;
+    font-weight: 600;
+  }
+  .viz__title {
+    font-family: var(--display);
+    font-size: clamp(1.18rem, 1.55vw, 1.4rem);
+    line-height: 1.28;
+    color: var(--ink-1);
+    margin: 0 0 .55rem;
+    font-weight: 460;
+    letter-spacing: -.012em;
+    font-variation-settings: "opsz" 36;
+  }
+  .viz__title em { font-style: italic; color: var(--flag); font-weight: 480; }
+  .viz__title strong { color: var(--accent); font-weight: 500; }
+  .viz__caption {
+    font-family: var(--body);
+    font-size: .94rem;
+    color: var(--ink-2);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .viz__caption em {
+    color: var(--ink-3);
+    font-style: italic;
+    display: block;
+    margin-top: .45rem;
+    font-size: .85rem;
+  }
+  .viz__svg-wrap {
+    margin: 1.3rem 0 0;
+    text-align: center;
+  }
+  .viz__svg-wrap svg {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+  }
+  .viz__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--ink-2);
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .viz__legend-item { display: flex; align-items: center; gap: .55rem; }
+  .viz__legend-swatch {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+  .viz__legend-swatch--accent { background: var(--accent); }
+  .viz__legend-swatch--cool { background: var(--cool); }
+  .viz__legend-swatch--flag { background: var(--flag); }
+  .viz__legend-swatch--ok { background: var(--ok); }
+  .viz__legend-swatch--ring {
+    border: 1px solid var(--ink-2);
+    background: transparent;
+    border-radius: 50%;
+    opacity: .8;
+  }
+  .viz__legend-swatch--dot {
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* SVG-shared text classes */
+  svg .lbl-mono {
+    font-family: var(--mono);
+    font-size: 11px;
+    fill: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+  svg .lbl-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    fill: var(--ink-1);
+    font-weight: 500;
+  }
+  svg .lbl-num-warn {
+    font-family: var(--mono);
+    font-size: 12px;
+    fill: var(--flag);
+    font-weight: 500;
+  }
+  svg .lbl-num-ok {
+    font-family: var(--mono);
+    font-size: 12px;
+    fill: var(--ok);
+    font-weight: 500;
+  }
+  svg .lbl-num-gold {
+    font-family: var(--mono);
+    font-size: 12px;
+    fill: var(--accent);
+    font-weight: 500;
+  }
+  svg .lbl-axis {
+    font-family: var(--mono);
+    font-size: 10px;
+    fill: var(--ink-3);
+    letter-spacing: .08em;
+  }
+  svg .lbl-anno {
+    font-family: var(--display);
+    font-size: 12px;
+    fill: var(--ink-2);
+    font-style: italic;
+    font-variation-settings: "opsz" 18;
+  }
+  svg .lbl-strong {
+    font-family: var(--display);
+    font-size: 12.5px;
+    fill: var(--ink-1);
+    font-weight: 500;
+    font-variation-settings: "opsz" 24;
+  }
+
+  /* ==============================================================
+     STAT PANEL (Point 01)
+     ============================================================== */
+  .stat-panel {
+    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink-2);
+    border-bottom: 1px solid var(--ink-2);
+    position: relative;
+    z-index: 1;
+  }
+  .stat-panel__cell {
+    padding: 1.6rem 1.2rem 1.4rem;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .stat-panel__cell:last-child { border-right: none; }
+  .stat-panel__num {
+    font-family: var(--display);
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 0.95;
+    color: var(--ink-1);
+    font-weight: 320;
+    letter-spacing: -.028em;
+    font-variation-settings: "opsz" 96;
+    font-feature-settings: "lnum";
+  }
+  .stat-panel__num.gold { color: var(--accent); }
+  .stat-panel__num sup {
+    font-size: .55em;
+    font-weight: 400;
+    color: var(--ink-3);
+    margin-left: .12em;
+    letter-spacing: 0;
+    vertical-align: 0.4em;
+  }
+  .stat-panel__label {
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    line-height: 1.45;
+  }
+  @media (max-width: 680px) {
+    .stat-panel { grid-template-columns: 1fr 1fr; }
+    .stat-panel__cell:nth-child(2) { border-right: none; }
+    .stat-panel__cell:nth-child(1),
+    .stat-panel__cell:nth-child(2) { border-bottom: 1px solid var(--rule); }
+    .stat-panel__cell:nth-child(3) {
+      grid-column: span 2;
+      border-right: none;
+    }
+  }
+
+  /* ==============================================================
+     PROTOCOL DIFF TABLE (Point 03)
+     ============================================================== */
+  .diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 0;
+    font-size: .94rem;
+  }
+  .diff-table th, .diff-table td {
+    text-align: left;
+    padding: 1rem 1.1rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+  .diff-table thead th {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--ink-2);
+    padding-bottom: .7rem;
+  }
+  .diff-table tbody th {
+    font-family: var(--display);
+    font-size: .92rem;
+    color: var(--ink-1);
+    font-weight: 480;
+    width: 22%;
+    padding-right: .5rem;
+    letter-spacing: -.005em;
+  }
+  .diff-table td { color: var(--ink-2); line-height: 1.55; }
+  .diff-table td.changed--add {
+    background: var(--accent-tint);
+    color: var(--ink-1);
+    border-left: 2px solid var(--accent);
+    padding-left: calc(1.1rem - 2px);
+  }
+  .diff-table td.changed--replace {
+    background: var(--flag-tint);
+    color: var(--ink-1);
+    border-left: 2px solid var(--flag);
+    padding-left: calc(1.1rem - 2px);
+  }
+  .diff-table td.empty {
+    color: var(--ink-3);
+    font-style: italic;
+    font-family: var(--body);
+  }
+  @media (max-width: 600px) {
+    .diff-table thead { display: none; }
+    .diff-table, .diff-table tbody, .diff-table tr, .diff-table th, .diff-table td {
+      display: block;
+      width: 100%;
+    }
+    .diff-table tr {
+      padding: .9rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .diff-table tbody th { padding: 0 0 .35rem 0; width: 100%; }
+    .diff-table td { padding: .35rem 0; border: none; }
+    .diff-table td.changed--add,
+    .diff-table td.changed--replace { padding-left: .8rem; }
+    .diff-table td::before {
+      content: attr(data-label);
+      font-family: var(--mono);
+      font-size: .58rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      display: block;
+      margin-bottom: .2rem;
+    }
+  }
+
+  /* ==============================================================
+     EVIDENCE CARDS (Point 06)
+     ============================================================== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+    margin: 1.6rem 0 .5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .card {
+    background: linear-gradient(180deg, var(--surface-2) 0%, color-mix(in srgb, var(--surface-2) 90%, var(--surface) 10%) 100%);
+    border: 1px solid var(--rule-bright);
+    border-top: 3px solid var(--flag);
+    border-radius: 4px;
+    padding: 1.2rem 1.3rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.45);
+  }
+  .card__num {
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--flag);
+    font-weight: 600;
+  }
+  .card__title {
+    font-family: var(--display);
+    font-size: 1.08rem;
+    line-height: 1.32;
+    color: var(--ink-1);
+    margin: 0;
+    font-weight: 480;
+    letter-spacing: -.005em;
+    font-variation-settings: "opsz" 24;
+  }
+  .card__code {
+    display: block;
+    font-family: var(--mono);
+    font-size: .8rem;
+    background: var(--surface);
+    padding: .6rem .75rem;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+    color: var(--ink-1);
+    word-break: break-word;
+    line-height: 1.5;
+  }
+  .card__note {
+    font-family: var(--body);
+    font-size: .92rem;
+    color: var(--ink-2);
+    margin: 0;
+    font-style: italic;
+    line-height: 1.55;
+  }
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ==============================================================
+     COI VERBATIM QUOTE (Point 07)
+     ============================================================== */
+  .coi-quote {
+    background: linear-gradient(180deg, var(--surface-2) 0%, color-mix(in srgb, var(--surface-2) 90%, var(--surface) 10%) 100%);
+    border: 1px solid var(--rule-bright);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 1.4rem 1.6rem 1.5rem;
+    margin: 1.6rem 0 .5rem;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.45);
+  }
+  .coi-quote__label {
+    font-family: var(--mono);
+    font-size: .62rem;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .7rem;
+    font-weight: 600;
+  }
+  .coi-quote__text {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 1.06rem;
+    line-height: 1.55;
+    color: var(--ink-1);
+    margin: 0 0 .7rem;
+  }
+  .coi-quote__source {
+    font-family: var(--mono);
+    font-size: .7rem;
+    color: var(--ink-3);
+    margin: 0;
+    letter-spacing: .04em;
+  }
+
+  /* ==============================================================
+     CLOSING
+     ============================================================== */
+  .closing {
+    margin-top: 1.6rem;
+    padding: clamp(2.6rem, 7vh, 4.5rem) 0 clamp(2.4rem, 6vh, 4rem);
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+  .closing::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4rem;
+    height: 1px;
+    background: var(--accent);
+  }
+  .closing h2 {
+    font-family: var(--display);
+    font-weight: 360;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    line-height: 1.05;
+    margin: 0 0 1.4rem;
+    letter-spacing: -.022em;
+    max-width: 22ch;
+    color: var(--ink-1);
+    font-variation-settings: "opsz" 96;
+  }
+  .closing h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .closing p {
+    font-family: var(--body);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin: 0 0 1rem;
+    max-width: 54ch;
+  }
+  .closing p:last-child { margin-bottom: 0; }
+  .closing p strong { color: var(--ink-1); font-weight: 500; }
+  .closing p em { color: var(--flag); font-style: italic; }
+
+  /* ==============================================================
+     COLOPHON
+     ============================================================== */
+  .colophon {
+    padding: 2rem 0 3rem;
+    border-top: 1px solid var(--rule);
+  }
+  .colophon p {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--ink-3);
+    line-height: 1.7;
+    margin: 0 0 .35rem;
+    max-width: 60ch;
+    letter-spacing: .02em;
+  }
+  .colophon p a {
+    color: var(--ink-3);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: color .2s, border-color .2s;
+  }
+  .colophon p a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .colophon p strong {
+    color: var(--ink-1);
+    font-weight: 500;
+  }
+
+  /* ANIMATIONS */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .finding { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 600px) {
+    .finding__numeral { left: -.2rem; top: -2.2rem; opacity: 0.16; }
+    .finding__plain { font-size: 1.04rem; }
+    .viz { padding: 1.3rem 1.1rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ========== EYEBROW STRIP — minimal ========== -->
+  <header class="strip">
+    <span class="strip__left">Critical appraisal · Patellar tendinopathy</span>
+    <span class="strip__right">May 2026</span>
+  </header>
+
+  <!-- ========== STICKY MINI-NAV ========== -->
+  <nav class="navstrip" aria-label="Section navigation">
+    <a class="navstrip__link" data-num="01" href="#sec01">Literature</a>
+    <a class="navstrip__link" data-num="02" href="#sec02">Sessions</a>
+    <a class="navstrip__link" data-num="03" href="#sec03">Drift</a>
+    <a class="navstrip__link" data-num="04" href="#sec04">Imbalance</a>
+    <a class="navstrip__link" data-num="05" href="#sec05">Effect size</a>
+    <a class="navstrip__link" data-num="06" href="#sec06">Arithmetic</a>
+    <a class="navstrip__link" data-num="07" href="#sec07">Disclosure</a>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero__overline">Methodological close-read</div>
+
+    <h1 class="hero__title">
+      Reading<br>
+      between the <em>lines.</em>
+    </h1>
+
+    <p class="hero__deck">
+      A 2025 randomised trial reports a striking advantage for Fascial
+      Manipulation® over eccentric training in patellar tendinopathy.
+      Read alongside the literature it sits in — and against its own
+      public pre-registration — the same trial tells a more complicated
+      story.
+    </p>
+
+    <div class="hero__paper">
+      <div class="hero__paper__label">The paper under review</div>
+      <p class="hero__paper__title">
+        Effectiveness of Fascial Manipulation® versus eccentric training
+        with static stretching on patellar tendinopathy — a randomised
+        clinical trial.
+      </p>
+      <p class="hero__paper__meta">
+        CTRI/2019/08/020643 &nbsp;·&nbsp; n = 88 &nbsp;·&nbsp; parallel RCT &nbsp;·&nbsp;
+        <a href="https://pubmed.ncbi.nlm.nih.gov/41316610/" target="_blank" rel="noopener">PubMed 41316610</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== INTRO ========== -->
+  <section class="intro col">
+    <p>
+      Pre-registration is a public commitment: who will be studied, how
+      they will be treated, and how success will be measured. Before any
+      of that, though, every trial sits in a literature — and that
+      literature shapes how its results should be read. Seven points,
+      starting with the world this paper lives in. Each closes with what
+      it means for a clinician reading critically.
+    </p>
+  </section>
+
+  <!-- ========== FINDINGS ========== -->
+  <main class="findings">
+
+    <!-- ============================================================
+         01 — LITERATURE CONCENTRATION
+         ============================================================ -->
+    <article class="finding finding--wide" id="sec01">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">01</div>
+        <span class="finding__tag">The literature this paper sits in</span>
+        <h2 class="finding__title">A small literature, dominated by one network.</h2>
+
+        <p class="finding__plain">
+          The entire PubMed-indexed literature on Fascial Manipulation®
+          contains 73 papers across 17 years. That is a thin evidence
+          base for a globally marketed, trademarked manual-therapy method,
+          and it is concentrated in a way that should change how a
+          clinician reads any single paper inside it — including this one.
+        </p>
+
+        <div class="stat-panel" aria-label="Headline statistics about the literature">
+          <div class="stat-panel__cell">
+            <div class="stat-panel__num">73</div>
+            <div class="stat-panel__label">Papers in PubMed<br>2009–2026</div>
+          </div>
+          <div class="stat-panel__cell">
+            <div class="stat-panel__num gold">49<sup>%</sup></div>
+            <div class="stat-panel__label">Co-authored by an<br>insider author</div>
+          </div>
+          <div class="stat-panel__cell">
+            <div class="stat-panel__num gold">36<sup>%</sup></div>
+            <div class="stat-panel__label">Published in a single<br>specialty journal</div>
+          </div>
+        </div>
+
+        <figure class="viz">
+          <div class="viz__head">
+            <div class="viz__eyebrow">Visualisation · authorship concentration</div>
+            <h3 class="viz__title">73 papers. <strong>36</strong> co-authored by the same network.</h3>
+            <p class="viz__caption">
+              Each dot is one PubMed-indexed paper on Fascial
+              Manipulation® (search: "fascial manipulation" OR "fascia
+              manipulation" in title/abstract; 2009–2026). Filled dots
+              are co-authored by at least one author from the network
+              that invented and licenses the method (any Stecco, plus
+              long-time FM-school collaborators).
+            </p>
+          </div>
+
+          <div class="viz__svg-wrap">
+            <svg viewBox="0 0 540 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="73-dot grid showing 36 insider papers as filled amber dots and 37 independent papers as ring outlines">
+              <!-- 10 columns x 8 rows = 80 cells, 73 used, sorted insider first
+                   cell width 50, dot center offset 25, radius 9 -->
+              <!-- Row 1: 10 insider dots -->
+              <circle cx="25"  cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="75"  cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="125" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="175" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="225" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="275" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="325" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="375" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="425" cy="20" r="9" fill="#E8B36A"/>
+              <circle cx="475" cy="20" r="9" fill="#E8B36A"/>
+              <!-- Row 2: 10 insider -->
+              <circle cx="25"  cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="75"  cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="125" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="175" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="225" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="275" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="325" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="375" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="425" cy="50" r="9" fill="#E8B36A"/>
+              <circle cx="475" cy="50" r="9" fill="#E8B36A"/>
+              <!-- Row 3: 10 insider -->
+              <circle cx="25"  cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="75"  cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="125" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="175" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="225" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="275" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="325" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="375" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="425" cy="80" r="9" fill="#E8B36A"/>
+              <circle cx="475" cy="80" r="9" fill="#E8B36A"/>
+              <!-- Row 4: 6 insider then 4 independent -->
+              <circle cx="25"  cy="110" r="9" fill="#E8B36A"/>
+              <circle cx="75"  cy="110" r="9" fill="#E8B36A"/>
+              <circle cx="125" cy="110" r="9" fill="#E8B36A"/>
+              <circle cx="175" cy="110" r="9" fill="#E8B36A"/>
+              <circle cx="225" cy="110" r="9" fill="#E8B36A"/>
+              <circle cx="275" cy="110" r="9" fill="#E8B36A"/>
+              <circle cx="325" cy="110" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="375" cy="110" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="425" cy="110" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="475" cy="110" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <!-- Row 5: 10 independent -->
+              <circle cx="25"  cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="75"  cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="125" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="175" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="225" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="275" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="325" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="375" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="425" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="475" cy="140" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <!-- Row 6: 10 independent -->
+              <circle cx="25"  cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="75"  cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="125" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="175" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="225" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="275" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="325" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="375" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="425" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="475" cy="170" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <!-- Row 7: 10 independent -->
+              <circle cx="25"  cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="75"  cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="125" cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="175" cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="225" cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="275" cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="325" cy="200" r="8.4" fill="none" stroke="#A9B4C4" stroke-width="1.2" opacity="0.7"/>
+              <!-- Row 7 last 3 cells empty (73 dots placed) -->
+            </svg>
+          </div>
+
+          <div class="viz__legend">
+            <div class="viz__legend-item">
+              <span class="viz__legend-swatch viz__legend-swatch--dot"></span>
+              <span>Network-authored — 36 papers (49%)</span>
+            </div>
+            <div class="viz__legend-item">
+              <span class="viz__legend-swatch viz__legend-swatch--ring"></span>
+              <span>Independent — 37 papers (51%)</span>
+            </div>
+          </div>
+        </figure>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            When roughly half the literature on a proprietary, trademarked
+            technique is co-authored by the same group that invented and
+            licenses it, you have a structural conflict of interest no
+            individual disclosure statement can fix. Independent
+            replication should be the dominant mode by year seventeen;
+            here it is the minority mode.
+          </p>
+          <p>
+            Most trials are also delivered by therapists certified inside
+            the same school whose theoretical model is being tested,
+            making allegiance and expectancy effects plausible across the
+            whole evidence base. The paper we are about to examine is one
+            square in this grid.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============================================================
+         02 — SESSIONS PER ARM (patient-stripe density)
+         ============================================================ -->
+    <article class="finding" id="sec02">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">02</div>
+        <span class="finding__tag">Headline conclusion</span>
+        <h2 class="finding__title">The two arms were not given comparable treatment packages.</h2>
+
+        <p class="finding__plain">
+          The paper concludes that Fascial Manipulation® is superior on
+          number of treatment sessions and on patient satisfaction. But
+          this is not a clean comparison of two equivalent packages. The
+          eccentric-training arm received a fixed programme of five
+          sessions per week for four weeks. The Fascial Manipulation®
+          arm received individualised treatment, between one and four
+          sessions, with treatment ending when the therapist judged that
+          pain and densification had resolved and movement was pain-free.
+        </p>
+
+        <figure class="viz">
+          <div class="viz__head">
+            <div class="viz__eyebrow">Visualisation · patient-stripe density</div>
+            <h3 class="viz__title">Each line is one patient's exposure. <em>The asymmetry is the message.</em></h3>
+            <p class="viz__caption">
+              One horizontal stripe per patient, length proportional to
+              sessions completed. The FM arm (top) is mostly empty space
+              because most patients exit after one or two sessions. The
+              ET arm (bottom) is a solid block because every patient
+              receives all twenty sessions.
+              <em>* Two ET patients withdrew before completing — the bottom panel shows 42 of 44.</em>
+            </p>
+          </div>
+
+          <div class="viz__svg-wrap">
+            <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two stacked panels of horizontal patient stripes. FM panel on top is mostly empty space with a small comb of short stripes at the left. ET panel on bottom is a solid block of long stripes reaching to session 20.">
+              <!-- Plot:
+                   x: 60 → 540 (480px) for sessions 0..22 → ~21.82 px / session
+                   FM panel: stripes y=44..216 (44 stripes, 4px row, gap 1px → 3px stripe)
+                   ET panel: stripes y=292..456 (42 stripes, 4px row → 3px stripe)
+                   Y-axis spine: x=60 -->
+
+              <!-- ===== Y-AXIS SPINE ===== -->
+              <line x1="60" y1="44"  x2="60" y2="220" stroke="#A9B4C4" stroke-width="1"/>
+              <line x1="60" y1="292" x2="60" y2="460" stroke="#A9B4C4" stroke-width="1"/>
+              <!-- Y-axis brackets/counts (left of spine) -->
+              <text x="52" y="48"  class="lbl-axis" text-anchor="end" fill="#E8B36A">n=44</text>
+              <text x="52" y="220" class="lbl-axis" text-anchor="end">↓</text>
+              <text x="52" y="296" class="lbl-axis" text-anchor="end" fill="#7BA8C5">n=42</text>
+              <text x="52" y="460" class="lbl-axis" text-anchor="end">↓</text>
+
+              <!-- ===== FM PANEL HEADER ===== -->
+              <text x="74" y="22" class="lbl-strong" fill="#E8B36A">FM arm</text>
+              <text x="74" y="36" class="lbl-anno">individualised stop-rule · one stripe = one patient</text>
+              <text x="540" y="22" class="lbl-mono" text-anchor="end">sorted by sessions, longest first</text>
+
+              <!-- 2 stripes of length 4 (87.27 px) -->
+              <rect x="60" y="44" width="87.27" height="3" fill="#E8B36A"/>
+              <rect x="60" y="48" width="87.27" height="3" fill="#E8B36A"/>
+              <!-- 2 stripes of length 3 (65.45 px) -->
+              <rect x="60" y="52" width="65.45" height="3" fill="#E8B36A"/>
+              <rect x="60" y="56" width="65.45" height="3" fill="#E8B36A"/>
+              <!-- 19 stripes of length 2 (43.64 px) — y=60 .. y=132 -->
+              <rect x="60" y="60"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="64"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="68"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="72"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="76"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="80"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="84"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="88"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="92"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="96"  width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="100" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="104" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="108" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="112" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="116" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="120" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="124" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="128" width="43.64" height="3" fill="#E8B36A"/>
+              <rect x="60" y="132" width="43.64" height="3" fill="#E8B36A"/>
+              <!-- 21 stripes of length 1 (21.82 px) — y=136 .. y=216 -->
+              <rect x="60" y="136" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="140" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="144" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="148" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="152" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="156" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="160" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="164" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="168" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="172" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="176" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="180" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="184" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="188" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="192" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="196" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="200" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="204" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="208" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="212" width="21.82" height="3" fill="#E8B36A"/>
+              <rect x="60" y="216" width="21.82" height="3" fill="#E8B36A"/>
+
+              <!-- FM annotation: median is "1 session" -->
+              <text x="170" y="180" class="lbl-anno" fill="#A9B4C4">half the arm finishes after one session</text>
+              <line x1="166" y1="176" x2="90" y2="170" stroke="#A9B4C4" stroke-width="1" stroke-dasharray="2,2" opacity="0.5"/>
+
+              <!-- Divider rule between panels -->
+              <line x1="0" y1="252" x2="600" y2="252" stroke="#34435E" stroke-width="1"/>
+
+              <!-- ===== ET PANEL HEADER ===== -->
+              <text x="74" y="274" class="lbl-strong" fill="#7BA8C5">ET arm</text>
+              <text x="74" y="288" class="lbl-anno">fixed 20-session protocol · 42 of 44 completed</text>
+
+              <!-- 42 stripes of length 20 (436.36 px) — y=292 .. y=456 -->
+              <g fill="#7BA8C5">
+                <rect x="60" y="292" width="436.36" height="3"/>
+                <rect x="60" y="296" width="436.36" height="3"/>
+                <rect x="60" y="300" width="436.36" height="3"/>
+                <rect x="60" y="304" width="436.36" height="3"/>
+                <rect x="60" y="308" width="436.36" height="3"/>
+                <rect x="60" y="312" width="436.36" height="3"/>
+                <rect x="60" y="316" width="436.36" height="3"/>
+                <rect x="60" y="320" width="436.36" height="3"/>
+                <rect x="60" y="324" width="436.36" height="3"/>
+                <rect x="60" y="328" width="436.36" height="3"/>
+                <rect x="60" y="332" width="436.36" height="3"/>
+                <rect x="60" y="336" width="436.36" height="3"/>
+                <rect x="60" y="340" width="436.36" height="3"/>
+                <rect x="60" y="344" width="436.36" height="3"/>
+                <rect x="60" y="348" width="436.36" height="3"/>
+                <rect x="60" y="352" width="436.36" height="3"/>
+                <rect x="60" y="356" width="436.36" height="3"/>
+                <rect x="60" y="360" width="436.36" height="3"/>
+                <rect x="60" y="364" width="436.36" height="3"/>
+                <rect x="60" y="368" width="436.36" height="3"/>
+                <rect x="60" y="372" width="436.36" height="3"/>
+                <rect x="60" y="376" width="436.36" height="3"/>
+                <rect x="60" y="380" width="436.36" height="3"/>
+                <rect x="60" y="384" width="436.36" height="3"/>
+                <rect x="60" y="388" width="436.36" height="3"/>
+                <rect x="60" y="392" width="436.36" height="3"/>
+                <rect x="60" y="396" width="436.36" height="3"/>
+                <rect x="60" y="400" width="436.36" height="3"/>
+                <rect x="60" y="404" width="436.36" height="3"/>
+                <rect x="60" y="408" width="436.36" height="3"/>
+                <rect x="60" y="412" width="436.36" height="3"/>
+                <rect x="60" y="416" width="436.36" height="3"/>
+                <rect x="60" y="420" width="436.36" height="3"/>
+                <rect x="60" y="424" width="436.36" height="3"/>
+                <rect x="60" y="428" width="436.36" height="3"/>
+                <rect x="60" y="432" width="436.36" height="3"/>
+                <rect x="60" y="436" width="436.36" height="3"/>
+                <rect x="60" y="440" width="436.36" height="3"/>
+                <rect x="60" y="444" width="436.36" height="3"/>
+                <rect x="60" y="448" width="436.36" height="3"/>
+                <rect x="60" y="452" width="436.36" height="3"/>
+                <rect x="60" y="456" width="436.36" height="3"/>
+              </g>
+
+              <!-- ===== X-AXIS ===== -->
+              <line x1="60" y1="468" x2="540" y2="468" stroke="#A9B4C4" stroke-width="1"/>
+              <line x1="60"    y1="468" x2="60"    y2="473" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="81.8"  y1="468" x2="81.8"  y2="473" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="169.1" y1="468" x2="169.1" y2="473" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="278.2" y1="468" x2="278.2" y2="473" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="387.3" y1="468" x2="387.3" y2="473" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="496.4" y1="468" x2="496.4" y2="473" stroke="#6E7B8E" stroke-width="1"/>
+
+              <text x="60"    y="484" class="lbl-axis" text-anchor="start">0</text>
+              <text x="81.8"  y="484" class="lbl-axis" text-anchor="middle">1</text>
+              <text x="169.1" y="484" class="lbl-axis" text-anchor="middle">5</text>
+              <text x="278.2" y="484" class="lbl-axis" text-anchor="middle">10</text>
+              <text x="387.3" y="484" class="lbl-axis" text-anchor="middle">15</text>
+              <text x="496.4" y="484" class="lbl-axis" text-anchor="middle">20</text>
+              <text x="300" y="497" class="lbl-anno" text-anchor="middle">session number</text>
+            </svg>
+          </div>
+
+          <div class="viz__legend">
+            <div class="viz__legend-item">
+              <span class="viz__legend-swatch viz__legend-swatch--accent"></span>
+              <span>FM arm — 44 patients, 1–4 sessions</span>
+            </div>
+            <div class="viz__legend-item">
+              <span class="viz__legend-swatch viz__legend-swatch--cool"></span>
+              <span>ET arm — 42 completed × 20 sessions</span>
+            </div>
+          </div>
+        </figure>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            When one treatment stops the moment the patient improves and
+            the other continues for twenty sessions regardless, of course
+            the first will "require fewer sessions" — that is a property
+            of the design, not the technique. And when one hour of
+            individualised hands-on care is compared with a repetitive
+            squat exercise, "higher satisfaction" is the predictable
+            outcome. The two headline conclusions of the paper are decided
+            in advance by the methodology.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============================================================
+         03 — PROTOCOL DRIFT
+         ============================================================ -->
+    <article class="finding" id="sec03">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">03</div>
+        <span class="finding__tag">Protocol drift</span>
+        <h2 class="finding__title">The published trial is not the trial that was registered.</h2>
+
+        <p class="finding__plain">
+          The eligibility criteria, the exclusion list, the age range, the
+          minimum symptom duration, and the dose of the intervention all
+          changed between the public pre-registration and the published
+          paper. None of these changes is flagged as a protocol amendment.
+        </p>
+
+        <figure class="viz">
+          <div class="viz__head">
+            <div class="viz__eyebrow">Visualisation · what changed</div>
+            <h3 class="viz__title">Pre-registered, then quietly adjusted.</h3>
+            <p class="viz__caption">
+              The public CTRI registration on the left, the paper as
+              published on the right. Amber-tinted cells were added or
+              specified from blank; coral-tinted cells were dropped or
+              replaced.
+            </p>
+          </div>
+
+          <table class="diff-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Pre-registered (CTRI, 2019)</th>
+                <th>Published (paper)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Population</th>
+                <td>Volleyball, basketball, soccer, runners — regional, state, national, collegiate, and recreational levels</td>
+                <td class="changed--add" data-label="Published">Sports clubs, gyms, and physiotherapy outpatients — added badminton and gym weight-training, plus 6 non-athletes</td>
+              </tr>
+              <tr>
+                <th>Exclusions</th>
+                <td>Nine items: PFPS, fat-pad, Osgood-Schlatter, Sinding-Larsen-Johansson, bursitis, quadriceps tendinopathy, plus prior pelvis/leg fracture, prior leg surgery, and acute lower-limb injury</td>
+                <td class="changed--replace" data-label="Published">Replaced with five different items: acute knee inflammation, recent corticosteroid injection, patellar tendon rupture, rheumatic disease, "other lower-extremity injuries" — the named conditions were dropped</td>
+              </tr>
+              <tr>
+                <th>Age range</th>
+                <td class="empty">Not specified</td>
+                <td class="changed--add" data-label="Published">18–35 years</td>
+              </tr>
+              <tr>
+                <th>Symptom duration</th>
+                <td class="empty">Not specified</td>
+                <td class="changed--add" data-label="Published">≥ 6 weeks</td>
+              </tr>
+              <tr>
+                <th>FM dose</th>
+                <td>4 sessions in 1 week (fixed)</td>
+                <td class="changed--replace" data-label="Published">1–4 sessions, ended at therapist's judgement</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            Pre-registration exists to prevent the question from being
+            tailored to the answer. When the protocol shifts quietly, we
+            as readers lose the ability to know whether the finding is
+            what the trial set out to test or what was discovered
+            afterwards.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============================================================
+         04 — BASELINE IMBALANCE (forest plot of SMDs)
+         ============================================================ -->
+    <article class="finding" id="sec04">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">04</div>
+        <span class="finding__tag">Baseline imbalance</span>
+        <h2 class="finding__title">Randomisation produced groups that were <em>not</em> comparable.</h2>
+
+        <p class="finding__plain">
+          Despite random allocation, the two groups began the trial in
+          significantly different states on three of the four outcome
+          scales — VISA-P, pressure-pain threshold, and tendon thickness.
+          Only the NPRS pain score was balanced. The standard analytic
+          correction for the imbalance — adjusting for baseline values —
+          was not applied.
+        </p>
+
+        <figure class="viz">
+          <div class="viz__head">
+            <div class="viz__eyebrow">Visualisation · standardised baseline differences</div>
+            <h3 class="viz__title">Three of four outcomes start unequal — one of them by nearly <em>two</em> standard deviations.</h3>
+            <p class="viz__caption">
+              Standardised mean difference (SMD) at baseline, FM minus
+              ET, computed from the means and SDs in the paper. Zero
+              means perfect balance. Conventional thresholds for "small,"
+              "medium," and "large" differences are marked at ±0.2,
+              ±0.5, and ±0.8.
+            </p>
+          </div>
+
+          <div class="viz__svg-wrap">
+            <svg viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Forest plot of standardised baseline differences. NPRS at zero is sage and balanced. VISA-P, PPT, and tendon thickness all sit in the negative range and are coloured coral.">
+              <!-- x-axis: SMD from -2.0 to +0.5; x: 80→540 (460px) → 184px per SMD unit; zero at x=448 -->
+
+              <!-- Threshold gridlines (subtle) -->
+              <line x1="411.2" y1="40" x2="411.2" y2="240" stroke="#34435E" stroke-width="1" stroke-dasharray="2,3"/>
+              <line x1="356"   y1="40" x2="356"   y2="240" stroke="#34435E" stroke-width="1" stroke-dasharray="2,3"/>
+              <line x1="300.8" y1="40" x2="300.8" y2="240" stroke="#34435E" stroke-width="1" stroke-dasharray="2,3"/>
+              <line x1="484.8" y1="40" x2="484.8" y2="240" stroke="#34435E" stroke-width="1" stroke-dasharray="2,3"/>
+
+              <!-- Zero reference line (the equality line) -->
+              <line x1="448" y1="40" x2="448" y2="240" stroke="#E8ECF1" stroke-width="1.5"/>
+
+              <!-- Threshold labels — amber, top of plot -->
+              <text x="300.8" y="32" class="lbl-axis" text-anchor="middle" fill="#E8B36A">−0.8</text>
+              <text x="356"   y="32" class="lbl-axis" text-anchor="middle" fill="#E8B36A">−0.5</text>
+              <text x="411.2" y="32" class="lbl-axis" text-anchor="middle" fill="#E8B36A">−0.2</text>
+              <text x="484.8" y="32" class="lbl-axis" text-anchor="middle" fill="#E8B36A">+0.2</text>
+
+              <!-- X-axis -->
+              <line x1="80" y1="240" x2="540" y2="240" stroke="#A9B4C4" stroke-width="1.5"/>
+
+              <!-- Below-axis labels -->
+              <text x="80"  y="258" class="lbl-axis" text-anchor="start">−2.0</text>
+              <text x="448" y="258" class="lbl-axis" text-anchor="middle" fill="#E8ECF1" font-weight="500">0</text>
+              <text x="540" y="258" class="lbl-axis" text-anchor="end">+0.5</text>
+              <text x="300" y="272" class="lbl-anno" text-anchor="middle">standardised baseline difference (FM − ET)</text>
+
+              <!-- Row 1: VISA-P at SMD = -0.79 → x = 302.6 -->
+              <text x="74" y="64" class="lbl-strong" text-anchor="end">VISA-P</text>
+              <line x1="302.6" y1="60" x2="448" y2="60" stroke="#E5755C" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+              <circle cx="302.6" cy="60" r="6" fill="#E5755C"/>
+              <text x="296" y="64" class="lbl-num-warn" text-anchor="end">−0.79</text>
+              <text x="554" y="64" class="lbl-num-warn" text-anchor="end">p&lt;.001</text>
+
+              <!-- Row 2: NPRS at SMD ~ 0 -->
+              <text x="74" y="114" class="lbl-strong" text-anchor="end">NPRS</text>
+              <circle cx="448" cy="110" r="6" fill="#7DB89D"/>
+              <text x="442" y="114" class="lbl-num-ok" text-anchor="end">0.00</text>
+              <text x="554" y="114" class="lbl-num-ok" text-anchor="end">p=.445</text>
+
+              <!-- Row 3: PPT at SMD = -1.82 → x = 113.1 -->
+              <text x="74" y="164" class="lbl-strong" text-anchor="end">PPT</text>
+              <line x1="113.1" y1="160" x2="448" y2="160" stroke="#E5755C" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+              <circle cx="113.1" cy="160" r="6" fill="#E5755C"/>
+              <text x="106" y="164" class="lbl-num-warn" text-anchor="end">−1.82</text>
+              <text x="554" y="164" class="lbl-num-warn" text-anchor="end">p&lt;.001</text>
+
+              <!-- Row 4: Tendon at SMD = -1.0 → x = 264 -->
+              <text x="74" y="214" class="lbl-strong" text-anchor="end">tendon</text>
+              <line x1="264" y1="210" x2="448" y2="210" stroke="#E5755C" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+              <circle cx="264" cy="210" r="6" fill="#E5755C"/>
+              <text x="258" y="214" class="lbl-num-warn" text-anchor="end">−1.00</text>
+              <text x="554" y="214" class="lbl-num-warn" text-anchor="end">p=.019</text>
+            </svg>
+          </div>
+
+          <div class="viz__legend">
+            <div class="viz__legend-item">
+              <span class="viz__legend-swatch viz__legend-swatch--flag"></span>
+              <span>Imbalanced (p &lt; .05)</span>
+            </div>
+            <div class="viz__legend-item">
+              <span class="viz__legend-swatch viz__legend-swatch--ok"></span>
+              <span>Balanced</span>
+            </div>
+          </div>
+        </figure>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            A group starting from a different baseline has more or less
+            room to move on the outcome scale, and the comparison between
+            groups is biased accordingly. This isn't merely a statistical
+            issue — it directly distorts the size of the effect we read
+            in the tables.
+          </p>
+        </div>
+
+        <section class="finding__notes">
+          <div class="finding__notes__label">Evidence</div>
+          <div class="finding__notes__body">
+            <p>
+              Despite block randomisation with sealed opaque envelopes,
+              the two arms differed substantially before any treatment was
+              given. The authors cite Bland &amp; Altman to argue that
+              baseline <em>p</em>-values shouldn't matter in a randomised
+              trial. The argument is correct in principle — and exactly
+              why the imbalance here is uncomfortable. With groups this
+              far apart at the start, the appropriate analysis is
+              <strong>ANCOVA with baseline as a covariate</strong>, which
+              absorbs the imbalance into the model. The paper instead
+              compares post-treatment means and change scores, which are
+              the most sensitive to it.
+            </p>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <!-- ============================================================
+         05 — EFFECT SIZE
+         ============================================================ -->
+    <article class="finding" id="sec05">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">05</div>
+        <span class="finding__tag">Effect size</span>
+        <h2 class="finding__title">The reported effect size is too large to be real.</h2>
+
+        <p class="finding__plain">
+          The authors report a Cohen's <em>d</em> of
+          <code style="font-family:var(--mono); font-size:.85em; background:var(--flag-tint); padding:.08em .42em; border-radius:2px; color:var(--flag); font-weight:500; border:1px solid rgba(229,117,92,0.35)">7.2</code>
+          for pain reduction. For context, a <em>d</em> of <code style="font-family:var(--mono); font-size:.85em; background:var(--surface-3); padding:.08em .42em; border-radius:2px; border:1px solid var(--rule); color:var(--ink-1)">0.8</code>
+          is conventionally considered large. A number this size is not
+          seen in clinical trials of physiotherapy interventions, and
+          likely indicates that the formula was applied with the wrong
+          denominator.
+        </p>
+
+        <figure class="viz">
+          <div class="viz__head">
+            <div class="viz__eyebrow">Visualisation · effect-size scale</div>
+            <h3 class="viz__title"><em>9×</em> the conventional "large" threshold.</h3>
+            <p class="viz__caption">
+              Where the reported effect sizes fall on the Cohen's
+              <em>d</em> scale. The conventional small / medium / large
+              thresholds occupy the amber-shaded zone at the left;
+              physiotherapy RCTs typically report effect sizes in this
+              range. The two values in this paper sit far to the right.
+            </p>
+          </div>
+
+          <div class="viz__svg-wrap">
+            <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Effect size scale on a Cohen's d axis from 0 to 8. Conventional zone 0 to 0.8 highlighted in amber at left. Two outliers in coral at d equals 3.8 and d equals 7.2 sit far to the right.">
+              <!-- d-axis: 0..8, x: 60..560 (500px) → 62.5px per unit -->
+
+              <!-- Conventional amber zone (0 to 0.8) -->
+              <rect x="60" y="100" width="50" height="40" fill="#E8B36A" opacity="0.18"/>
+
+              <!-- Stylised density curve under the conventional zone — typical PT effect mass clusters near 0.5 -->
+              <path d="M60,140 Q72,138 80,135 Q92,128 100,124 Q108,118 115,120 Q120,124 125,128 Q135,132 145,134 Q160,135 175,136 Q200,137 230,138 Q260,138.5 300,139 Q360,139.5 420,140 L560,140 L560,140 L60,140 Z" fill="#E8B36A" opacity="0.10"/>
+              <path d="M60,140 Q72,138 80,135 Q92,128 100,124 Q108,118 115,120 Q120,124 125,128 Q135,132 145,134 Q160,135 175,136 Q200,137 230,138 Q260,138.5 300,139 Q360,139.5 420,140 L560,140" fill="none" stroke="#E8B36A" stroke-width="1" opacity="0.4"/>
+
+              <!-- Axis baseline -->
+              <line x1="60" y1="140" x2="560" y2="140" stroke="#A9B4C4" stroke-width="1.5"/>
+
+              <!-- Major ticks -->
+              <line x1="60"    y1="136" x2="60"    y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="122.5" y1="136" x2="122.5" y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="185"   y1="136" x2="185"   y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="247.5" y1="136" x2="247.5" y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="310"   y1="136" x2="310"   y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="372.5" y1="136" x2="372.5" y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="435"   y1="136" x2="435"   y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="497.5" y1="136" x2="497.5" y2="144" stroke="#6E7B8E" stroke-width="1"/>
+              <line x1="560"   y1="136" x2="560"   y2="144" stroke="#6E7B8E" stroke-width="1"/>
+
+              <text x="60"    y="158" class="lbl-axis" text-anchor="middle">0</text>
+              <text x="122.5" y="158" class="lbl-axis" text-anchor="middle">1</text>
+              <text x="185"   y="158" class="lbl-axis" text-anchor="middle">2</text>
+              <text x="247.5" y="158" class="lbl-axis" text-anchor="middle">3</text>
+              <text x="310"   y="158" class="lbl-axis" text-anchor="middle">4</text>
+              <text x="372.5" y="158" class="lbl-axis" text-anchor="middle">5</text>
+              <text x="435"   y="158" class="lbl-axis" text-anchor="middle">6</text>
+              <text x="497.5" y="158" class="lbl-axis" text-anchor="middle">7</text>
+              <text x="560"   y="158" class="lbl-axis" text-anchor="middle">8</text>
+              <text x="310"   y="174" class="lbl-anno" text-anchor="middle">Cohen's d</text>
+
+              <!-- Threshold ticks inside amber zone -->
+              <line x1="72.5" y1="100" x2="72.5" y2="110" stroke="#E8B36A" stroke-width="1.5"/>
+              <line x1="91.25" y1="100" x2="91.25" y2="110" stroke="#E8B36A" stroke-width="1.5"/>
+              <line x1="110" y1="100" x2="110" y2="110" stroke="#E8B36A" stroke-width="1.5"/>
+
+              <text x="72.5"  y="92" class="lbl-axis" text-anchor="middle" fill="#E8B36A">.2</text>
+              <text x="91.25" y="92" class="lbl-axis" text-anchor="middle" fill="#E8B36A">.5</text>
+              <text x="110"   y="92" class="lbl-axis" text-anchor="middle" fill="#E8B36A">.8</text>
+
+              <!-- Conventional zone label, anchored start at x=60 -->
+              <text x="60" y="200" class="lbl-strong" text-anchor="start">Conventional clinical zone</text>
+              <text x="60" y="216" class="lbl-anno" text-anchor="start">0 ≤ d ≤ 0.8 — small / medium / large</text>
+              <text x="60" y="232" class="lbl-anno" text-anchor="start">where physiotherapy effects normally live</text>
+
+              <!-- Outlier markers -->
+              <line x1="297.5" y1="118" x2="297.5" y2="162" stroke="#E5755C" stroke-width="2"/>
+              <circle cx="297.5" cy="140" r="6" fill="#E5755C"/>
+              <text x="297.5" y="106" class="lbl-num-warn" text-anchor="middle">d = 3.8</text>
+              <text x="297.5" y="94" class="lbl-axis" text-anchor="middle" fill="#E5755C">VISA-P</text>
+
+              <line x1="510" y1="118" x2="510" y2="162" stroke="#E5755C" stroke-width="2"/>
+              <circle cx="510" cy="140" r="6" fill="#E5755C"/>
+              <text x="510" y="106" class="lbl-num-warn" text-anchor="middle">d = 7.2</text>
+              <text x="510" y="94" class="lbl-axis" text-anchor="middle" fill="#E5755C">pain</text>
+
+              <!-- Coral callout, anchored at safe x -->
+              <text x="290" y="216" class="lbl-strong" text-anchor="start" fill="#E5755C">↑ reported in this paper</text>
+              <text x="290" y="232" class="lbl-anno" text-anchor="start" fill="#E5755C">d = 7.2 is 9× the conventional "large"</text>
+            </svg>
+          </div>
+        </figure>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            If the effect size we cite is inflated several-fold, it is
+            not comparable to effect sizes elsewhere in the literature
+            and does not translate into a coherent clinical decision.
+            When the number comes out implausible, the first to be
+            sceptical should be the clinician about to apply it to their
+            patients.
+          </p>
+        </div>
+
+        <section class="finding__notes">
+          <div class="finding__notes__label">Evidence</div>
+          <div class="finding__notes__body">
+            <p>
+              Effect sizes above about <code>3</code> are unusual outside
+              comparisons of populations that barely overlap. Values in
+              this range strongly suggest the formula divided the mean
+              change by the standard deviation of the <em>change</em>,
+              rather than by the pooled standard deviation. The methods
+              do not specify which was used.
+            </p>
+            <p>
+              A separate concern points in the same direction. Across
+              the FM arm's three repeated-measures ANOVAs, the reported
+              denominator degrees of freedom imply
+              <strong>three different sample sizes</strong> within the
+              same paper — VISA-P is consistent with n ≈ 15, while NPRS
+              and PPT are consistent with n ≈ 88. The trial enrolled
+              roughly 43 per arm. These three numbers cannot all be
+              correct.
+            </p>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <!-- ============================================================
+         06 — ARITHMETIC ERRORS
+         ============================================================ -->
+    <article class="finding" id="sec06">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">06</div>
+        <span class="finding__tag">Arithmetic</span>
+        <h2 class="finding__title">Several rows in the published tables don't add up.</h2>
+
+        <p class="finding__plain">
+          The published tables contain plain numerical errors: a
+          satisfaction column that sums to over 113%, a confidence
+          interval whose upper bound is below its lower bound, a tenfold
+          asymmetry in the reported standard deviation of the same
+          ultrasound measurement, and reported loss-to-follow-up of zero
+          at twelve months — something that, as anyone working in physio
+          knows, simply doesn't happen in practice.
+        </p>
+
+        <div class="cards-grid" aria-label="Four documented arithmetic errors">
+          <article class="card">
+            <div class="card__num">Error 01</div>
+            <h4 class="card__title">A satisfaction column that sums to 113%</h4>
+            <code class="card__code">80% + 13.3% + 11.11% + 8.8% = 113.21%</code>
+            <p class="card__note">FM arm. The ET arm sums to 102.28%. Both are mathematically impossible — patients chose one option.</p>
+          </article>
+
+          <article class="card">
+            <div class="card__num">Error 02</div>
+            <h4 class="card__title">A confidence interval that runs backwards</h4>
+            <code class="card__code">0.06 (0.02 to −0.11)</code>
+            <p class="card__note">Table 5. The upper bound (−0.11) is smaller than the lower bound (0.02), and the point estimate (0.06) is outside the interval either way.</p>
+          </article>
+
+          <article class="card">
+            <div class="card__num">Error 03</div>
+            <h4 class="card__title">A tenfold SD asymmetry on the same instrument</h4>
+            <code class="card__code">FM Δ: 0.09 ± 0.20 mm  ·  ET Δ: 0.03 ± 0.02 mm</code>
+            <p class="card__note">Table 5. Same ultrasound machine, same measurement. The SD differs by 10× between groups, which is not biologically plausible for the same instrument.</p>
+          </article>
+
+          <article class="card">
+            <div class="card__num">Error 04</div>
+            <h4 class="card__title">Zero loss to follow-up at twelve months</h4>
+            <code class="card__code">Loss to follow-up: n = 0 / 44 (both arms)</code>
+            <p class="card__note">Figure 1. Exceptional retention for a year-long outpatient trial in young athletic patients — and a number worth checking against the registry.</p>
+          </article>
+        </div>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            These are errors that should have been caught in proofing —
+            by the authors, the reviewers, and the editor. When none of
+            them were caught, the probability that the rest of the paper
+            was checked carefully drops, and we are obliged to read the
+            remainder with a more cautious eye.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============================================================
+         07 — DISCLOSURE
+         ============================================================ -->
+    <article class="finding" id="sec07">
+      <div class="finding__inner">
+        <div class="finding__numeral" aria-hidden="true">07</div>
+        <span class="finding__tag">Disclosure</span>
+        <h2 class="finding__title">There is no competing-interests statement.</h2>
+
+        <p class="finding__plain">
+          One co-author is the daughter of the inventor of the technique
+          under test. The first author teaches certification courses in
+          the technique and personally delivered all of the Fascial
+          Manipulation® treatment in the trial. None of this is disclosed.
+        </p>
+
+        <aside class="coi-quote" aria-label="Verbatim competing-interests statement from the published paper">
+          <div class="coi-quote__label">Competing interests — verbatim, page 9</div>
+          <p class="coi-quote__text">
+            The authors declare that they have no known competing
+            financial interests or personal relationships that could have
+            appeared to influence the work reported in this paper.
+          </p>
+          <p class="coi-quote__source">Sannasi et al., J Bodyw Mov Ther 45 (2025) 483–492</p>
+        </aside>
+
+        <div class="finding__meaning">
+          <div class="finding__meaning__label">What this means</div>
+          <p>
+            Intellectual and institutional conflicts of interest shape
+            which questions are asked, what comparators are chosen, and
+            how conclusions are framed — no less than financial ones.
+            They do not make a finding wrong, but they are information
+            the reader is entitled to receive openly in order to see the
+            larger picture.
+          </p>
+        </div>
+
+        <section class="finding__notes">
+          <div class="finding__notes__label">Notes</div>
+          <div class="finding__notes__body">
+            <p>
+              Most journals' disclosure policies — including ICMJE —
+              explicitly include non-financial relationships of this kind.
+              The earlier supportive evidence cited in the paper's
+              introduction also originates substantially from the
+              inventor's research group. That context belongs in the
+              disclosure statement and in the reader's mental model of
+              how much external corroboration the result has.
+            </p>
+          </div>
+        </section>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ========== CLOSING ========== -->
+  <section class="closing">
+    <div class="col">
+      <h2>Both arms improved. The <em>headline</em> didn't.</h2>
+      <p>
+        The most defensible reading of this trial is not that Fascial
+        Manipulation® beats eccentric training. It is that
+        <strong>both treatments improved outcomes</strong> in young
+        athletic patients over twelve months, that the groups
+        <strong>began the trial unequal and ended it similar</strong>, and
+        that several of the numbers reporting that outcome do not survive
+        close inspection.
+      </p>
+      <p>
+        The deeper lesson is general. A small literature dominated by the
+        network that licenses its own technique cannot be checked by reading
+        one of its papers in isolation. Pre-registration is only useful
+        when reviewers and readers actually <strong>check the published
+        paper against it</strong>. The cost of doing so is an afternoon.
+        The cost of not doing so accumulates in the literature.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== COLOPHON ========== -->
+  <footer class="colophon">
+    <p>
+      <strong>About this document.</strong> A clinician-facing
+      methodological close-read of a single published RCT, set against
+      a PubMed-wide audit of the Fascial Manipulation® literature
+      (n = 73, 2009–2026) and the trial's own WHO/CTRI pre-registration.
+      Not peer-reviewed, not endorsed by any institution, and not a
+      substitute for the original paper or the registry record. Specific
+      numerical claims are derived from values reported in the published
+      paper or extracted from the PubMed-indexed corpus; interpretations
+      are the author's.
+    </p>
+    <p>
+      Source paper: <a href="https://pubmed.ncbi.nlm.nih.gov/41316610/" target="_blank" rel="noopener">PubMed 41316610</a> &nbsp;·&nbsp;
+      Pre-registration: <a href="http://www.ctri.nic.in/Clinicaltrials/pmaindet2.php?trialid=34063" target="_blank" rel="noopener">CTRI/2019/08/020643</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  /* Reveal each finding on scroll. */
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        reveal.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+
+  document.querySelectorAll('.finding').forEach(el => reveal.observe(el));
+
+  /* Scrollspy for the sticky mini-nav. */
+  const navLinks = document.querySelectorAll('.navstrip__link');
+  const sections = Array.from(navLinks).map(link => {
+    const id = link.getAttribute('href').slice(1);
+    return { link, section: document.getElementById(id) };
+  }).filter(s => s.section);
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const target = sections.find(s => s.section === e.target);
+      if (!target) return;
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        target.link.classList.add('active');
+      }
+    });
+  }, { rootMargin: "-30% 0px -60% 0px", threshold: 0 });
+
+  sections.forEach(s => spy.observe(s.section));
+</script>
+
+</body>
+</html>
