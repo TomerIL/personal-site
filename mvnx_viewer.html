@@ -408,7 +408,9 @@
       <div class="side-note">ZXY Euler angles, degrees (MVN convention). Each trace shows three components in the order
         Movella exports them: <b>AA</b> abduction/adduction, <b>IER</b> internal/external rotation, <b>FE</b> flexion/extension
         (ankle ch.3 = <b>DF/PF</b> dorsi/plantarflexion). Spine/neck use <b>LB</b> lateral bending · <b>AR</b> axial rotation · FE;
-        elbow/wrist use <b>UR</b> ulnar/radial · <b>PS</b> pronation/supination · FE.</div>
+        elbow/wrist use <b>UR</b> ulnar/radial · <b>PS</b> pronation/supination · FE. Shoulders are shown with the
+        <b>XZY</b> extraction (recommended for the glenohumeral joint). <b>*</b> toe AA/IER are interpolated — MVN measures
+        only toe flexion/extension.</div>
       <div id="panels">
         <div class="side-empty">Add a joint to plot its angle trace through the whole file.
           The moving dot tracks the current frame. Click or drag on a chart to scrub the 3D view.</div>
@@ -535,11 +537,11 @@ const COL = { left:0x2dd4bf, right:0xf5a623, axial:0x8b94a6, contact:0x34d399, c
 const side = lab => lab.startsWith('Left') ? 'left' : lab.startsWith('Right') ? 'right' : 'axial';
 const CONTACTS = new Set(['LeftFoot','LeftToe','RightFoot','RightToe']);
 
-// neutral A-pose for the idle empty-state ghost (Z-up, metres)
+// MVN calibration T-pose for the idle empty-state ghost (the iconic mocap reference pose; Z-up, metres)
 const GHOST = {
   Pelvis:[0,0,.95], L5:[0,-.01,1.04], L3:[0,-.01,1.13], T12:[0,-.005,1.22], T8:[0,0,1.33], Neck:[0,.01,1.47], Head:[0,.02,1.60],
-  RightShoulder:[-.06,0,1.42], RightUpperArm:[-.18,0,1.40], RightForeArm:[-.205,.02,1.13], RightHand:[-.215,.03,.88],
-  LeftShoulder:[.06,0,1.42], LeftUpperArm:[.18,0,1.40], LeftForeArm:[.205,.02,1.13], LeftHand:[.215,.03,.88],
+  RightShoulder:[-.06,0,1.44], RightUpperArm:[-.20,0,1.45], RightForeArm:[-.47,0,1.45], RightHand:[-.68,0,1.45],
+  LeftShoulder:[.06,0,1.44], LeftUpperArm:[.20,0,1.45], LeftForeArm:[.47,0,1.45], LeftHand:[.68,0,1.45],
   RightUpperLeg:[-.09,0,.90], RightLowerLeg:[-.10,.01,.48], RightFoot:[-.10,0,.08], RightToe:[-.10,.14,.03],
   LeftUpperLeg:[.09,0,.90], LeftLowerLeg:[.10,.01,.48], LeftFoot:[.10,0,.08], LeftToe:[.10,.14,.03]
 };
@@ -568,6 +570,9 @@ function parseMVNX(text){
   const pos = new Float32Array(nframes * nseg * 3);
   const com = new Float32Array(nframes * 3); let hasCoM = false;
   const jang = njoints ? new Float32Array(nframes * njoints * 3) : null; let hasJoints = false;
+  const jangX = njoints ? new Float32Array(nframes * njoints * 3) : null; let hasJointsX = false;  // XZY sequence (preferred for shoulders, per MVN manual §23.7.2)
+  const pIdx = label2idx['Pelvis'];                                              // pelvis orientation → facing-aware default camera
+  const pq = (pIdx!=null) ? new Float32Array(nframes * 4) : null; let hasPQ = false;
   const contacts = []; let hasContacts = false, ncontact = 0;
   for (let fi = 0; fi < nframes; fi++){
     const f = frameEls[fi];
@@ -581,7 +586,14 @@ function parseMVNX(text){
       if (ja){ const jv = ja.textContent.trim().split(/\s+/);
         if (jv.length < njoints*3) throw new Error(`Frame ${fi}: expected ${njoints*3} jointAngle values, got ${jv.length}.`);
         hasJoints = true; for (let k = 0; k < njoints*3; k++) jang[fi*njoints*3 + k] = parseFloat(jv[k]); }
+      const jx = f.getElementsByTagNameNS('*','jointAngleXZY')[0];
+      if (jx){ const xv = jx.textContent.trim().split(/\s+/);
+        if (xv.length >= njoints*3){ hasJointsX = true; for (let k = 0; k < njoints*3; k++) jangX[fi*njoints*3 + k] = parseFloat(xv[k]); } }
     }
+    if (pq){ const or = f.getElementsByTagNameNS('*','orientation')[0];
+      if (or){ const ov = or.textContent.trim().split(/\s+/);
+        if (ov.length >= (pIdx+1)*4){ hasPQ = true; const o = pIdx*4;
+          pq[fi*4]=parseFloat(ov[o]); pq[fi*4+1]=parseFloat(ov[o+1]); pq[fi*4+2]=parseFloat(ov[o+2]); pq[fi*4+3]=parseFloat(ov[o+3]); } } }
     const cm = f.getElementsByTagNameNS('*','centerOfMass')[0]; let cmOK=false;
     if (cm){ const cv = cm.textContent.trim().split(/\s+/);
       if (cv.length >= 3){ hasCoM = true; cmOK=true; com[fi*3]=parseFloat(cv[0]); com[fi*3+1]=parseFloat(cv[1]); com[fi*3+2]=parseFloat(cv[2]); } }
@@ -593,7 +605,7 @@ function parseMVNX(text){
   }
   if (!contactLabels.length && hasContacts && ncontact === 4)
     contactLabels = ['LeftFoot_Heel','LeftFoot_Toe','RightFoot_Heel','RightFoot_Toe'];
-  return { labels, nseg, label2idx, jointLabels, njoints, jang, hasJoints,
+  return { labels, nseg, label2idx, jointLabels, njoints, jang, hasJoints, jangX, hasJointsX, pq, hasPQ,
            frameRate, nframes, pos, com, hasCoM, contacts, hasContacts, contactLabels };
 }
 
@@ -646,6 +658,13 @@ gridTex.wrapS = gridTex.wrapT = THREE.RepeatWrapping; gridTex.repeat.set(GRID_SI
 const gridPlane = new THREE.Mesh(new THREE.PlaneGeometry(GRID_SIZE,GRID_SIZE),
   new THREE.MeshBasicMaterial({ map:gridTex, transparent:true, depthWrite:false, opacity:0.8, toneMapped:false }));
 gridPlane.renderOrder = 1; gridPlane.position.z = 0.002; scene.add(gridPlane);   // lifted off the floor so it never z-fights
+
+// subtle ground chevron showing the subject's anatomical forward (+X / anterior), from the pelvis orientation
+const fwdShape = new THREE.Shape();
+fwdShape.moveTo(0,0.34); fwdShape.lineTo(-0.15,-0.02); fwdShape.lineTo(0,0.07); fwdShape.lineTo(0.15,-0.02); fwdShape.closePath();
+const fwdArrow = new THREE.Mesh(new THREE.ShapeGeometry(fwdShape),
+  new THREE.MeshBasicMaterial({ color:0x60a5fa, transparent:true, opacity:0.5, depthWrite:false, toneMapped:false, side:THREE.DoubleSide }));
+fwdArrow.renderOrder = 2; fwdArrow.visible = false; scene.add(fwdArrow);   // local +Y is the tip; oriented in fitCamera
 
 function makeGridTexture(){
   const S=512, cv=document.createElement('canvas'); cv.width=cv.height=S; const g=cv.getContext('2d');
@@ -756,15 +775,18 @@ const COMP_COL=['#d55e00','#0072b2','#009e73'], COMP_DASH=[[],[6,4],[2,4]];
 // FE = flexion/extension · AA = abduction/adduction · IER = internal/external rotation
 // DF/PF = dorsi/plantarflexion · LB = lateral bending · AR = axial rotation
 // UR = ulnar/radial deviation · PS = pronation/supination
+// BallFoot AA*/IER* are interpolated — MVN measures only toe flex/ext (manual §23.6.11)
 const ANGLE_MAP=[
   [/Ankle/,                                            ['AA','IER','DF/PF']],
   [/Hip|Knee/,                                         ['AA','IER','FE']],
   [/Shoulder/,                                         ['AA','IER','FE']],
   [/Elbow|Wrist/,                                      ['UR','PS','FE']],
-  [/BallFoot/,                                         ['AA','IER','FE']],
+  [/BallFoot/,                                         ['AA*','IER*','FE']],
   [/L5S1|L4L3|L1T12|T9T8|T1C7|C1Head|Head|Neck|Spine/, ['LB','AR','FE']],
 ];
 function compNames(j){ for(const [re,n] of ANGLE_MAP) if(re.test(j)) return n; return ['AA','IER','FE']; }
+// glenohumeral shoulder is better described by the XZY extraction than ZXY (manual §23.7.2); T4Shoulder stays ZXY
+const usesXZY = lab => /Shoulder/.test(lab) && !/T4/.test(lab);
 let panels=[];
 const prettyJoint = l => l.replace(/^j/,'').replace(/([a-z0-9])([A-Z])/g,'$1 $2');
 function populateJointSelect(){
@@ -774,7 +796,8 @@ function populateJointSelect(){
 }
 function jointSeries(ji){
   const N=DATA.nframes,J=DATA.njoints,b=ji*3,s=[new Float32Array(N),new Float32Array(N),new Float32Array(N)];
-  for(let f=0;f<N;f++){ const o=f*J*3+b; s[0][f]=DATA.jang[o]; s[1][f]=DATA.jang[o+1]; s[2][f]=DATA.jang[o+2]; }
+  const src = (DATA.hasJointsX && usesXZY(DATA.jointLabels[ji])) ? DATA.jangX : DATA.jang;   // shoulders → XZY
+  for(let f=0;f<N;f++){ const o=f*J*3+b; s[0][f]=src[o]; s[1][f]=src[o+1]; s[2][f]=src[o+2]; }
   return s;
 }
 const emptyMsg='<div class="side-empty">Add a joint to plot its angle trace through the whole file. The moving dot tracks the current frame. Click or drag on a chart to scrub the 3D view.</div>';
@@ -788,8 +811,9 @@ function addPanel(ji){
   if(!isFinite(ymin)||ymin===ymax){ ymin=(isFinite(ymin)?ymin:0)-1; ymax=(isFinite(ymax)?ymax:0)+1; }
   const pad=(ymax-ymin)*0.08||1; ymin-=pad; ymax+=pad;
   const ym=v=>MARG.t+(1-(v-ymin)/(ymax-ymin))*(CH-MARG.t-MARG.b);
+  const seq = (DATA.hasJointsX && usesXZY(DATA.jointLabels[ji])) ? ' <span style="font-size:9px;font-weight:500;color:var(--mut)">XZY</span>' : '';
   const el=document.createElement('div'); el.className='jcard';
-  el.innerHTML=`<div class="jhead"><b>${prettyJoint(DATA.jointLabels[ji])}</b>`
+  el.innerHTML=`<div class="jhead"><b>${prettyJoint(DATA.jointLabels[ji])}${seq}</b>`
     +`<span class="key">${names.map((n,c)=>`<span><i style="background:${COMP_COL[c]}"></i>${n}</span>`).join('')}</span>`
     +`<button class="rm" title="remove" aria-label="remove chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><canvas></canvas>`;
   document.getElementById('panels').appendChild(el);
@@ -920,13 +944,22 @@ function fitCamera(){
       const x=DATA.pos[b+i*3],y=DATA.pos[b+i*3+1],z=DATA.pos[b+i*3+2];
       if(isFinite(x)&&isFinite(y)&&isFinite(z)) box.expandByPoint(v.set(x,y,z)); }
     return box; };
-  let fb=frameBox(0); if(fb.isEmpty()) fb=frameBox(Math.floor(DATA.nframes/2));
+  let fitFi=0, fb=frameBox(0); if(fb.isEmpty()){ fitFi=Math.floor(DATA.nframes/2); fb=frameBox(fitFi); }
   if(fb.isEmpty()){ fitCenter={x:0,y:0,z:0}; controls.target.set(0,0,1); camera.position.set(2.4,-3.2,1.8);
     homeCam=camera.position.clone(); homeTarget=controls.target.clone(); controls.update(); travels=false; return; }
   const c=fb.getCenter(new THREE.Vector3()), size=fb.getSize(new THREE.Vector3());
   let d=Math.max(size.x,size.y,size.z,1.0)*1.8+1.2; if(!isFinite(d)||d<=0) d=3;
   fitCenter={x:c.x,y:c.y,z:fb.min.z};
-  controls.target.copy(c); camera.position.set(c.x+d*0.6, c.y-d, fb.min.z+size.z*0.6+0.3);
+  // facing-aware default view: a 3/4 FRONT angle from the subject's anatomical forward (body +X axis)
+  let fx=null, fy=null;
+  if(DATA.hasPQ){ const o=fitFi*4, w=DATA.pq[o], x=DATA.pq[o+1], y=DATA.pq[o+2], z=DATA.pq[o+3];
+    let ax=1-2*(y*y+z*z), ay=2*(x*y+z*w), m=Math.hypot(ax,ay);   // body +X rotated into the world ground plane
+    if(m>1e-4){ fx=ax/m; fy=ay/m; } }
+  const camZ=fb.min.z+size.z*0.6+0.3;
+  controls.target.copy(c);
+  if(fx!==null){ const sx=fy, sy=-fx;                              // subject's right = forward rotated −90°
+    camera.position.set(c.x+fx*d*0.85+sx*d*0.6, c.y+fy*d*0.85+sy*d*0.6, camZ); }
+  else camera.position.set(c.x+d*0.6, c.y-d, camZ);
   controls.minDistance=d*0.3; controls.maxDistance=d*4;            // bounded so zoom feel stays consistent
   homeCam=camera.position.clone(); homeTarget=c.clone(); controls.update();
   // full travel path → place the world-fixed ground at its centre, and auto-follow if the subject roams far
@@ -971,6 +1004,11 @@ function setFrame(fi){
       camera.position.x+=dx; camera.position.y+=dy; controls.target.x=px; controls.target.y=py; }
     // the shadow light's frustum is small (±3 m), so ride it under the figure wherever it is
     key.position.set(px+2.6,py-3.4,4.2); key.target.position.set(px,py,0); key.target.updateMatrixWorld();
+    // forward chevron rides just ahead of the figure, pointing along anatomical forward (body +X)
+    if(fwdArrow.visible){ const o=frame*4, w=DATA.pq[o], qx=DATA.pq[o+1], qy=DATA.pq[o+2], qz=DATA.pq[o+3];
+      let ax=1-2*(qy*qy+qz*qz), ay=2*(qx*qy+qz*w), m=Math.hypot(ax,ay);
+      if(m>1e-4){ ax/=m; ay/=m; fwdArrow.position.set(px+ax*0.5, py+ay*0.5, fitCenter.z+0.004);
+        fwdArrow.rotation.set(0,0,Math.atan2(ay,ax)-Math.PI/2); } }
   }
   drawTimeline(frame);
   const t=(frame/DATA.frameRate).toFixed(2), tot=(DATA.nframes/DATA.frameRate).toFixed(2);
@@ -984,6 +1022,7 @@ function setFrame(fi){
 function load(data,name){
   DATA=data; frame=0; framePos=0; stopPlay();
   document.getElementById('drop').classList.add('hidden'); ghost.visible=false; ghostVisible=false;
+  fwdArrow.visible=DATA.hasPQ;
   document.getElementById('scaleNote').style.display='';
   document.getElementById('contacts').disabled=!DATA.hasContacts;
   document.getElementById('com').disabled=!DATA.hasCoM;
