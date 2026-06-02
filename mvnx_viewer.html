@@ -176,6 +176,7 @@
   #drop .glyph svg{ width:38px; height:38px; display:block; }
   #drop .big{ font-size:var(--fs-xl); font-weight:600; color:var(--ink); }
   #drop .sub{ font-size:var(--fs-body); color:var(--mut); max-width:34ch; }
+  #dropOpen{ pointer-events:auto; margin-top:6px; }
   #stage.dragging #drop .card{ border-color:var(--acc); background:var(--acc-ghost); transform:scale(1.02); }
   #stage.dragging #drop .glyph{ transform:translateY(-3px) scale(1.08); }
 
@@ -390,7 +391,8 @@
         <div class="card">
           <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></div>
           <div class="big">Drop an .mvnx file</div>
-          <div class="sub">or click “Open .mvnx” — files stay in your browser, nothing is uploaded.</div>
+          <div class="sub">Files stay in your browser — nothing is uploaded.</div>
+          <button class="btn primary" id="dropOpen" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Open .mvnx</button>
         </div>
       </div>
       <div id="loading" class="hidden" role="status" aria-live="polite"><div class="spin"></div><span id="loadingTxt">Parsing…</span></div>
@@ -633,12 +635,12 @@ const subject = new THREE.Group(); scene.add(subject);
 const ghost = new THREE.Group(); scene.add(ghost);
 
 // floor shadow catcher + radial-fade grid
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(80,80), new THREE.ShadowMaterial({ opacity:0.32, color:0x000000 }));
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(80,80), new THREE.ShadowMaterial({ opacity:0.32, color:0x000000, depthWrite:false }));
 floor.receiveShadow = true; floor.renderOrder = 0; scene.add(floor);
 const gridTex = makeGridTexture();
 const gridPlane = new THREE.Mesh(new THREE.PlaneGeometry(8,8),
   new THREE.MeshBasicMaterial({ map:gridTex, transparent:true, depthWrite:false, opacity:0.9, toneMapped:false }));
-gridPlane.renderOrder = 1; scene.add(gridPlane);
+gridPlane.renderOrder = 1; gridPlane.position.z = 0.002; scene.add(gridPlane);   // lift off the floor so the grid never z-fights (incl. idle screen)
 
 function makeGridTexture(){
   const S=512, cv=document.createElement('canvas'); cv.width=cv.height=S; const g=cv.getContext('2d');
@@ -997,7 +999,9 @@ function ingest(fileList){
         } catch(e){ showErr(file.name+': '+e.message); } finally { if(idx===0) hideLoading(); } },20); };
     r.onerror=()=>showErr('Could not read '+file.name); r.readAsText(file); });
 }
-document.getElementById('pick').onclick=()=>document.getElementById('file').click();
+const openPicker=()=>document.getElementById('file').click();
+document.getElementById('pick').onclick=openPicker;
+document.getElementById('dropOpen').onclick=openPicker;
 document.getElementById('file').onchange=e=>ingest(e.target.files);
 document.getElementById('fileSel').onchange=e=>{ const d=FILES.get(e.target.value); if(d) load(d,e.target.value); };
 // dragover counter
