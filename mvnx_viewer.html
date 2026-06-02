@@ -433,7 +433,6 @@
       <div class="seg" role="radiogroup" aria-label="Camera mode">
         <input type="radio" name="cam" id="cam-static" value="static" checked><label for="cam-static">Static</label>
         <input type="radio" name="cam" id="cam-follow" value="follow"><label for="cam-follow">Follow</label>
-        <input type="radio" name="cam" id="cam-tread" value="treadmill"><label for="cam-tread">Treadmill</label>
       </div>
       <div class="f-group"><span class="ctl-cap">speed</span>
         <input id="speed" class="rng" type="range" min="0.1" max="2" step="0.1" value="1" aria-label="Playback speed" />
@@ -462,7 +461,7 @@
 
     <h3>Features</h3>
     <div class="features">
-      <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg></div><b>3D skeleton playback</b><span>Rotate, zoom, play and frame-step; follow-cam and treadmill-lock for walking and running.</span></div>
+      <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg></div><b>3D skeleton playback</b><span>Rotate, zoom, play and frame-step; follow-cam keeps walking and running trials in view.</span></div>
       <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 2 4-5"/></svg></div><b>Per-joint angle charts</b><span>Plot any joint's angles across the file with a live cursor synced to the 3D view; click to scrub.</span></div>
       <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V6M9 18v-5M14 18V9M19 18v-8"/></svg></div><b>Foot-contact timeline</b><span>Stance ribbons and touchdown / toe-off markers from the recording's foot-contact data.</span></div>
       <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><b>Centre-of-mass tracking</b><span>Show the centre of mass and its trajectory trail through the movement.</span></div>
@@ -506,7 +505,7 @@
       <dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>jump to trim start / end</dd>
       <dt><kbd>I</kbd> <kbd>O</kbd></dt><dd>set trim in / out here</dd>
       <dt><kbd>Backspace</kbd></dt><dd>reset trim</dd>
-      <dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>camera static / follow / treadmill</dd>
+      <dt><kbd>1</kbd> <kbd>2</kbd></dt><dd>camera static / follow</dd>
       <dt><kbd>L</kbd> <kbd>C</kbd> <kbd>M</kbd></dt><dd>toggle lower-body / contacts / CoM</dd>
       <dt><kbd>J</kbd></dt><dd>toggle joints panel</dd>
       <dt><kbd>R</kbd></dt><dd>reset view</dd>
@@ -636,24 +635,25 @@ const subject = new THREE.Group(); scene.add(subject);
 const ghost = new THREE.Group(); scene.add(ghost);
 
 // floor shadow catcher + radial-fade grid
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(80,80), new THREE.ShadowMaterial({ opacity:0.32, color:0x000000, depthWrite:false }));
+// World-fixed ground: a large shadow-catcher + a large repeating grid. Both stay put in the world
+// (they do NOT ride the subject) so that in follow-cam the grid flows past and locomotion is visible.
+// Distance fade comes from scene fog, which gives the soft radial look without the grid having to move.
+const GRID_SIZE=80, GRID_TILE=8;                                            // 80 m plane, 8 m repeating tile (0.25 m cells)
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(120,120), new THREE.ShadowMaterial({ opacity:0.32, color:0x000000, depthWrite:false }));
 floor.receiveShadow = true; floor.renderOrder = 0; scene.add(floor);
 const gridTex = makeGridTexture();
-const gridPlane = new THREE.Mesh(new THREE.PlaneGeometry(8,8),
-  new THREE.MeshBasicMaterial({ map:gridTex, transparent:true, depthWrite:false, opacity:0.9, toneMapped:false }));
-gridPlane.renderOrder = 1; gridPlane.position.z = 0.002; scene.add(gridPlane);   // lift off the floor so the grid never z-fights (incl. idle screen)
+gridTex.wrapS = gridTex.wrapT = THREE.RepeatWrapping; gridTex.repeat.set(GRID_SIZE/GRID_TILE, GRID_SIZE/GRID_TILE);
+const gridPlane = new THREE.Mesh(new THREE.PlaneGeometry(GRID_SIZE,GRID_SIZE),
+  new THREE.MeshBasicMaterial({ map:gridTex, transparent:true, depthWrite:false, opacity:0.8, toneMapped:false }));
+gridPlane.renderOrder = 1; gridPlane.position.z = 0.002; scene.add(gridPlane);   // lifted off the floor so it never z-fights
 
 function makeGridTexture(){
   const S=512, cv=document.createElement('canvas'); cv.width=cv.height=S; const g=cv.getContext('2d');
-  g.clearRect(0,0,S,S); const cells=32, step=S/cells;                       // 8 m / 0.25 m = 32 cells
-  for(let i=0;i<=cells;i++){ const p=Math.round(i*step)+0.5, major=(i%4===0);
-    g.strokeStyle = major ? 'rgba(150,170,200,0.55)' : 'rgba(120,140,170,0.30)'; g.lineWidth = major?1.4:0.8;
+  g.clearRect(0,0,S,S); const cells=32, step=S/cells;                       // 8 m tile / 0.25 m = 32 cells, seamless when repeated
+  for(let i=0;i<cells;i++){ const p=Math.round(i*step)+0.5, major=(i%4===0);
+    g.strokeStyle = major ? 'rgba(150,170,200,0.55)' : 'rgba(120,140,170,0.28)'; g.lineWidth = major?1.4:0.8;
     g.beginPath(); g.moveTo(p,0); g.lineTo(p,S); g.moveTo(0,p); g.lineTo(S,p); g.stroke(); }
-  g.globalCompositeOperation='destination-in';                              // radial alpha fade
-  const rg=g.createRadialGradient(S/2,S/2,S*0.10,S/2,S/2,S*0.50);
-  rg.addColorStop(0,'rgba(0,0,0,1)'); rg.addColorStop(0.72,'rgba(0,0,0,1)'); rg.addColorStop(1,'rgba(0,0,0,0)');
-  g.fillStyle=rg; g.fillRect(0,0,S,S);
-  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t;
+  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=8; return t;
 }
 
 // shared materials (never disposed across rebuilds)
@@ -693,7 +693,7 @@ function makeGlow(rgb){
 let DATA=null, renderedBones=[], renderedSegs=[], boneMeshes=[], jointMeshes=[], contactGlows={},
     comMarker=null, comTrail=null, comTrailGeom=null,
     frame=0, framePos=0, playing=false, speed=1, lastT=0, homeCam=null, homeTarget=null,
-    camMode='static', lastPelvis=null, pelvis0={x:0,y:0}, fitCenter={x:0,y:0,z:0},
+    camMode='static', lastPelvis=null, fitCenter={x:0,y:0,z:0}, travels=false,
     trimIn=0, trimOut=0, draggingTrim=null, scrubbing=false, hoverX=null,
     needsRender=true, ghostVisible=true, lastGhost=0;
 const _lit={}, _lastPel={x:0,y:0};
@@ -912,19 +912,32 @@ window.addEventListener('pointerup', ()=>{ draggingTrim=null; });
 
 // ====================== CAMERA FIT ======================
 function fitCamera(){
-  const box=new THREE.Box3(), v=new THREE.Vector3();
+  const v=new THREE.Vector3();
+  // bounding box of the figure at a single frame (not the whole travel path — that would push
+  // the camera far away and shrink the avatar to a dot on traveling trials like gait / long jump)
+  const frameBox=fi=>{ const box=new THREE.Box3(), b=fi*DATA.nseg*3;
+    for(const lab of renderedSegs){ const i=DATA.label2idx[lab];
+      const x=DATA.pos[b+i*3],y=DATA.pos[b+i*3+1],z=DATA.pos[b+i*3+2];
+      if(isFinite(x)&&isFinite(y)&&isFinite(z)) box.expandByPoint(v.set(x,y,z)); }
+    return box; };
+  let fb=frameBox(0); if(fb.isEmpty()) fb=frameBox(Math.floor(DATA.nframes/2));
+  if(fb.isEmpty()){ fitCenter={x:0,y:0,z:0}; controls.target.set(0,0,1); camera.position.set(2.4,-3.2,1.8);
+    homeCam=camera.position.clone(); homeTarget=controls.target.clone(); controls.update(); travels=false; return; }
+  const c=fb.getCenter(new THREE.Vector3()), size=fb.getSize(new THREE.Vector3());
+  let d=Math.max(size.x,size.y,size.z,1.0)*1.8+1.2; if(!isFinite(d)||d<=0) d=3;
+  fitCenter={x:c.x,y:c.y,z:fb.min.z};
+  controls.target.copy(c); camera.position.set(c.x+d*0.6, c.y-d, fb.min.z+size.z*0.6+0.3);
+  controls.minDistance=d*0.3; controls.maxDistance=d*4;            // bounded so zoom feel stays consistent
+  homeCam=camera.position.clone(); homeTarget=c.clone(); controls.update();
+  // full travel path → place the world-fixed ground at its centre, and auto-follow if the subject roams far
+  const tb=new THREE.Box3();
   for(let fi=0;fi<DATA.nframes;fi++){ const b=fi*DATA.nseg*3;
     for(const lab of renderedSegs){ const i=DATA.label2idx[lab];
       const x=DATA.pos[b+i*3],y=DATA.pos[b+i*3+1],z=DATA.pos[b+i*3+2];
-      if(isFinite(x)&&isFinite(y)&&isFinite(z)) box.expandByPoint(v.set(x,y,z)); } }
-  if(box.isEmpty()){ fitCenter={x:0,y:0,z:0}; controls.target.set(0,0,1); camera.position.set(2.4,-3.2,1.8);
-    homeCam=camera.position.clone(); homeTarget=controls.target.clone(); controls.update(); return; }
-  const c=box.getCenter(new THREE.Vector3()), size=box.getSize(new THREE.Vector3());
-  let d=Math.max(size.x,size.y,size.z)*1.6+1; if(!isFinite(d)||d<=0) d=3;
-  fitCenter={x:c.x,y:c.y,z:box.min.z};
-  floor.position.set(c.x,c.y,box.min.z); gridPlane.position.set(c.x,c.y,box.min.z+0.001);
-  controls.target.copy(c); camera.position.set(c.x+d*0.6, c.y-d, box.min.z+size.z*0.6+0.3);
-  homeCam=camera.position.clone(); homeTarget=c.clone(); controls.update();
+      if(isFinite(x)&&isFinite(y)&&isFinite(z)) tb.expandByPoint(v.set(x,y,z)); } }
+  const tc=tb.getCenter(new THREE.Vector3()), ts=tb.getSize(new THREE.Vector3());
+  floor.position.set(tc.x,tc.y,fb.min.z); gridPlane.position.set(tc.x,tc.y,fb.min.z+0.002);
+  travels = Math.max(ts.x,ts.y) > Math.max(size.x,size.y,0.3)*2.0;
 }
 
 // ====================== SET FRAME ======================
@@ -950,18 +963,15 @@ function setFrame(fi){
       comGlow.position.copy(comMarker.position); comTrailGeom.setDrawRange(0,frame+1); } }
   else if(comGlow) comGlow.visible=false;
   if(panels.length) refreshPanels(frame);
-  // camera follow / treadmill + shadow ride
+  // camera follow + shadow-light ride. Ground (floor/grid) stays world-fixed so follow shows real motion.
   if(DATA.pelvisIdx!=null){ const pj=DATA.pelvisIdx*3+base, px=P[pj], py=P[pj+1];
-    if(camMode==='treadmill') subject.position.set(pelvis0.x-px, pelvis0.y-py, 0); else subject.position.set(0,0,0);
-    if(camMode==='follow'&&lastPelvis){ const dx=px-lastPelvis.x, dy=py-lastPelvis.y;
-      camera.position.x+=dx; camera.position.y+=dy; controls.target.x+=dx; controls.target.y+=dy; }
-    _lastPel.x=px; _lastPel.y=py; lastPelvis=_lastPel;
-    // anchor key-light + floor + grid: follow=pelvis, treadmill=locked spot, static=trial centre (stays put)
-    let ax, ay;
-    if(camMode==='follow'){ ax=px; ay=py; } else if(camMode==='treadmill'){ ax=pelvis0.x; ay=pelvis0.y; } else { ax=fitCenter.x; ay=fitCenter.y; }
-    key.position.set(ax+2.6,ay-3.4,4.2); key.target.position.set(ax,ay,0); key.target.updateMatrixWorld();
-    floor.position.set(ax,ay,fitCenter.z); gridPlane.position.set(ax,ay,fitCenter.z+0.001);
-  } else subject.position.set(0,0,0);
+    // absolute follow: snap the orbit target onto the pelvis every frame (works when scrubbing AND
+    // playing), shifting the camera by the same delta so the user's orbit/zoom is preserved
+    if(camMode==='follow'){ const dx=px-controls.target.x, dy=py-controls.target.y;
+      camera.position.x+=dx; camera.position.y+=dy; controls.target.x=px; controls.target.y=py; }
+    // the shadow light's frustum is small (±3 m), so ride it under the figure wherever it is
+    key.position.set(px+2.6,py-3.4,4.2); key.target.position.set(px,py,0); key.target.updateMatrixWorld();
+  }
   drawTimeline(frame);
   const t=(frame/DATA.frameRate).toFixed(2), tot=(DATA.nframes/DATA.frameRate).toFixed(2);
   const lab=`frame ${frame}/${DATA.nframes-1}   ${t}/${tot}s`;
@@ -981,12 +991,11 @@ function load(data,name){
   document.getElementById('addJoint').disabled=!DATA.hasJoints;
   if(DATA.hasContacts) computeContacts(); else { DATA.cL=DATA.cR=DATA.edges=null; }
   DATA.pelvisIdx=DATA.label2idx['Pelvis'];
-  if(DATA.pelvisIdx!=null){ const pj0=DATA.pelvisIdx*3; pelvis0={x:DATA.pos[pj0],y:DATA.pos[pj0+1]}; }
   lastPelvis=null; subject.position.set(0,0,0);
   trimIn=0; trimOut=DATA.nframes-1; tlStaticDirty=true;
   tlEl.style.display = DATA.nframes>1?'':'none';
   tlEl.setAttribute('aria-valuemax', Math.max(0,DATA.nframes-1));
-  buildSkeleton(); buildCoM(); fitCamera(); setFrame(0); resizePanels();
+  buildSkeleton(); buildCoM(); fitCamera(); setCam(travels?'follow':'static'); setFrame(0); resizePanels();
   document.getElementById('info').textContent =
     `${name}  ·  ${DATA.nframes} frames @ ${DATA.frameRate} Hz  ·  ${DATA.nseg} segments`
     + (DATA.hasContacts?'  ·  footContacts ✓':'') + (DATA.hasCoM?'  ·  CoM ✓':'') + (DATA.hasJoints?'':'  ·  no jointAngles');
@@ -1051,7 +1060,7 @@ function syncSegPill(){ const c=seg.querySelector('input:checked'); if(!c) retur
   seg.style.setProperty('--segw',lab.offsetWidth+'px'); seg.style.setProperty('--segx',(lab.offsetLeft-3)+'px'); }
 seg.addEventListener('change',e=>{ if(e.target.name!=='cam') return; camMode=e.target.value; lastPelvis=null; syncSegPill(); if(DATA) setFrame(frame); invalidate(); });
 new ResizeObserver(syncSegPill).observe(seg);
-function setCam(mode){ const r=document.getElementById('cam-'+(mode==='treadmill'?'tread':mode)); if(r){ r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); } }
+function setCam(mode){ const r=document.getElementById('cam-'+mode); if(r){ r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); } }
 // sidebar toggle
 const sidebar=document.getElementById('sidebar'), toggleSide=document.getElementById('toggleSide'), scrim=document.getElementById('scrim');
 const isOverlay=()=>matchMedia('(max-width:1099px)').matches;
@@ -1097,7 +1106,7 @@ addEventListener('keydown',e=>{
   else if(k==='m'){ const c=document.getElementById('com'); if(!c.disabled){ c.checked=!c.checked; c.onchange(); } }
   else if(k==='j'){ toggleSidebar(); }
   else if(k==='r'){ document.getElementById('resetView').onclick(); }
-  else if(k==='1'){ setCam('static'); } else if(k==='2'){ setCam('follow'); } else if(k==='3'){ setCam('treadmill'); }
+  else if(k==='1'){ setCam('static'); } else if(k==='2'){ setCam('follow'); }
 });
 
 // resize
