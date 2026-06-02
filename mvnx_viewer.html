@@ -405,9 +405,10 @@
         <select id="addJoint" aria-label="Add joint chart"><option value="">+ add joint…</option></select>
         <button class="btn icon side-close" id="sideClose" aria-label="Close joints panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       </div>
-      <div class="side-note">ZXY Euler, degrees. + ≈ flexion / abduction / internal-rotation (MVN convention).
-        Hip / knee / ankle are labelled FE / AA / IER (ankle ch.1 = DF/PF); spine, shoulder, foot and other joints
-        are shown as raw Z / X / Y.</div>
+      <div class="side-note">ZXY Euler angles, degrees (MVN convention). Each trace shows three components in the order
+        Movella exports them: <b>AA</b> abduction/adduction, <b>IER</b> internal/external rotation, <b>FE</b> flexion/extension
+        (ankle ch.3 = <b>DF/PF</b> dorsi/plantarflexion). Spine/neck use <b>LB</b> lateral bending · <b>AR</b> axial rotation · FE;
+        elbow/wrist use <b>UR</b> ulnar/radial · <b>PS</b> pronation/supination · FE.</div>
       <div id="panels">
         <div class="side-empty">Add a joint to plot its angle trace through the whole file.
           The moving dot tracks the current frame. Click or drag on a chart to scrub the 3D view.</div>
@@ -749,8 +750,21 @@ controls.target.set(0,0,1); camera.position.set(2.2,-3.0,1.7); controls.update()
 // ====================== CHARTS (ported) ======================
 const CH=110, MARG={l:32,r:8,t:8,b:16};
 const COMP_COL=['#d55e00','#0072b2','#009e73'], COMP_DASH=[[],[6,4],[2,4]];
-const ANAT={ Hip:['FE','AA','IER'], Knee:['FE','AA','IER'], Ankle:['DF/PF','Inv/Ev','IER'] };
-function compNames(j){ for(const k in ANAT) if(j.endsWith(k)) return ANAT[k]; return ['Z','X','Y']; }
+// MVNX jointAngle component order is [X, Y, Z] axis = [frontal, transverse, sagittal],
+// verified against Movella's own "Joint Angles ZXY" xlsx columns:
+//   [0]=Abd/Add (Lateral Bending / Ulnar-Radial), [1]=Int/Ext rot (Axial / Pron-Sup), [2]=Flex/Ext (Dorsi/Plantar).
+// FE = flexion/extension · AA = abduction/adduction · IER = internal/external rotation
+// DF/PF = dorsi/plantarflexion · LB = lateral bending · AR = axial rotation
+// UR = ulnar/radial deviation · PS = pronation/supination
+const ANGLE_MAP=[
+  [/Ankle/,                                            ['AA','IER','DF/PF']],
+  [/Hip|Knee/,                                         ['AA','IER','FE']],
+  [/Shoulder/,                                         ['AA','IER','FE']],
+  [/Elbow|Wrist/,                                      ['UR','PS','FE']],
+  [/BallFoot/,                                         ['AA','IER','FE']],
+  [/L5S1|L4L3|L1T12|T9T8|T1C7|C1Head|Head|Neck|Spine/, ['LB','AR','FE']],
+];
+function compNames(j){ for(const [re,n] of ANGLE_MAP) if(re.test(j)) return n; return ['AA','IER','FE']; }
 let panels=[];
 const prettyJoint = l => l.replace(/^j/,'').replace(/([a-z0-9])([A-Z])/g,'$1 $2');
 function populateJointSelect(){
