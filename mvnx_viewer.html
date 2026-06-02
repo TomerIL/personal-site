@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MVNX Viewer — Free Online .mvnx Motion-Capture Viewer</title>
+<meta name="description" content="Free browser-based viewer for .mvnx motion-capture files (the Movella / Xsens MVN Analyze export). 3D skeleton playback, joint-angle charts, foot-contact timeline and centre-of-mass tracking. No upload, no install. By Tomer Yona, PhD." />
+<link rel="canonical" href="https://www.tomeryona.com/mvnx-viewer/" />
+<meta name="robots" content="index,follow" />
+<meta name="author" content="Tomer Yona" />
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="MVNX Viewer — Free Online .mvnx Motion-Capture Viewer" />
+<meta property="og:description" content="Open and inspect .mvnx motion-capture files in your browser: 3D skeleton, joint angles, foot contacts, centre of mass. No upload, no install." />
+<meta property="og:url" content="https://www.tomeryona.com/mvnx-viewer/" />
+<meta property="og:image" content="https://www.tomeryona.com/mvnx-viewer/preview.png" />
+<meta property="og:site_name" content="Tomer Yona" />
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="MVNX Viewer — Free Online .mvnx Motion-Capture Viewer" />
+<meta name="twitter:description" content="Open and inspect .mvnx motion-capture files in your browser — no upload, no install." />
+<meta name="twitter:image" content="https://www.tomeryona.com/mvnx-viewer/preview.png" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230e1117'/%3E%3Cpath d='M12 9l11 7-11 7z' fill='%233b82f6'/%3E%3C/svg%3E" />
+<!-- Structured data: the tool -->
+<script type="application/ld+json">
+{ "@context":"https://schema.org", "@type":"WebApplication",
+  "name":"MVNX Viewer",
+  "url":"https://www.tomeryona.com/mvnx-viewer/",
+  "description":"Free browser-based viewer for .mvnx motion-capture files (the Movella / Xsens MVN Analyze export). 3D skeleton playback, joint-angle charts, foot-contact timeline and centre-of-mass tracking. Runs entirely in the browser; files are not uploaded.",
+  "applicationCategory":"MultimediaApplication",
+  "operatingSystem":"Any (modern web browser)",
+  "browserRequirements":"Requires a modern browser with WebGL and ES modules",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "featureList":["3D skeleton playback","Per-joint angle charts","Foot-contact timeline","Centre-of-mass tracking","Trim and loop","Client-side, no upload"],
+  "creator":{"@type":"Person","name":"Tomer Yona","url":"https://www.tomeryona.com"},
+  "author":{"@type":"Person","name":"Tomer Yona","url":"https://www.tomeryona.com"}
+}
+</script>
+<!-- Structured data: FAQ -->
+<script type="application/ld+json">
+{ "@context":"https://schema.org", "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Is MVNX Viewer free?","acceptedAnswer":{"@type":"Answer","text":"Yes. MVNX Viewer is free to use, with no account or installation."}},
+    {"@type":"Question","name":"Does MVNX Viewer upload my data?","acceptedAnswer":{"@type":"Answer","text":"No. Your .mvnx file is parsed locally in your browser and is never uploaded to any server."}},
+    {"@type":"Question","name":"Can MVNX Viewer open .mvn files?","acceptedAnswer":{"@type":"Answer","text":"No. It opens the .mvnx XML export. Export your recording to .mvnx from MVN Analyze first."}},
+    {"@type":"Question","name":"What is an .mvnx file?","acceptedAnswer":{"@type":"Answer","text":"An .mvnx file is the open XML motion-capture export from Movella (formerly Xsens) MVN systems, containing per-frame segment positions, joint angles, centre of mass and foot contacts."}}
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<style>
+  :root{
+    /* ===== SURFACE RAMP ===== */
+    --e0:#0a0c10; --e1:#0e1117; --e2:#141923; --e3:#1b212d; --e4:#232b38; --inset:#0f1218;
+    --line:rgba(255,255,255,.07); --line-2:rgba(255,255,255,.11); --line-3:rgba(255,255,255,.14);
+    /* ===== TEXT ===== */
+    --ink:#eef1f6; --ink-2:#aab2c0; --mut:#9aa6b8; --faint:#6f7889; --on-acc:#f4f8ff;
+    /* ===== UI ACCENT ===== */
+    --acc:#3b82f6; --acc-hi:#60a5fa; --acc-press:#2563eb; --acc-ghost:rgba(59,130,246,.14); --acc-ring:rgba(96,165,250,.55);
+    /* ===== DATA / SEMANTIC ===== */
+    --left:#2dd4bf; --right:#f5a623; --axial:#8b94a6; --contact:#34d399; --com:#fbbf24; --com-trail:rgba(251,191,36,.55);
+    --left-soft:rgba(45,212,191,.22); --right-soft:rgba(245,166,35,.22);
+    /* ===== CHART SERIES (Okabe-Ito CB-safe) ===== */
+    --chart-1:#d55e00; --chart-2:#0072b2; --chart-3:#009e73;
+    --chart-grid:rgba(255,255,255,.07); --chart-axis:#9aa6b8; --chart-cursor:#eef1f6;
+    /* ===== ELEVATION ===== */
+    --sh-1:0 1px 2px rgba(0,0,0,.40);
+    --sh-2:0 4px 16px rgba(0,0,0,.35), 0 1px 3px rgba(0,0,0,.50);
+    --sh-pop:0 12px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.60);
+    --sh-focus:0 0 0 2px var(--e1), 0 0 0 4px var(--acc-hi);
+    /* ===== RADIUS / SPACING ===== */
+    --r-xs:4px; --r-sm:6px; --r-md:9px; --r-lg:13px; --r-xl:16px; --r-pill:999px;
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px; --sp-6:24px; --sp-8:32px;
+    /* ===== TYPOGRAPHY ===== */
+    --font-sans:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --fs-caption:0.6875rem; --fs-small:0.75rem; --fs-body:0.8125rem; --fs-base:0.875rem;
+    --fs-md:1rem; --fs-lg:1.125rem; --fs-xl:1.375rem; --fs-2xl:1.75rem; --fs-3xl:2.25rem;
+    --lh:1.45; --lh-prose:1.66; --ls-caps:0.08em; --ls-h1:-0.02em; --ls-h2:-0.01em;
+    /* ===== GLASS ===== */
+    --glass-bg:rgba(14,17,23,.72); --glass-border:var(--line);
+    --glass-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 6px 20px rgba(0,0,0,.28);
+    /* ===== STAGE BG ===== */
+    --stage-top:#1a1f2a; --stage-mid:#141925; --stage-bot:#0c0e13; --vignette:rgba(0,0,0,.45);
+    /* ===== SELECTION + SCROLLBAR ===== */
+    --selection-bg:var(--acc-ghost); --selection-fg:var(--ink);
+    --scrollbar-thumb:var(--e4); --scrollbar-thumb-hover:#2e3744;
+    /* ===== MOTION ===== */
+    --ease:cubic-bezier(.4,0,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+    --t-fast:120ms; --t-med:190ms; --t-slow:260ms;
+    /* ===== BRIDGE ===== */
+    --bridge-bg:#f7f9fc; --bridge-text:#1e293b; --bridge-muted:#64748b;
+    --bridge-accent:#2563eb; --bridge-accent-hover:#1d4ed8; --bridge-border:#e2e8f0;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; min-height:100%; background:var(--e1); color:var(--ink); font-family:var(--font-sans);
+        font-size:var(--fs-base); line-height:var(--lh); font-variant-numeric:tabular-nums; }
+  ::selection{ background:var(--selection-bg); color:var(--selection-fg); }
+  *{ scrollbar-width:thin; scrollbar-color:var(--scrollbar-thumb) transparent; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb{ background:var(--scrollbar-thumb); border-radius:99px; border:2px solid transparent; background-clip:content-box; }
+  ::-webkit-scrollbar-thumb:hover{ background:var(--scrollbar-thumb-hover); background-clip:content-box; }
+  :where(button,[role="slider"],a,select,input,[tabindex]):focus-visible{ outline:none; box-shadow:var(--sh-focus); }
+  @media (forced-colors:active){ :focus-visible{ outline:2px solid Highlight; } }
+  .vh{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+  #app{ display:flex; flex-direction:column; height:100vh; }
+
+  /* ---------- HEADER ---------- */
+  header{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:var(--sp-4);
+          height:54px; padding:0 var(--sp-4); background:var(--glass-bg); backdrop-filter:blur(16px) saturate(1.4);
+          -webkit-backdrop-filter:blur(16px) saturate(1.4); border-bottom:1px solid var(--line);
+          box-shadow:var(--sh-1); z-index:20; flex:0 0 auto; }
+  .h-left{ justify-self:start; display:flex; align-items:baseline; gap:10px; min-width:0; }
+  h1.wordmark{ font-size:var(--fs-md); font-weight:700; letter-spacing:.2px; margin:0; color:var(--ink); white-space:nowrap; }
+  h1.wordmark span{ color:var(--acc-hi); }
+  .byline{ font-size:var(--fs-small); color:var(--mut); white-space:nowrap; }
+  .byline a{ color:var(--acc); text-decoration:none; }
+  .byline a:hover{ text-decoration:underline; }
+  .h-center{ justify-self:center; display:flex; align-items:center; gap:var(--sp-3); min-width:0; }
+  #info{ color:var(--mut); font-size:var(--fs-small); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:46ch; }
+  .h-right{ justify-self:end; display:flex; align-items:center; gap:var(--sp-2); position:relative; }
+
+  .btn{ display:inline-flex; align-items:center; gap:8px; border-radius:var(--r-md); font:inherit;
+        font-size:var(--fs-body); font-weight:600; cursor:pointer; border:1px solid var(--line-2);
+        background:var(--e3); color:var(--ink); padding:8px 13px; transition:background var(--t-fast) var(--ease),
+        border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+  .btn:hover{ background:var(--e4); border-color:var(--line-3); }
+  .btn:active{ transform:translateY(.5px); }
+  .btn.primary{ background:var(--acc); border-color:transparent; color:var(--on-acc); box-shadow:var(--sh-1); }
+  .btn.primary:hover{ background:var(--acc-hi); }
+  .btn.primary:active{ background:var(--acc-press); }
+  .btn.icon{ padding:8px; width:38px; height:38px; justify-content:center; }
+  .btn svg{ width:16px; height:16px; display:block; }
+  #fileSel{ background:var(--e2); color:var(--ink); border:1px solid var(--line-2); border-radius:var(--r-md);
+            padding:7px 9px; font:inherit; font-size:var(--fs-body); max-width:200px; }
+  #toggleSide .chev{ transition:transform var(--t-med) var(--ease); }
+  #toggleSide.open .chev{ transform:rotate(180deg); }
+
+  #legendPop{ position:absolute; top:46px; right:0; background:var(--e4); border:1px solid var(--line-2);
+              border-radius:var(--r-md); box-shadow:var(--sh-pop); padding:11px 13px; display:none;
+              z-index:40; min-width:160px; transform-origin:top right; }
+  #legendPop.open{ display:block; animation:pop var(--t-med) var(--ease-out); }
+  @keyframes pop{ from{ opacity:0; transform:scale(.97); } to{ opacity:1; transform:scale(1); } }
+  #legendPop .row{ display:flex; align-items:center; gap:9px; font-size:var(--fs-small); color:var(--ink-2); padding:3px 0; }
+  #legendPop i{ width:12px; height:12px; border-radius:3px; flex:0 0 auto; }
+
+  /* ---------- BODY / STAGE ---------- */
+  #body{ display:flex; flex:1 1 auto; min-height:0; }
+  #stage{ position:relative; flex:1 1 auto; min-width:0;
+    background:
+      radial-gradient(120% 90% at 50% 18%, var(--stage-top) 0%, var(--stage-mid) 38%, var(--stage-bot) 72%, #0a0d14 100%),
+      radial-gradient(140% 120% at 50% 50%, rgba(0,0,0,0) 55%, var(--vignette) 100%);
+    background-blend-mode:normal, multiply; }
+  #canvas{ width:100%; height:100%; display:block; background:transparent; }
+  #scaleNote{ position:absolute; left:14px; bottom:12px; color:var(--mut); font-size:var(--fs-caption);
+              letter-spacing:.04em; pointer-events:none; background:rgba(10,13,20,.82);
+              padding:4px 9px; border-radius:var(--r-sm); border:1px solid var(--line); display:none; }
+
+  /* drop / empty state */
+  #drop{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
+  #drop.hidden{ display:none; }
+  #drop .card{ display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
+    padding:38px 54px; border:1.5px dashed var(--line-2); border-radius:var(--r-lg);
+    background:rgba(14,18,26,.35); backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+    transition:border-color var(--t-med) var(--ease-out), background var(--t-med) var(--ease-out), transform var(--t-med) var(--ease-out); }
+  #drop .glyph{ color:var(--acc-hi); transition:transform var(--t-med) var(--ease-out); }
+  #drop .glyph svg{ width:38px; height:38px; display:block; }
+  #drop .big{ font-size:var(--fs-xl); font-weight:600; color:var(--ink); }
+  #drop .sub{ font-size:var(--fs-body); color:var(--mut); max-width:34ch; }
+  #stage.dragging #drop .card{ border-color:var(--acc); background:var(--acc-ghost); transform:scale(1.02); }
+  #stage.dragging #drop .glyph{ transform:translateY(-3px) scale(1.08); }
+
+  #loading{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:13px;
+            background:rgba(10,13,20,.74); z-index:5; font-size:var(--fs-md); color:var(--ink); }
+  #loading.hidden{ display:none; }
+  #loading .spin{ width:26px; height:26px; border:3px solid var(--e4); border-top-color:var(--acc); border-radius:50%; animation:spin .8s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  #err{ position:absolute; left:14px; top:14px; background:#3a1414; color:#ffc4c4; border:1px solid #7a2a2a;
+        padding:9px 13px; border-radius:var(--r-md); max-width:60%; display:none; z-index:6; box-shadow:var(--sh-2); }
+
+  /* ---------- SIDEBAR ---------- */
+  #sidebar{ width:360px; flex:0 0 auto; background:var(--e1); border-left:1px solid var(--line);
+            box-shadow:-8px 0 24px rgba(0,0,0,.25); overflow-y:auto; display:flex; flex-direction:column;
+            transition:transform var(--t-slow) var(--ease-out); }
+  #sidebar.collapsed{ display:none; }
+  .side-head{ display:flex; align-items:center; gap:var(--sp-2); padding:11px 13px; border-bottom:1px solid var(--line);
+              position:sticky; top:0; background:var(--glass-bg); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); z-index:1; }
+  .side-head strong{ font-size:var(--fs-body); font-weight:600; }
+  #addJoint{ margin-left:auto; background:var(--e2); color:var(--ink); border:1px solid var(--line-2);
+             border-radius:var(--r-md); padding:6px 9px; font:inherit; font-size:var(--fs-body); max-width:180px; }
+  .side-note{ color:var(--mut); font-size:var(--fs-small); line-height:1.5; padding:9px 13px; border-bottom:1px solid var(--line); }
+  #panels{ padding:var(--sp-2); display:flex; flex-direction:column; gap:var(--sp-3); }
+  .side-empty{ color:var(--mut); font-size:var(--fs-small); padding:16px 8px; line-height:1.55; }
+  .jcard{ background:var(--e2); border:1px solid var(--line); border-radius:var(--r-md); padding:7px 9px;
+          box-shadow:var(--sh-1); animation:cardIn var(--t-med) var(--ease-out); }
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:none; } }
+  .jcard .jhead{ display:flex; align-items:center; gap:8px; font-size:var(--fs-small); margin-bottom:3px; }
+  .jcard .jhead b{ font-weight:600; color:var(--ink); }
+  .jcard .jhead .key{ color:var(--mut); display:flex; gap:8px; margin-left:auto; font-size:var(--fs-caption); }
+  .jcard .jhead .key span i{ display:inline-block; width:12px; height:3px; border-radius:2px; vertical-align:2px; margin-right:3px; }
+  .jcard .rm{ cursor:pointer; color:var(--faint); border:none; background:none; padding:0 2px; display:flex; opacity:0; transition:opacity var(--t-fast); }
+  .jcard:hover .rm,.jcard:focus-within .rm{ opacity:1; }
+  .jcard .rm:hover{ color:#ffb4b4; }
+  .jcard .rm svg{ width:13px; height:13px; }
+  .jcard canvas{ display:block; width:100%; height:110px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ display:flex; flex-direction:column; gap:9px; padding:10px var(--sp-4) 12px; background:var(--glass-bg);
+          backdrop-filter:blur(16px) saturate(1.4); -webkit-backdrop-filter:blur(16px) saturate(1.4);
+          border-top:1px solid var(--line); box-shadow:var(--glass-shadow); flex:0 0 auto; }
+  .f-row{ display:flex; align-items:center; gap:var(--sp-3); flex-wrap:wrap; }
+  .f-row.transport{ flex-wrap:nowrap; }
+  #play{ width:44px; height:44px; border-radius:var(--r-pill); flex:0 0 auto; padding:0; }
+  #play svg{ width:18px; height:18px; }
+  #play .ico-pause{ display:none; } #play.is-playing .ico-play{ display:none; } #play.is-playing .ico-pause{ display:block; }
+  #tlabel{ font-size:var(--fs-small); color:var(--ink-2); min-width:148px; text-align:right; white-space:nowrap; }
+  .divider{ width:1px; height:22px; background:var(--line-2); flex:0 0 auto; }
+  .f-group{ display:flex; align-items:center; gap:var(--sp-2); }
+
+  /* timeline */
+  .tl{ position:relative; flex:1 1 320px; min-width:180px; height:40px; background:var(--e2);
+       border-radius:var(--r-md); box-shadow:inset 0 0 0 1px var(--line); cursor:pointer; touch-action:none; }
+  .tl canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; border-radius:var(--r-md); }
+  .tl #tlHandles{ position:absolute; inset:0; pointer-events:none; }
+  .tl .trimh{ position:absolute; top:-3px; height:46px; width:24px; margin-left:-12px; background:transparent;
+              border:none; cursor:ew-resize; touch-action:none; padding:0; pointer-events:auto; }
+  .tl .trimh::before{ content:""; position:absolute; left:50%; top:6px; bottom:6px; width:3px; margin-left:-1.5px;
+              border-radius:99px; background:var(--acc); box-shadow:0 0 0 1px rgba(0,0,0,.4);
+              transition:background var(--t-fast), box-shadow var(--t-fast); }
+  .tl .trimh:hover::before,.tl .trimh:focus-visible::before{ background:var(--acc-hi); box-shadow:0 0 0 4px var(--acc-ghost); }
+  .tl .trimh::after{ content:""; position:absolute; left:50%; top:14px; width:7px; height:7px; margin-left:-3.5px; border-radius:50%; background:var(--acc); }
+  .tl:focus-visible{ box-shadow:var(--sh-focus), inset 0 0 0 1px var(--line); }
+
+  /* segmented camera */
+  .seg{ display:inline-flex; padding:3px; gap:2px; background:var(--e2); border-radius:var(--r-md);
+        box-shadow:inset 0 0 0 1px var(--line); position:relative; }
+  .seg input{ position:absolute; opacity:0; pointer-events:none; }
+  .seg label{ position:relative; z-index:1; padding:5px 12px; border-radius:var(--r-sm); font-size:var(--fs-body);
+        color:var(--ink-2); cursor:pointer; transition:color var(--t-fast) var(--ease); white-space:nowrap; }
+  .seg input:checked + label{ color:var(--on-acc); }
+  .seg input:focus-visible + label{ box-shadow:var(--sh-focus); }
+  .seg::before{ content:""; position:absolute; top:3px; bottom:3px; left:3px; width:var(--segw,72px);
+        transform:translateX(var(--segx,0)); background:var(--acc); border-radius:var(--r-sm); box-shadow:var(--sh-1);
+        transition:transform var(--t-med) var(--ease-out), width var(--t-med) var(--ease-out); }
+  .ctl-cap{ font-size:var(--fs-caption); color:var(--mut); text-transform:uppercase; letter-spacing:var(--ls-caps); }
+
+  /* range slider */
+  input[type=range].rng{ -webkit-appearance:none; appearance:none; height:18px; width:108px; background:transparent; cursor:pointer; }
+  input[type=range].rng::-webkit-slider-runnable-track{ height:4px; border-radius:99px;
+        background:linear-gradient(var(--acc),var(--acc)) 0/var(--fill,50%) 100% no-repeat, var(--e3); }
+  input[type=range].rng::-webkit-slider-thumb{ -webkit-appearance:none; width:14px; height:14px; margin-top:-5px;
+        border-radius:50%; background:var(--ink); box-shadow:0 0 0 1px rgba(0,0,0,.4), var(--sh-1);
+        transition:transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+  input[type=range].rng:hover::-webkit-slider-thumb{ transform:scale(1.15); }
+  input[type=range].rng:active::-webkit-slider-thumb{ transform:scale(1.05); box-shadow:0 0 0 6px var(--acc-ghost), var(--sh-1); }
+  input[type=range].rng:focus-visible::-webkit-slider-thumb{ box-shadow:var(--sh-focus); }
+  input[type=range].rng::-moz-range-track{ height:4px; border-radius:99px; background:var(--e3); }
+  input[type=range].rng::-moz-range-progress{ height:4px; border-radius:99px; background:var(--acc); }
+  input[type=range].rng::-moz-range-thumb{ width:14px; height:14px; border:none; border-radius:50%; background:var(--ink); box-shadow:var(--sh-1); }
+  #speedl{ font-size:var(--fs-small); color:var(--ink-2); min-width:30px; }
+
+  /* toggle switch */
+  .sw{ display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none; color:var(--ink-2); font-size:var(--fs-body); }
+  .sw input{ position:absolute; opacity:0; width:0; height:0; }
+  .sw .track{ position:relative; width:34px; height:20px; border-radius:99px; background:var(--e3);
+        box-shadow:inset 0 0 0 1px var(--line-2); transition:background var(--t-fast) var(--ease); flex:0 0 auto; }
+  .sw .track::after{ content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%;
+        background:var(--ink-2); box-shadow:var(--sh-1); transition:transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
+  .sw input:checked + .track{ background:var(--acc); box-shadow:inset 0 0 0 1px var(--acc-press); }
+  .sw input:checked + .track::after{ transform:translateX(14px); background:var(--on-acc); }
+  .sw input:focus-visible + .track{ box-shadow:var(--sh-focus); }
+  .sw input:disabled + .track{ opacity:.4; }
+  .sw:has(input:disabled){ cursor:not-allowed; color:var(--faint); }
+  .sw:hover input:not(:disabled) + .track::after{ background:var(--ink); }
+
+  /* ---------- LANDING ---------- */
+  .about{ background:var(--e1); border-top:1px solid var(--line); padding:52px 20px 60px; }
+  .about .wrap{ max-width:820px; margin:0 auto; }
+  .about h2.lead{ font-size:var(--fs-2xl); margin:0 0 .35rem; color:var(--ink); letter-spacing:var(--ls-h1); font-weight:700; }
+  .about .tag{ color:var(--mut); font-size:var(--fs-lg); margin:0 0 1.6rem; }
+  .about h3{ font-size:var(--fs-lg); margin:1.9rem 0 .55rem; color:var(--ink); letter-spacing:var(--ls-h2); }
+  .about p, .about li{ color:var(--ink-2); font-size:var(--fs-base); line-height:var(--lh-prose); font-variant-numeric:normal; }
+  .about ul,.about ol{ padding-left:1.15rem; } .about li{ margin:.3rem 0; }
+  .about a{ color:var(--acc); } .about strong{ color:var(--ink); }
+  .about code{ background:var(--e2); padding:1px 6px; border-radius:var(--r-xs); font-size:.9em; }
+  .about .faq dt{ font-weight:600; color:var(--ink); margin-top:1rem; }
+  .about .faq dd{ margin:.25rem 0 0; color:var(--ink-2); }
+  .about .credit{ margin-top:2.2rem; padding-top:1.4rem; border-top:1px solid var(--line); }
+  .features{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin:1.2rem 0 .4rem; }
+  .feature{ background:var(--e2); border:1px solid var(--line); border-radius:var(--r-md); padding:16px; }
+  .feature .fi{ color:var(--acc-hi); margin-bottom:8px; } .feature .fi svg{ width:20px; height:20px; }
+  .feature b{ display:block; color:var(--ink); font-size:var(--fs-base); margin-bottom:3px; }
+  .feature span{ color:var(--mut); font-size:var(--fs-small); line-height:1.5; }
+  .bridge{ background:var(--bridge-bg); color:var(--bridge-text); text-align:center; padding:42px 20px; }
+  .bridge h3{ margin:0 0 8px; color:var(--bridge-text); font-size:var(--fs-xl); }
+  .bridge p{ color:var(--bridge-muted); margin:0 0 18px; font-variant-numeric:normal; }
+  .bridge a.cta{ display:inline-flex; align-items:center; gap:8px; background:var(--bridge-accent); color:#fff;
+        text-decoration:none; font-weight:600; padding:11px 22px; border-radius:var(--r-md); transition:background var(--t-fast); }
+  .bridge a.cta:hover{ background:var(--bridge-accent-hover); }
+
+  #shortcuts{ position:fixed; inset:0; background:rgba(6,8,12,.6); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+              display:none; align-items:center; justify-content:center; z-index:100; }
+  #shortcuts.open{ display:flex; }
+  .sc-card{ background:var(--e3); border:1px solid var(--line-2); border-radius:var(--r-lg); box-shadow:var(--sh-pop);
+            padding:18px 22px; min-width:330px; max-width:90vw; animation:pop var(--t-med) var(--ease-out); }
+  .sc-head{ display:flex; align-items:center; justify-content:space-between; font-weight:600; margin-bottom:13px; color:var(--ink); font-size:var(--fs-md); }
+  .sc-card dl{ display:grid; grid-template-columns:auto 1fr; gap:8px 18px; margin:0; font-size:var(--fs-body); align-items:center; }
+  .sc-card dd{ color:var(--mut); margin:0; }
+  .sc-card kbd{ background:var(--e1); border:1px solid var(--line-2); border-bottom-width:2px; border-radius:var(--r-xs);
+                padding:1px 7px; font-family:inherit; font-size:.85em; color:var(--ink-2); }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; }
+  }
+
+  /* scrim + drawer close (mobile sidebar) */
+  #scrim{ position:absolute; inset:54px 0 0 0; background:rgba(0,0,0,.45); z-index:25; opacity:0;
+          pointer-events:none; transition:opacity var(--t-med) var(--ease); display:none; }
+  #scrim.show{ opacity:1; pointer-events:auto; }
+  .side-close{ display:none; margin-left:auto; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1099px){
+    #sidebar{ position:absolute; right:0; top:54px; bottom:0; z-index:30; width:min(360px,86vw);
+              transition:transform var(--t-slow) var(--ease-out); }
+    #sidebar.collapsed{ display:flex; transform:translateX(101%); pointer-events:none; }   /* slide, not display:none */
+    #sidebar:not(.collapsed){ transform:translateX(0); }
+    #scrim{ display:block; }
+    .side-close{ display:inline-flex; }
+    .side-head #addJoint{ margin-left:0; }
+    .byline{ display:none; }
+  }
+  @media (max-width:767px){
+    header{ grid-template-columns:1fr auto; gap:var(--sp-2); }
+    .h-center{ display:none; }
+    #info{ display:none; }
+    footer .f-row.controls{ overflow-x:auto; }
+    #tlabel{ min-width:0; font-size:var(--fs-caption); }
+    .about{ padding:40px 16px 48px; }
+    .about h2.lead{ font-size:var(--fs-xl); }
+  }
+  @media (pointer:coarse){
+    .btn.icon{ width:44px; height:44px; }
+    .sw{ min-height:44px; }
+    .jcard .rm{ opacity:1; }
+    .tl .trimh{ width:30px; margin-left:-15px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="h-left">
+      <h1 class="wordmark">MVNX <span>Viewer</span></h1>
+      <span class="byline">by <a href="https://www.tomeryona.com" target="_blank" rel="noopener">Tomer Yona, PhD</a></span>
+    </div>
+    <div class="h-center">
+      <button class="btn primary" id="pick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Open .mvnx</button>
+      <input id="file" type="file" accept=".mvnx,.xml" multiple style="display:none" />
+      <select id="fileSel" style="display:none"></select>
+      <span id="info" role="status">no file loaded</span>
+    </div>
+    <div class="h-right">
+      <button class="btn icon" id="legendBtn" aria-label="Colour key" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg></button>
+      <div id="legendPop" role="dialog" aria-label="Colour key">
+        <div class="row"><i style="background:var(--left)"></i>left limb</div>
+        <div class="row"><i style="background:var(--right)"></i>right limb</div>
+        <div class="row"><i style="background:var(--axial)"></i>spine / axial</div>
+        <div class="row"><i style="background:var(--contact)"></i>foot contact</div>
+        <div class="row"><i style="background:var(--com)"></i>centre of mass</div>
+      </div>
+      <button class="btn" id="toggleSide" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 2 4-5"/></svg>Joints<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M6 9l6 6 6-6"/></svg></button>
+    </div>
+  </header>
+
+  <div id="body">
+    <div id="stage">
+      <canvas id="canvas" tabindex="0" role="img" aria-label="3D motion-capture skeleton; Space to play, arrow keys to step frames"></canvas>
+      <div id="scaleNote">Z up · grid 0.25 m</div>
+      <div id="drop">
+        <div class="card">
+          <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></div>
+          <div class="big">Drop an .mvnx file</div>
+          <div class="sub">or click “Open .mvnx” — files stay in your browser, nothing is uploaded.</div>
+        </div>
+      </div>
+      <div id="loading" class="hidden" role="status" aria-live="polite"><div class="spin"></div><span id="loadingTxt">Parsing…</span></div>
+      <div id="err" role="alert"></div>
+    </div>
+
+    <aside id="sidebar" class="collapsed">
+      <div class="side-head">
+        <strong>Joint angles</strong>
+        <select id="addJoint" aria-label="Add joint chart"><option value="">+ add joint…</option></select>
+        <button class="btn icon side-close" id="sideClose" aria-label="Close joints panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <div class="side-note">ZXY Euler, degrees. + ≈ flexion / abduction / internal-rotation (MVN convention).
+        Hip / knee / ankle are labelled FE / AA / IER (ankle ch.1 = DF/PF); spine, shoulder, foot and other joints
+        are shown as raw Z / X / Y.</div>
+      <div id="panels">
+        <div class="side-empty">Add a joint to plot its angle trace through the whole file.
+          The moving dot tracks the current frame. Click or drag on a chart to scrub the 3D view.</div>
+      </div>
+    </aside>
+    <div id="scrim"></div>
+  </div>
+
+  <footer>
+    <div class="f-row transport">
+      <button class="btn primary" id="play" aria-label="Play"><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg></button>
+      <div id="timeline" class="tl" role="slider" tabindex="0" aria-label="Playback position" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="Frame 0">
+        <canvas id="tlCanvas"></canvas>
+        <div id="tlHandles">
+          <button id="trimHIn" class="trimh" aria-label="Trim start" tabindex="0"></button>
+          <button id="trimHOut" class="trimh" aria-label="Trim end" tabindex="0"></button>
+        </div>
+      </div>
+      <span id="tlabel">– / –</span>
+    </div>
+    <div class="f-row controls">
+      <div class="seg" role="radiogroup" aria-label="Camera mode">
+        <input type="radio" name="cam" id="cam-static" value="static" checked><label for="cam-static">Static</label>
+        <input type="radio" name="cam" id="cam-follow" value="follow"><label for="cam-follow">Follow</label>
+        <input type="radio" name="cam" id="cam-tread" value="treadmill"><label for="cam-tread">Treadmill</label>
+      </div>
+      <div class="f-group"><span class="ctl-cap">speed</span>
+        <input id="speed" class="rng" type="range" min="0.1" max="2" step="0.1" value="1" aria-label="Playback speed" />
+        <span id="speedl">1.0×</span>
+      </div>
+      <div class="divider"></div>
+      <div class="f-group">
+        <label class="sw"><input id="lower" type="checkbox"><span class="track"></span><span>lower body</span></label>
+        <label class="sw"><input id="contacts" type="checkbox" checked><span class="track"></span><span>contacts</span></label>
+        <label class="sw"><input id="com" type="checkbox"><span class="track"></span><span>CoM</span></label>
+      </div>
+      <div class="divider"></div>
+      <button class="btn icon" id="resetView" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+    </div>
+  </footer>
+</div>
+
+<section class="about">
+  <div class="wrap">
+    <h2 class="lead">MVNX Viewer</h2>
+    <p class="tag">A free, browser-based viewer for <strong>.mvnx</strong> motion-capture files — the XML export from Movella&nbsp;/&nbsp;Xsens MVN Analyze.</p>
+    <p>MVNX Viewer lets you open and inspect an <strong>.mvnx</strong> file directly in your web browser: play back the 3D body skeleton, scrub frame-by-frame, plot per-joint angles, see foot-contact events on a timeline, and track the centre of mass. There is nothing to install, and your data never leaves your computer — the file is parsed locally in the browser.</p>
+
+    <h3>What is an .mvnx file?</h3>
+    <p>An <strong>.mvnx</strong> file is the open XML export produced by Movella / Xsens MVN motion-capture software. It contains, per frame, the 3D positions and orientations of the body segments, joint angles, centre of mass, and foot-contact flags. MVNX Viewer reads this <strong>.mvnx</strong> export; it does <em>not</em> open the proprietary binary <code>.mvn</code> project file — export your recording to <code>.mvnx</code> from MVN Analyze first.</p>
+
+    <h3>Features</h3>
+    <div class="features">
+      <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg></div><b>3D skeleton playback</b><span>Rotate, zoom, play and frame-step; follow-cam and treadmill-lock for walking and running.</span></div>
+      <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 2 4-5"/></svg></div><b>Per-joint angle charts</b><span>Plot any joint's angles across the file with a live cursor synced to the 3D view; click to scrub.</span></div>
+      <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V6M9 18v-5M14 18V9M19 18v-8"/></svg></div><b>Foot-contact timeline</b><span>Stance ribbons and touchdown / toe-off markers from the recording's foot-contact data.</span></div>
+      <div class="feature"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div><b>Centre-of-mass tracking</b><span>Show the centre of mass and its trajectory trail through the movement.</span></div>
+    </div>
+
+    <h3>How to use it</h3>
+    <ol>
+      <li>Open MVNX Viewer and drag your <code>.mvnx</code> file onto the window (or click “Open .mvnx”).</li>
+      <li>Press play or scrub the timeline; open the Joints panel to add angle charts.</li>
+      <li>Everything runs in your browser — no upload, no account, no install.</li>
+    </ol>
+
+    <h3>Privacy</h3>
+    <p>MVNX Viewer is fully client-side. Your <strong>.mvnx</strong> file is read and rendered in your own browser and is never uploaded to any server.</p>
+
+    <h3>Frequently asked questions</h3>
+    <dl class="faq">
+      <dt>Is MVNX Viewer free?</dt><dd>Yes — it is free to use, with no account or installation.</dd>
+      <dt>Does it upload my data?</dt><dd>No. Files are parsed locally in your browser; nothing leaves your machine.</dd>
+      <dt>Can it open .mvn files?</dt><dd>No. It opens the <code>.mvnx</code> XML export. Export your recording to <code>.mvnx</code> from MVN Analyze first.</dd>
+      <dt>What do I need to run it?</dt><dd>A current web browser (Chrome, Edge, Firefox or Safari) and your <code>.mvnx</code> file.</dd>
+      <dt>What are MVNX, Movella and Xsens?</dt><dd>MVNX is the XML motion-capture export format from Movella (formerly Xsens) MVN inertial motion-capture systems.</dd>
+    </dl>
+
+    <p class="credit">MVNX Viewer is built and maintained by <a href="https://www.tomeryona.com" target="_blank" rel="noopener"><strong>Tomer Yona, PhD</strong></a> — a biomechanics researcher working on wearable sensors, motion capture and measurement validation.</p>
+  </div>
+</section>
+<div class="bridge">
+  <h3>More research &amp; tools</h3>
+  <p>MVNX Viewer is one of several open tools from Tomer Yona, PhD.</p>
+  <a class="cta" href="https://www.tomeryona.com" target="_blank" rel="noopener">Visit tomeryona.com
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+
+<div id="shortcuts" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts">
+  <div class="sc-card">
+    <div class="sc-head">Keyboard shortcuts<button id="scClose" class="btn icon" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <dl>
+      <dt><kbd>Space</kbd></dt><dd>play / pause</dd>
+      <dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>step 1 frame (<kbd>Shift</kbd> = 10)</dd>
+      <dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>jump to trim start / end</dd>
+      <dt><kbd>I</kbd> <kbd>O</kbd></dt><dd>set trim in / out here</dd>
+      <dt><kbd>Backspace</kbd></dt><dd>reset trim</dd>
+      <dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>camera static / follow / treadmill</dd>
+      <dt><kbd>L</kbd> <kbd>C</kbd> <kbd>M</kbd></dt><dd>toggle lower-body / contacts / CoM</dd>
+      <dt><kbd>J</kbd></dt><dd>toggle joints panel</dd>
+      <dt><kbd>R</kbd></dt><dd>reset view</dd>
+      <dt><kbd>?</kbd></dt><dd>this help</dd>
+    </dl>
+  </div>
+</div>
+<div class="vh" aria-live="polite" id="sr"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+// ---- segment hierarchy ----
+const BONES = [
+  ['Pelvis','L5'],['L5','L3'],['L3','T12'],['T12','T8'],['T8','Neck'],['Neck','Head'],
+  ['T8','RightShoulder'],['RightShoulder','RightUpperArm'],['RightUpperArm','RightForeArm'],['RightForeArm','RightHand'],
+  ['T8','LeftShoulder'],['LeftShoulder','LeftUpperArm'],['LeftUpperArm','LeftForeArm'],['LeftForeArm','LeftHand'],
+  ['Pelvis','RightUpperLeg'],['RightUpperLeg','RightLowerLeg'],['RightLowerLeg','RightFoot'],['RightFoot','RightToe'],
+  ['Pelvis','LeftUpperLeg'],['LeftUpperLeg','LeftLowerLeg'],['LeftLowerLeg','LeftFoot'],['LeftFoot','LeftToe']
+];
+const LOWER = new Set(['Pelvis','RightUpperLeg','RightLowerLeg','RightFoot','RightToe','LeftUpperLeg','LeftLowerLeg','LeftFoot','LeftToe']);
+const COL = { left:0x2dd4bf, right:0xf5a623, axial:0x8b94a6, contact:0x34d399, com:0xfbbf24 };
+const side = lab => lab.startsWith('Left') ? 'left' : lab.startsWith('Right') ? 'right' : 'axial';
+const CONTACTS = new Set(['LeftFoot','LeftToe','RightFoot','RightToe']);
+
+// neutral A-pose for the idle empty-state ghost (Z-up, metres)
+const GHOST = {
+  Pelvis:[0,0,.95], L5:[0,-.01,1.04], L3:[0,-.01,1.13], T12:[0,-.005,1.22], T8:[0,0,1.33], Neck:[0,.01,1.47], Head:[0,.02,1.60],
+  RightShoulder:[-.06,0,1.42], RightUpperArm:[-.18,0,1.40], RightForeArm:[-.205,.02,1.13], RightHand:[-.215,.03,.88],
+  LeftShoulder:[.06,0,1.42], LeftUpperArm:[.18,0,1.40], LeftForeArm:[.205,.02,1.13], LeftHand:[.215,.03,.88],
+  RightUpperLeg:[-.09,0,.90], RightLowerLeg:[-.10,.01,.48], RightFoot:[-.10,0,.08], RightToe:[-.10,.14,.03],
+  LeftUpperLeg:[.09,0,.90], LeftLowerLeg:[.10,.01,.48], LeftFoot:[.10,0,.08], LeftToe:[.10,.14,.03]
+};
+
+// ====================== MVNX PARSER (ported verbatim) ======================
+function parseMVNX(text){
+  const doc = new DOMParser().parseFromString(text, 'application/xml');
+  if (doc.querySelector('parsererror')) throw new Error('Not valid XML / not an MVNX file.');
+  const tag = (root, name) => [...root.getElementsByTagNameNS('*', name)];
+  const segEls = tag(doc, 'segment').filter(s => s.parentNode && s.parentNode.localName === 'segments');
+  if (!segEls.length) throw new Error('No <segments> found — is this an MVNX export?');
+  const labels = segEls.map(s => s.getAttribute('label'));
+  const nseg = labels.length;
+  const label2idx = {}; labels.forEach((l,i) => label2idx[l] = i);
+  const jointEls = tag(doc, 'joint').filter(j => j.parentNode && j.parentNode.localName === 'joints');
+  const jointLabels = jointEls.map(j => j.getAttribute('label'));
+  const njoints = jointLabels.length;
+  const cdEls = tag(doc, 'contactDefinition');
+  let contactLabels = cdEls.map(c => c.getAttribute('label'));
+  const subj = tag(doc, 'subject')[0];
+  const frameRate = subj && subj.getAttribute('frameRate') ? parseInt(subj.getAttribute('frameRate')) : 100;
+  if (!frameRate || frameRate < 1) throw new Error('Bad / missing frameRate.');
+  const frameEls = tag(doc, 'frame').filter(f => f.getAttribute('type') === 'normal');
+  const nframes = frameEls.length;
+  if (!nframes) throw new Error('No normal motion frames found.');
+  const pos = new Float32Array(nframes * nseg * 3);
+  const com = new Float32Array(nframes * 3); let hasCoM = false;
+  const jang = njoints ? new Float32Array(nframes * njoints * 3) : null; let hasJoints = false;
+  const contacts = []; let hasContacts = false, ncontact = 0;
+  for (let fi = 0; fi < nframes; fi++){
+    const f = frameEls[fi];
+    const p = f.getElementsByTagNameNS('*','position')[0];
+    if (!p) throw new Error(`Frame ${fi}: missing <position>.`);
+    const v = p.textContent.trim().split(/\s+/);
+    if (v.length < nseg*3) throw new Error(`Frame ${fi}: expected ${nseg*3} position values, got ${v.length}.`);
+    for (let k = 0; k < nseg*3; k++) pos[fi*nseg*3 + k] = parseFloat(v[k]);
+    if (njoints){
+      const ja = f.getElementsByTagNameNS('*','jointAngle')[0];
+      if (ja){ const jv = ja.textContent.trim().split(/\s+/);
+        if (jv.length < njoints*3) throw new Error(`Frame ${fi}: expected ${njoints*3} jointAngle values, got ${jv.length}.`);
+        hasJoints = true; for (let k = 0; k < njoints*3; k++) jang[fi*njoints*3 + k] = parseFloat(jv[k]); }
+    }
+    const cm = f.getElementsByTagNameNS('*','centerOfMass')[0]; let cmOK=false;
+    if (cm){ const cv = cm.textContent.trim().split(/\s+/);
+      if (cv.length >= 3){ hasCoM = true; cmOK=true; com[fi*3]=parseFloat(cv[0]); com[fi*3+1]=parseFloat(cv[1]); com[fi*3+2]=parseFloat(cv[2]); } }
+    if (!cmOK && fi>0){ com[fi*3]=com[(fi-1)*3]; com[fi*3+1]=com[(fi-1)*3+1]; com[fi*3+2]=com[(fi-1)*3+2]; }  // forward-fill gaps (no origin spike)
+    const fc = f.getElementsByTagNameNS('*','footContacts')[0];
+    if (fc){ hasContacts = true; const cc = fc.textContent.trim().split(/\s+/).map(Number);
+      ncontact = Math.max(ncontact, cc.length); contacts.push(cc); }
+    else contacts.push(null);
+  }
+  if (!contactLabels.length && hasContacts && ncontact === 4)
+    contactLabels = ['LeftFoot_Heel','LeftFoot_Toe','RightFoot_Heel','RightFoot_Toe'];
+  return { labels, nseg, label2idx, jointLabels, njoints, jang, hasJoints,
+           frameRate, nframes, pos, com, hasCoM, contacts, hasContacts, contactLabels };
+}
+
+// ====================== THREE.JS SCENE ======================
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance', stencil:false });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x141925, 7, 30);
+const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 1000);
+camera.up.set(0,0,1);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = !RM;
+controls.addEventListener('change', invalidate);
+
+// environment (PMREM, once)
+{ const pmrem = new THREE.PMREMGenerator(renderer); pmrem.compileEquirectangularShader();
+  const envRT = pmrem.fromScene(new RoomEnvironment(renderer), 0.04);
+  scene.environment = envRT.texture; pmrem.dispose(); }   // fromScene is synchronous; initial needsRender=true covers first paint
+
+// lighting rig (world-fixed)
+const key  = new THREE.DirectionalLight(0xfff4e8, 2.6);  key.position.set(2.6,-3.4,4.2); key.castShadow = true;
+const fill = new THREE.DirectionalLight(0x9fc0ff, 0.55); fill.position.set(-3.2,-2.0,2.0);
+const rim  = new THREE.DirectionalLight(0xbfe3ff, 1.1);  rim.position.set(-1.2,3.6,2.4);
+const hemi = new THREE.HemisphereLight(0xdfe9ff, 0x141821, 0.35);
+scene.add(key, key.target, fill, rim, hemi);
+key.shadow.mapSize.set(1024,1024);
+{ const sc=key.shadow.camera; sc.near=0.5; sc.far=16; sc.left=-3; sc.right=3; sc.top=3.5; sc.bottom=-1; sc.updateProjectionMatrix(); }
+key.shadow.bias=-0.0008; key.shadow.normalBias=0.02; key.shadow.radius=4;
+
+const subject = new THREE.Group(); scene.add(subject);
+const ghost = new THREE.Group(); scene.add(ghost);
+
+// floor shadow catcher + radial-fade grid
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(80,80), new THREE.ShadowMaterial({ opacity:0.32, color:0x000000 }));
+floor.receiveShadow = true; floor.renderOrder = 0; scene.add(floor);
+const gridTex = makeGridTexture();
+const gridPlane = new THREE.Mesh(new THREE.PlaneGeometry(8,8),
+  new THREE.MeshBasicMaterial({ map:gridTex, transparent:true, depthWrite:false, opacity:0.9, toneMapped:false }));
+gridPlane.renderOrder = 1; scene.add(gridPlane);
+
+function makeGridTexture(){
+  const S=512, cv=document.createElement('canvas'); cv.width=cv.height=S; const g=cv.getContext('2d');
+  g.clearRect(0,0,S,S); const cells=32, step=S/cells;                       // 8 m / 0.25 m = 32 cells
+  for(let i=0;i<=cells;i++){ const p=Math.round(i*step)+0.5, major=(i%4===0);
+    g.strokeStyle = major ? 'rgba(150,170,200,0.55)' : 'rgba(120,140,170,0.30)'; g.lineWidth = major?1.4:0.8;
+    g.beginPath(); g.moveTo(p,0); g.lineTo(p,S); g.moveTo(0,p); g.lineTo(S,p); g.stroke(); }
+  g.globalCompositeOperation='destination-in';                              // radial alpha fade
+  const rg=g.createRadialGradient(S/2,S/2,S*0.10,S/2,S/2,S*0.50);
+  rg.addColorStop(0,'rgba(0,0,0,1)'); rg.addColorStop(0.72,'rgba(0,0,0,1)'); rg.addColorStop(1,'rgba(0,0,0,0)');
+  g.fillStyle=rg; g.fillRect(0,0,S,S);
+  const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t;
+}
+
+// shared materials (never disposed across rebuilds)
+const boneMat = { left:boneMaterial(COL.left), right:boneMaterial(COL.right), axial:boneMaterial(COL.axial) };
+const jointMat = { left:jointMaterial(COL.left), right:jointMaterial(COL.right), axial:jointMaterial(COL.axial) };
+const contactJointMat = { LeftFoot:jointMaterial(COL.left), LeftToe:jointMaterial(COL.left),
+                          RightFoot:jointMaterial(COL.right), RightToe:jointMaterial(COL.right) };
+const ghostMat = new THREE.MeshStandardMaterial({ color:0x3a4456, roughness:0.85, metalness:0, transparent:true, opacity:0.20, envMapIntensity:0.3 });
+const comMat = new THREE.MeshPhysicalMaterial({ color:0xfbbf24, roughness:0.18, metalness:0, clearcoat:0.8, clearcoatRoughness:0.2,
+  emissive:new THREE.Color(0xfbbf24), emissiveIntensity:0.55, envMapIntensity:1.2 });
+function boneMaterial(hex){ return new THREE.MeshStandardMaterial({ color:hex, roughness:0.62, metalness:0.05, envMapIntensity:0.55 }); }
+function jointMaterial(hex){ const c=new THREE.Color(hex); return new THREE.MeshPhysicalMaterial({ color:hex, roughness:0.28, metalness:0,
+  clearcoat:0.6, clearcoatRoughness:0.35, envMapIntensity:1.0, emissive:c.clone().multiplyScalar(0.06), emissiveIntensity:1.0 }); }
+
+const BONE_GEO  = new THREE.CylinderGeometry(0.012, 0.022, 1, 12, 1, false);
+const JOINT_GEO = new THREE.SphereGeometry(1, 16, 12); const JOINT_R = 0.026;
+const _A=new THREE.Vector3(),_B=new THREE.Vector3(),_dir=new THREE.Vector3(),_mid=new THREE.Vector3(),_up=new THREE.Vector3(0,1,0),_q=new THREE.Quaternion();
+function placeCapsule(m, ax,ay,az, bx,by,bz){
+  _A.set(ax,ay,az); _B.set(bx,by,bz); _dir.subVectors(_B,_A); const len=_dir.length();
+  if(len<1e-6){ m.visible=false; return; } m.visible=true;
+  _dir.divideScalar(len); _mid.addVectors(_A,_B).multiplyScalar(0.5);
+  m.position.copy(_mid); _q.setFromUnitVectors(_up,_dir); m.quaternion.copy(_q); m.scale.set(1,len,1);
+}
+
+// glow sprites
+const comGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map:makeGlow('251,191,36'), transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, toneMapped:false }));
+comGlow.scale.setScalar(0.22); comGlow.visible=false; subject.add(comGlow);
+const contactGlowTex = makeGlow('52,211,153');
+function makeGlow(rgb){
+  const S=128, cv=document.createElement('canvas'); cv.width=cv.height=S; const g=cv.getContext('2d');
+  const rg=g.createRadialGradient(S/2,S/2,0,S/2,S/2,S/2);
+  rg.addColorStop(0,`rgba(${rgb},0.95)`); rg.addColorStop(0.35,`rgba(${rgb},0.45)`); rg.addColorStop(1,`rgba(${rgb},0)`);
+  g.fillStyle=rg; g.fillRect(0,0,S,S); const t=new THREE.CanvasTexture(cv); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+
+// ====================== STATE ======================
+let DATA=null, renderedBones=[], renderedSegs=[], boneMeshes=[], jointMeshes=[], contactGlows={},
+    comMarker=null, comTrail=null, comTrailGeom=null,
+    frame=0, framePos=0, playing=false, speed=1, lastT=0, homeCam=null, homeTarget=null,
+    camMode='static', lastPelvis=null, pelvis0={x:0,y:0}, fitCenter={x:0,y:0,z:0},
+    trimIn=0, trimOut=0, draggingTrim=null, scrubbing=false, hoverX=null,
+    needsRender=true, ghostVisible=true, lastGhost=0;
+const _lit={}, _lastPel={x:0,y:0};
+function invalidate(){ needsRender=true; }
+
+// ---- build skeleton (capsules + lit joints) ----
+function buildSkeleton(){
+  boneMeshes.forEach(m=>subject.remove(m)); boneMeshes=[];
+  jointMeshes.forEach(m=>subject.remove(m)); jointMeshes=[];
+  Object.values(contactGlows).forEach(s=>{ subject.remove(s); s.material.dispose(); }); contactGlows={};
+  const lowerOnly = document.getElementById('lower').checked;
+  const present = lab => DATA.label2idx[lab] !== undefined && (!lowerOnly || LOWER.has(lab));
+  renderedBones = BONES.filter(([a,b]) => present(a) && present(b));
+  renderedSegs  = [...new Set(renderedBones.flat())];
+  renderedBones.forEach(([a,b]) => {
+    const m = new THREE.Mesh(BONE_GEO, boneMat[side(b)]); m.userData={a,b}; m.castShadow=true; m.frustumCulled=false;
+    subject.add(m); boneMeshes.push(m);
+  });
+  renderedSegs.forEach(lab => {
+    const mat = contactJointMat[lab] || jointMat[side(lab)];
+    const m = new THREE.Mesh(JOINT_GEO, mat); m.scale.setScalar(JOINT_R); m.userData.label=lab; m.castShadow=true;
+    subject.add(m); jointMeshes.push(m);
+    if (CONTACTS.has(lab)){
+      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map:contactGlowTex, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, toneMapped:false }));
+      s.scale.setScalar(0.16); s.visible=false; subject.add(s); contactGlows[lab]=s;
+    }
+  });
+}
+
+function buildCoM(){
+  if (comMarker){ subject.remove(comMarker); comMarker.geometry.dispose(); comMarker=null; }
+  if (comTrail){ subject.remove(comTrail); comTrail.geometry.dispose(); comTrail.material.dispose(); comTrail=null; }
+  if (!DATA.hasCoM){ comGlow.visible=false; return; }
+  comMarker = new THREE.Mesh(new THREE.SphereGeometry(0.03,16,12), comMat); subject.add(comMarker);
+  comTrailGeom = new THREE.BufferGeometry();
+  comTrailGeom.setAttribute('position', new THREE.BufferAttribute(DATA.com.slice(), 3));
+  comTrail = new THREE.Line(comTrailGeom, new THREE.LineBasicMaterial({ color:0xfbbf24, transparent:true, opacity:0.85, blending:THREE.AdditiveBlending, toneMapped:false }));
+  comTrail.frustumCulled=false; subject.add(comTrail);
+}
+
+// idle ghost skeleton
+function buildGhost(){
+  BONES.forEach(([a,b]) => {
+    if (!(a in GHOST) || !(b in GHOST)) return;
+    const m=new THREE.Mesh(BONE_GEO, ghostMat); m.frustumCulled=false;
+    placeCapsule(m, ...GHOST[a], ...GHOST[b]); ghost.add(m);
+  });
+  for (const lab in GHOST){ const m=new THREE.Mesh(JOINT_GEO, ghostMat); m.scale.setScalar(JOINT_R*0.9); m.position.set(...GHOST[lab]); ghost.add(m); }
+  ghost.position.set(0,0,0);
+}
+buildGhost();
+controls.target.set(0,0,1); camera.position.set(2.2,-3.0,1.7); controls.update();
+
+// ====================== CHARTS (ported) ======================
+const CH=110, MARG={l:32,r:8,t:8,b:16};
+const COMP_COL=['#d55e00','#0072b2','#009e73'], COMP_DASH=[[],[6,4],[2,4]];
+const ANAT={ Hip:['FE','AA','IER'], Knee:['FE','AA','IER'], Ankle:['DF/PF','Inv/Ev','IER'] };
+function compNames(j){ for(const k in ANAT) if(j.endsWith(k)) return ANAT[k]; return ['Z','X','Y']; }
+let panels=[];
+const prettyJoint = l => l.replace(/^j/,'').replace(/([a-z0-9])([A-Z])/g,'$1 $2');
+function populateJointSelect(){
+  const sel=document.getElementById('addJoint'); sel.innerHTML='<option value="">+ add joint…</option>';
+  if(!DATA||!DATA.hasJoints) return;
+  DATA.jointLabels.forEach((l,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=prettyJoint(l); sel.appendChild(o); });
+}
+function jointSeries(ji){
+  const N=DATA.nframes,J=DATA.njoints,b=ji*3,s=[new Float32Array(N),new Float32Array(N),new Float32Array(N)];
+  for(let f=0;f<N;f++){ const o=f*J*3+b; s[0][f]=DATA.jang[o]; s[1][f]=DATA.jang[o+1]; s[2][f]=DATA.jang[o+2]; }
+  return s;
+}
+const emptyMsg='<div class="side-empty">Add a joint to plot its angle trace through the whole file. The moving dot tracks the current frame. Click or drag on a chart to scrub the 3D view.</div>';
+function clearPanels(){ panels=[]; document.getElementById('panels').innerHTML=emptyMsg; }
+function addPanel(ji){
+  if(!DATA||!DATA.hasJoints||panels.some(p=>p.ji===ji)) return;
+  document.querySelector('.side-empty')?.remove();
+  const series=jointSeries(ji), names=compNames(DATA.jointLabels[ji]);
+  let ymin=Infinity,ymax=-Infinity;
+  for(let c=0;c<3;c++) for(let f=0;f<DATA.nframes;f++){ const v=series[c][f]; if(v<ymin)ymin=v; if(v>ymax)ymax=v; }
+  if(!isFinite(ymin)||ymin===ymax){ ymin=(isFinite(ymin)?ymin:0)-1; ymax=(isFinite(ymax)?ymax:0)+1; }
+  const pad=(ymax-ymin)*0.08||1; ymin-=pad; ymax+=pad;
+  const ym=v=>MARG.t+(1-(v-ymin)/(ymax-ymin))*(CH-MARG.t-MARG.b);
+  const el=document.createElement('div'); el.className='jcard';
+  el.innerHTML=`<div class="jhead"><b>${prettyJoint(DATA.jointLabels[ji])}</b>`
+    +`<span class="key">${names.map((n,c)=>`<span><i style="background:${COMP_COL[c]}"></i>${n}</span>`).join('')}</span>`
+    +`<button class="rm" title="remove" aria-label="remove chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><canvas></canvas>`;
+  document.getElementById('panels').appendChild(el);
+  const cv=el.querySelector('canvas'), dpr=Math.min(devicePixelRatio,2), cw=cv.clientWidth||300;
+  cv.width=cw*dpr; cv.height=CH*dpr; const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr);
+  const p={ ji, el, canvas:cv, ctx, cw, series, ym, ymin, ymax };
+  cv.style.cursor='ew-resize';
+  const toFrame=ev=>{ const r=cv.getBoundingClientRect();
+    const f=Math.round((ev.clientX-r.left-MARG.l)/Math.max(1,(p.cw-MARG.l-MARG.r))*(DATA.nframes-1));
+    return Math.max(0,Math.min(DATA.nframes-1,f)); };
+  cv.addEventListener('pointerdown',ev=>{ stopPlay(); chartDragging=true; framePos=toFrame(ev); lastPelvis=null; setFrame(framePos); try{cv.setPointerCapture(ev.pointerId);}catch(_){}});
+  cv.addEventListener('pointermove',ev=>{ if(chartDragging){ framePos=toFrame(ev); setFrame(framePos); }});
+  cv.addEventListener('pointerup',()=>{ chartDragging=false; });
+  el.querySelector('.rm').onclick=()=>{ el.remove(); panels=panels.filter(q=>q!==p); if(!panels.length) document.getElementById('panels').innerHTML=emptyMsg; resizePanels(); };
+  panels.push(p); drawPanel(p,frame); resizePanels();
+}
+let chartDragging=false;
+function resizePanels(){ const dpr=Math.min(devicePixelRatio,2);
+  for(const p of panels){ const w=p.canvas.clientWidth; if(!w||Math.abs(w-p.cw)<1) continue;
+    p.cw=w; p.canvas.width=w*dpr; p.canvas.height=CH*dpr; p.ctx.scale(dpr,dpr); drawPanel(p,frame); } }
+function cxMap(p,f){ return MARG.l+(DATA.nframes>1?f/(DATA.nframes-1):0)*(p.cw-MARG.l-MARG.r); }
+function drawPanel(p,fr){
+  const ctx=p.ctx,W=p.cw; ctx.clearRect(0,0,W,CH);
+  ctx.strokeStyle='rgba(255,255,255,.07)'; ctx.lineWidth=1; ctx.setLineDash([]);
+  if(p.ymin<0&&p.ymax>0){ const y0=p.ym(0); ctx.beginPath(); ctx.moveTo(MARG.l,y0); ctx.lineTo(W-MARG.r,y0); ctx.stroke(); }
+  ctx.fillStyle='#9aa6b8'; ctx.font='10px Inter, system-ui'; ctx.textAlign='right';
+  ctx.fillText(p.ymax.toFixed(0)+'°',MARG.l-3,MARG.t+7); ctx.fillText(p.ymin.toFixed(0)+'°',MARG.l-3,CH-MARG.b+3);
+  const N=DATA.nframes, step=Math.max(1,Math.floor(N/Math.max(1,(W-MARG.l-MARG.r))));
+  for(let c=0;c<3;c++){ ctx.strokeStyle=COMP_COL[c]; ctx.setLineDash(COMP_DASH[c]); ctx.lineWidth=1.3; ctx.beginPath(); let first=true;
+    for(let f=0;f<N;f+=step){ const x=cxMap(p,f),y=p.ym(p.series[c][f]); first?(ctx.moveTo(x,y),first=false):ctx.lineTo(x,y); } ctx.stroke(); }
+  ctx.setLineDash([]);
+  if(DATA.hasContacts&&DATA.edges){ ctx.lineWidth=1;
+    for(const e of DATA.edges){ const ex=cxMap(p,e.f); ctx.strokeStyle=e.side==='L'?'rgba(45,212,191,.22)':'rgba(245,166,35,.22)';
+      ctx.beginPath(); ctx.moveTo(ex,MARG.t); ctx.lineTo(ex,CH-MARG.b); ctx.stroke(); } }
+  if(trimIn>0||trimOut<DATA.nframes-1){ const xi=cxMap(p,trimIn),xo=cxMap(p,trimOut),yT=MARG.t,hH=CH-MARG.t-MARG.b;
+    ctx.fillStyle='rgba(8,10,15,0.6)';
+    if(trimIn>0) ctx.fillRect(MARG.l,yT,xi-MARG.l,hH);
+    if(trimOut<DATA.nframes-1) ctx.fillRect(xo,yT,(W-MARG.r)-xo,hH);
+    ctx.strokeStyle='rgba(96,165,250,.85)'; ctx.lineWidth=1;
+    for(const xx of [xi,xo]){ ctx.beginPath(); ctx.moveTo(xx,yT); ctx.lineTo(xx,CH-MARG.b); ctx.stroke(); } }
+  const x=cxMap(p,fr); ctx.strokeStyle='#eef1f6'; ctx.globalAlpha=.45;
+  ctx.beginPath(); ctx.moveTo(x,MARG.t); ctx.lineTo(x,CH-MARG.b); ctx.stroke(); ctx.globalAlpha=1;
+  for(let c=0;c<3;c++){ const y=p.ym(p.series[c][fr]); ctx.fillStyle=COMP_COL[c]; ctx.beginPath(); ctx.arc(x,y,3.2,0,Math.PI*2); ctx.fill(); }
+}
+function refreshPanels(fr){ for(const p of panels) drawPanel(p,fr); }
+
+// ====================== FOOT CONTACTS (ported) ======================
+function debounce(arr,minRun){ const a=arr.slice(),n=a.length; let i=0;
+  while(i<n){ let j=i; while(j<n&&a[j]===a[i])j++; if(j-i<minRun&&i>0){ for(let k=i;k<j;k++)a[k]=a[i-1]; } i=j; } return a; }
+function computeContacts(){
+  const N=DATA.nframes, sd=DATA.contactLabels.map(l=>/left/i.test(l)?'L':/right/i.test(l)?'R':'?');
+  let cL=new Uint8Array(N), cR=new Uint8Array(N);
+  for(let f=0;f<N;f++){ const c=DATA.contacts[f]; if(!c) continue; let l=0,r=0;
+    for(let k=0;k<c.length;k++){ if(!c[k]) continue; if(sd[k]==='L')l=1; else if(sd[k]==='R')r=1; } cL[f]=l; cR[f]=r; }
+  const minRun=Math.max(2,Math.round(0.04*DATA.frameRate)); cL=debounce(cL,minRun); cR=debounce(cR,minRun);
+  const edges=[];
+  for(const [arr,s] of [[cL,'L'],[cR,'R']]) for(let f=1;f<N;f++) if(arr[f]!==arr[f-1]) edges.push({f,side:s,on:arr[f]===1});
+  DATA.cL=cL; DATA.cR=cR; DATA.edges=edges;
+}
+
+// ====================== UNIFIED TIMELINE ======================
+const tl=document.getElementById('tlCanvas'); const tlEl=document.getElementById('timeline');
+const trimHIn=document.getElementById('trimHIn'), trimHOut=document.getElementById('trimHOut');
+const TLH=40; let tlStatic=document.createElement('canvas'), tlStaticDirty=true, tlW0=0;
+function tlW(){ return tl.clientWidth; }
+function frameToX(f){ return (DATA&&DATA.nframes>1)?(f/(DATA.nframes-1))*tlW():0; }
+function xToFrame(clientX){ const r=tlEl.getBoundingClientRect();
+  return Math.max(0,Math.min(DATA.nframes-1,Math.round((clientX-r.left)/Math.max(1,tlW())*(DATA.nframes-1)))); }
+function ensureTlSize(){ const dpr=Math.min(devicePixelRatio,2), W=tlW();
+  if(tl.width!==Math.round(W*dpr)){ tl.width=Math.round(W*dpr); tl.height=Math.round(TLH*dpr); tlStaticDirty=true; } }
+function renderTlStatic(){
+  const dpr=Math.min(devicePixelRatio,2), W=tlW(), H=TLH;
+  tlStatic.width=Math.round(W*dpr); tlStatic.height=Math.round(H*dpr);
+  const g=tlStatic.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H);
+  g.fillStyle='rgba(255,255,255,.07)'; g.fillRect(0,34,W,3);                     // rail bg
+  const xf=f=>frameToX(f), contactsOn=DATA.hasContacts&&document.getElementById('contacts').checked;
+  if(contactsOn){
+    const runs=(arr,y,h,col)=>{ g.fillStyle=col; let s=-1;
+      for(let f=0;f<=DATA.nframes;f++){ const on=f<DATA.nframes&&arr[f];
+        if(on&&s<0)s=f; else if(!on&&s>=0){ g.fillRect(xf(s),y,Math.max(1,xf(f)-xf(s)),h); s=-1; } } };
+    runs(DATA.cL,8,5,'#2dd4bf'); runs(DATA.cR,16,5,'#f5a623');
+    for(const e of DATA.edges){ const x=xf(e.f); g.strokeStyle=e.side==='L'?'rgba(45,212,191,.6)':'rgba(245,166,35,.6)';
+      g.lineWidth=1; g.beginPath(); g.moveTo(x,e.on?30:24); g.lineTo(x,e.on?24:30); g.stroke(); }
+  }
+  if(trimIn>0||trimOut<DATA.nframes-1){ g.fillStyle='rgba(8,10,15,.55)';
+    if(trimIn>0) g.fillRect(0,0,xf(trimIn),H);
+    if(trimOut<DATA.nframes-1) g.fillRect(xf(trimOut),0,W-xf(trimOut),H);
+    g.strokeStyle='rgba(96,165,250,.7)'; g.lineWidth=1;
+    for(const xx of [xf(trimIn),xf(trimOut)]){ g.beginPath(); g.moveTo(xx,0); g.lineTo(xx,H); g.stroke(); } }
+  tlStaticDirty=false;
+}
+function drawTimeline(fr){ if(!DATA) return; ensureTlSize(); if(tlStaticDirty) renderTlStatic();
+  const g=tl.getContext('2d'), W=tlW(), H=TLH, dpr=Math.min(devicePixelRatio,2);
+  g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H); g.drawImage(tlStatic,0,0,W,H);
+  const xi=frameToX(trimIn), xp=frameToX(fr);
+  g.fillStyle='rgba(59,130,246,.9)'; g.fillRect(Math.min(xi,xp),34,Math.abs(xp-xi),3);
+  if(hoverX!=null){ g.strokeStyle='rgba(255,255,255,.25)'; g.lineWidth=1; g.beginPath(); g.moveTo(hoverX,4); g.lineTo(hoverX,H-3); g.stroke(); }
+  g.strokeStyle='#eef1f6'; g.lineWidth=1.5; g.beginPath(); g.moveTo(xp,4); g.lineTo(xp,H-3); g.stroke();
+  g.fillStyle='#eef1f6'; g.beginPath(); g.moveTo(xp-4,4); g.lineTo(xp+4,4); g.lineTo(xp,9); g.closePath(); g.fill();
+  trimHIn.style.left=frameToX(trimIn)+'px'; trimHOut.style.left=frameToX(trimOut)+'px';
+}
+function redrawTrim(){ tlStaticDirty=true; drawTimeline(frame); refreshPanels(frame); invalidate(); }
+
+// timeline scrub
+tlEl.addEventListener('pointerdown', ev=>{ if(!DATA||ev.target.closest('.trimh')) return;
+  stopPlay(); scrubbing=true; lastPelvis=null; tlEl.setPointerCapture?.(ev.pointerId);
+  framePos=xToFrame(ev.clientX); setFrame(framePos); });
+tlEl.addEventListener('pointermove', ev=>{ if(!DATA) return;
+  if(scrubbing){ framePos=xToFrame(ev.clientX); setFrame(framePos); }
+  else { const r=tlEl.getBoundingClientRect(); hoverX=ev.clientX-r.left; drawTimeline(frame); } });
+tlEl.addEventListener('pointerup', ()=>{ scrubbing=false; });
+tlEl.addEventListener('pointerleave', ()=>{ if(hoverX!=null){ hoverX=null; if(DATA) drawTimeline(frame); } });
+tlEl.addEventListener('dblclick', ev=>{ if(!DATA||ev.target.closest('.trimh')) return; trimIn=0; trimOut=DATA.nframes-1; redrawTrim(); });
+[['trimHIn','in'],['trimHOut','out']].forEach(([id,which])=>{
+  document.getElementById(id).addEventListener('pointerdown', ev=>{ if(!DATA||DATA.nframes<2) return; ev.preventDefault(); draggingTrim=which; });
+});
+window.addEventListener('pointermove', ev=>{ if(!draggingTrim||!DATA) return; const f=xToFrame(ev.clientX);
+  if(draggingTrim==='in') trimIn=Math.min(f,trimOut-1); else trimOut=Math.max(f,trimIn+1); redrawTrim(); });
+window.addEventListener('pointerup', ()=>{ draggingTrim=null; });
+
+// ====================== CAMERA FIT ======================
+function fitCamera(){
+  const box=new THREE.Box3(), v=new THREE.Vector3();
+  for(let fi=0;fi<DATA.nframes;fi++){ const b=fi*DATA.nseg*3;
+    for(const lab of renderedSegs){ const i=DATA.label2idx[lab];
+      const x=DATA.pos[b+i*3],y=DATA.pos[b+i*3+1],z=DATA.pos[b+i*3+2];
+      if(isFinite(x)&&isFinite(y)&&isFinite(z)) box.expandByPoint(v.set(x,y,z)); } }
+  if(box.isEmpty()){ fitCenter={x:0,y:0,z:0}; controls.target.set(0,0,1); camera.position.set(2.4,-3.2,1.8);
+    homeCam=camera.position.clone(); homeTarget=controls.target.clone(); controls.update(); return; }
+  const c=box.getCenter(new THREE.Vector3()), size=box.getSize(new THREE.Vector3());
+  let d=Math.max(size.x,size.y,size.z)*1.6+1; if(!isFinite(d)||d<=0) d=3;
+  fitCenter={x:c.x,y:c.y,z:box.min.z};
+  floor.position.set(c.x,c.y,box.min.z); gridPlane.position.set(c.x,c.y,box.min.z+0.001);
+  controls.target.copy(c); camera.position.set(c.x+d*0.6, c.y-d, box.min.z+size.z*0.6+0.3);
+  homeCam=camera.position.clone(); homeTarget=c.clone(); controls.update();
+}
+
+// ====================== SET FRAME ======================
+const _CC=new THREE.Color();
+function setFrame(fi){
+  frame=Math.max(0,Math.min(DATA.nframes-1,Math.round(fi)));
+  const base=frame*DATA.nseg*3, P=DATA.pos;
+  for(let bi=0;bi<boneMeshes.length;bi++){ const m=boneMeshes[bi];
+    const ia=DATA.label2idx[m.userData.a]*3+base, ib=DATA.label2idx[m.userData.b]*3+base;
+    placeCapsule(m, P[ia],P[ia+1],P[ia+2], P[ib],P[ib+1],P[ib+2]); }
+  const useC=document.getElementById('contacts').checked&&DATA.hasContacts;
+  const litL=useC&&DATA.cL&&DATA.cL[frame], litR=useC&&DATA.cR&&DATA.cR[frame];
+  _lit.LeftFoot=litL; _lit.LeftToe=litL; _lit.RightFoot=litR; _lit.RightToe=litR;
+  for(let k=0;k<jointMeshes.length;k++){ const m=jointMeshes[k], lab=m.userData.label, i=DATA.label2idx[lab]*3+base;
+    m.position.set(P[i],P[i+1],P[i+2]);
+    if(CONTACTS.has(lab)){ const on=_lit[lab], mat=m.material;
+      mat.emissive.copy(on?_CC.setHex(COL.contact):_CC.setHex(COL[side(lab)]).multiplyScalar(0.06));
+      mat.emissiveIntensity=on?1.7:1.0; m.scale.setScalar(on?JOINT_R*1.5:JOINT_R);
+      const s=contactGlows[lab]; if(s){ s.visible=on; if(on) s.position.copy(m.position); } } }
+  if(DATA.hasCoM&&comMarker){ const show=document.getElementById('com').checked;
+    comMarker.visible=show; comTrail.visible=show; comGlow.visible=show;
+    if(show){ const c=frame*3; comMarker.position.set(DATA.com[c],DATA.com[c+1],DATA.com[c+2]);
+      comGlow.position.copy(comMarker.position); comTrailGeom.setDrawRange(0,frame+1); } }
+  else if(comGlow) comGlow.visible=false;
+  if(panels.length) refreshPanels(frame);
+  // camera follow / treadmill + shadow ride
+  if(DATA.pelvisIdx!=null){ const pj=DATA.pelvisIdx*3+base, px=P[pj], py=P[pj+1];
+    if(camMode==='treadmill') subject.position.set(pelvis0.x-px, pelvis0.y-py, 0); else subject.position.set(0,0,0);
+    if(camMode==='follow'&&lastPelvis){ const dx=px-lastPelvis.x, dy=py-lastPelvis.y;
+      camera.position.x+=dx; camera.position.y+=dy; controls.target.x+=dx; controls.target.y+=dy; }
+    _lastPel.x=px; _lastPel.y=py; lastPelvis=_lastPel;
+    // anchor key-light + floor + grid: follow=pelvis, treadmill=locked spot, static=trial centre (stays put)
+    let ax, ay;
+    if(camMode==='follow'){ ax=px; ay=py; } else if(camMode==='treadmill'){ ax=pelvis0.x; ay=pelvis0.y; } else { ax=fitCenter.x; ay=fitCenter.y; }
+    key.position.set(ax+2.6,ay-3.4,4.2); key.target.position.set(ax,ay,0); key.target.updateMatrixWorld();
+    floor.position.set(ax,ay,fitCenter.z); gridPlane.position.set(ax,ay,fitCenter.z+0.001);
+  } else subject.position.set(0,0,0);
+  drawTimeline(frame);
+  const t=(frame/DATA.frameRate).toFixed(2), tot=(DATA.nframes/DATA.frameRate).toFixed(2);
+  const lab=`frame ${frame}/${DATA.nframes-1}   ${t}/${tot}s`;
+  document.getElementById('tlabel').textContent=lab;
+  tlEl.setAttribute('aria-valuenow',frame); tlEl.setAttribute('aria-valuetext',lab);
+  invalidate();
+}
+
+// ====================== LOAD ======================
+function load(data,name){
+  DATA=data; frame=0; framePos=0; stopPlay();
+  document.getElementById('drop').classList.add('hidden'); ghost.visible=false; ghostVisible=false;
+  document.getElementById('scaleNote').style.display='';
+  document.getElementById('contacts').disabled=!DATA.hasContacts;
+  document.getElementById('com').disabled=!DATA.hasCoM;
+  populateJointSelect(); clearPanels();
+  document.getElementById('addJoint').disabled=!DATA.hasJoints;
+  if(DATA.hasContacts) computeContacts(); else { DATA.cL=DATA.cR=DATA.edges=null; }
+  DATA.pelvisIdx=DATA.label2idx['Pelvis'];
+  if(DATA.pelvisIdx!=null){ const pj0=DATA.pelvisIdx*3; pelvis0={x:DATA.pos[pj0],y:DATA.pos[pj0+1]}; }
+  lastPelvis=null; subject.position.set(0,0,0);
+  trimIn=0; trimOut=DATA.nframes-1; tlStaticDirty=true;
+  tlEl.style.display = DATA.nframes>1?'':'none';
+  tlEl.setAttribute('aria-valuemax', Math.max(0,DATA.nframes-1));
+  buildSkeleton(); buildCoM(); fitCamera(); setFrame(0); resizePanels();
+  document.getElementById('info').textContent =
+    `${name}  ·  ${DATA.nframes} frames @ ${DATA.frameRate} Hz  ·  ${DATA.nseg} segments`
+    + (DATA.hasContacts?'  ·  footContacts ✓':'') + (DATA.hasCoM?'  ·  CoM ✓':'') + (DATA.hasJoints?'':'  ·  no jointAngles');
+  announce(`Loaded ${name}, ${DATA.nframes} frames at ${DATA.frameRate} hertz`);
+  invalidate();
+}
+
+// ====================== FILE HANDLING ======================
+const FILES=new Map();
+let errTimer=null, errHover=false;
+function showErr(msg){ const e=document.getElementById('err'); e.textContent=msg; e.style.display='block';
+  clearTimeout(errTimer); const sched=()=>{ errTimer=setTimeout(()=>{ if(errHover){ sched(); return; } e.style.display='none'; },7000); };
+  e.onmouseenter=()=>errHover=true; e.onmouseleave=()=>errHover=false; sched(); }
+function showLoading(t){ document.getElementById('loadingTxt').textContent=t; const l=document.getElementById('loading'); l.classList.remove('hidden'); l.setAttribute('aria-busy','true'); }
+function hideLoading(){ const l=document.getElementById('loading'); l.classList.add('hidden'); l.setAttribute('aria-busy','false'); }
+function ingest(fileList){
+  const sel=document.getElementById('fileSel');
+  [...fileList].forEach((file,idx)=>{ const r=new FileReader();
+    r.onload=()=>{ if(idx===0) showLoading('Parsing '+file.name+' …');
+      setTimeout(()=>{ try{ const d=parseMVNX(r.result); FILES.set(file.name,d);
+          if(![...sel.options].some(o=>o.value===file.name)){ const o=document.createElement('option'); o.value=o.textContent=file.name; sel.appendChild(o); }
+          sel.style.display=FILES.size>1?'':'none';
+          if(idx===0){ sel.value=file.name; load(d,file.name); }   // only the first file auto-loads; others go to the select
+        } catch(e){ showErr(file.name+': '+e.message); } finally { if(idx===0) hideLoading(); } },20); };
+    r.onerror=()=>showErr('Could not read '+file.name); r.readAsText(file); });
+}
+document.getElementById('pick').onclick=()=>document.getElementById('file').click();
+document.getElementById('file').onchange=e=>ingest(e.target.files);
+document.getElementById('fileSel').onchange=e=>{ const d=FILES.get(e.target.value); if(d) load(d,e.target.value); };
+// dragover counter
+let dragDepth=0; const stage=document.getElementById('stage');
+window.addEventListener('dragover',e=>e.preventDefault());
+window.addEventListener('dragenter',e=>{ e.preventDefault(); dragDepth++; stage.classList.add('dragging'); });
+window.addEventListener('dragleave',e=>{ e.preventDefault(); if(--dragDepth<=0){ dragDepth=0; stage.classList.remove('dragging'); } });
+window.addEventListener('drop',e=>{ e.preventDefault(); dragDepth=0; stage.classList.remove('dragging'); if(e.dataTransfer.files.length) ingest(e.dataTransfer.files); });
+
+// ====================== PLAYBACK / CONTROLS ======================
+const playBtn=document.getElementById('play');
+function setPlayUI(){ playBtn.classList.toggle('is-playing',playing); playBtn.setAttribute('aria-label',playing?'Pause':'Play'); }
+function stopPlay(){ playing=false; setPlayUI(); }
+function playToggle(){ if(!DATA||DATA.nframes<2) return; playing=!playing;
+  if(playing&&(framePos<trimIn||framePos>=trimOut)) framePos=trimIn; setPlayUI(); lastT=performance.now(); invalidate();
+  announce(playing?'Playing':'Paused, '+document.getElementById('tlabel').textContent); }
+playBtn.onclick=playToggle;
+let srTimer=null;
+function announce(msg){ clearTimeout(srTimer); srTimer=setTimeout(()=>{ document.getElementById('sr').textContent=msg; },280); }
+function pauseAndGo(f){ stopPlay(); lastPelvis=null; framePos=Math.max(0,Math.min(DATA.nframes-1,f)); setFrame(framePos);
+  announce(document.getElementById('tlabel').textContent); }
+function stepFrame(d){ if(DATA){ lastPelvis=null; pauseAndGo(frame+d); } }
+document.getElementById('speed').oninput=e=>{ speed=+e.target.value; document.getElementById('speedl').textContent=speed.toFixed(1)+'×';
+  e.target.style.setProperty('--fill',((speed-0.1)/(2-0.1)*100)+'%'); };
+document.getElementById('speed').style.setProperty('--fill',((1-0.1)/(2-0.1)*100)+'%');
+document.getElementById('lower').onchange=()=>{ if(DATA){ buildSkeleton(); fitCamera(); setFrame(frame); } };
+document.getElementById('contacts').onchange=()=>{ if(DATA){ tlStaticDirty=true; setFrame(frame); } };
+document.getElementById('com').onchange=()=>{ if(DATA) setFrame(frame); };
+document.getElementById('resetView').onclick=()=>{ if(homeCam){ camera.position.copy(homeCam); controls.target.copy(homeTarget); controls.update(); invalidate(); } };
+// segmented camera
+const seg=document.querySelector('.seg');
+function syncSegPill(){ const c=seg.querySelector('input:checked'); if(!c) return; const lab=seg.querySelector(`label[for="${c.id}"]`);
+  seg.style.setProperty('--segw',lab.offsetWidth+'px'); seg.style.setProperty('--segx',(lab.offsetLeft-3)+'px'); }
+seg.addEventListener('change',e=>{ if(e.target.name!=='cam') return; camMode=e.target.value; lastPelvis=null; syncSegPill(); if(DATA) setFrame(frame); invalidate(); });
+new ResizeObserver(syncSegPill).observe(seg);
+function setCam(mode){ const r=document.getElementById('cam-'+(mode==='treadmill'?'tread':mode)); if(r){ r.checked=true; r.dispatchEvent(new Event('change',{bubbles:true})); } }
+// sidebar toggle
+const sidebar=document.getElementById('sidebar'), toggleSide=document.getElementById('toggleSide'), scrim=document.getElementById('scrim');
+const isOverlay=()=>matchMedia('(max-width:1099px)').matches;
+function setSidebar(open){ sidebar.classList.toggle('collapsed',!open); toggleSide.classList.toggle('open',open);
+  toggleSide.setAttribute('aria-expanded',open); scrim.classList.toggle('show', open&&isOverlay()); requestAnimationFrame(resizePanels); }
+function toggleSidebar(){ setSidebar(sidebar.classList.contains('collapsed')); }
+toggleSide.onclick=toggleSidebar;
+document.getElementById('sideClose').onclick=()=>setSidebar(false);
+scrim.onclick=()=>setSidebar(false);
+// shortcuts overlay
+const scEl=document.getElementById('shortcuts');
+function toggleShortcuts(open){ scEl.classList.toggle('open', open===undefined?!scEl.classList.contains('open'):open); }
+document.getElementById('scClose').onclick=()=>toggleShortcuts(false);
+scEl.onclick=e=>{ if(e.target===scEl) toggleShortcuts(false); };
+addEventListener('keydown',e=>{ const tg=e.target.tagName;
+  if(e.key==='Escape'){ setLegend(false); toggleShortcuts(false); if(isOverlay()&&!sidebar.classList.contains('collapsed')) setSidebar(false); }
+  else if(e.key==='?'&&tg!=='INPUT'&&tg!=='SELECT'&&tg!=='TEXTAREA'){ toggleShortcuts(); } });
+document.getElementById('addJoint').onchange=e=>{ if(e.target.value!=='') addPanel(+e.target.value); e.target.value=''; };
+// legend popover
+const legendBtn=document.getElementById('legendBtn'), legendPop=document.getElementById('legendPop');
+function setLegend(open){ legendPop.classList.toggle('open',open); legendBtn.setAttribute('aria-expanded',open); }
+legendBtn.onclick=e=>{ e.stopPropagation(); setLegend(!legendPop.classList.contains('open')); };
+document.addEventListener('click',e=>{ if(!legendPop.contains(e.target)&&!e.target.closest('#legendBtn')) setLegend(false); });
+
+// keyboard
+addEventListener('keydown',e=>{
+  if(!DATA) return;
+  const t=e.target, tag=t.tagName, onCtrl=(tag==='INPUT'||tag==='BUTTON'||tag==='SELECT'||tag==='TEXTAREA');
+  if(e.code==='Space'){ if(onCtrl) return; e.preventDefault(); playToggle(); return; }
+  if(e.code==='ArrowRight'||e.code==='ArrowLeft'){ const d=(e.code==='ArrowRight'?1:-1)*(e.shiftKey?10:1);
+    if(t.closest&&t.closest('.trimh')){ if(t.id==='trimHIn') trimIn=Math.max(0,Math.min(trimOut-1,trimIn+d)); else trimOut=Math.max(trimIn+1,Math.min(DATA.nframes-1,trimOut+d)); redrawTrim(); e.preventDefault(); return; }
+    if(onCtrl&&tag!=='BUTTON') return;   // sliders keep their arrows
+    e.preventDefault(); stepFrame(d); return; }
+  if(tag==='INPUT'||tag==='SELECT'||tag==='TEXTAREA') return;   // don't hijack select type-ahead / text entry
+  if(e.code==='Home'){ e.preventDefault(); pauseAndGo(trimIn); return; }
+  if(e.code==='End'){ e.preventDefault(); pauseAndGo(trimOut); return; }
+  const k=e.key.toLowerCase();
+  if(k==='i'){ trimIn=Math.min(frame,trimOut-1); redrawTrim(); }
+  else if(k==='o'){ trimOut=Math.max(frame,trimIn+1); redrawTrim(); }
+  else if(e.code==='Backspace'){ e.preventDefault(); trimIn=0; trimOut=DATA.nframes-1; redrawTrim(); }
+  else if(k==='l'){ const c=document.getElementById('lower'); if(!c.disabled){ c.checked=!c.checked; c.onchange(); } }
+  else if(k==='c'){ const c=document.getElementById('contacts'); if(!c.disabled){ c.checked=!c.checked; c.onchange(); } }
+  else if(k==='m'){ const c=document.getElementById('com'); if(!c.disabled){ c.checked=!c.checked; c.onchange(); } }
+  else if(k==='j'){ toggleSidebar(); }
+  else if(k==='r'){ document.getElementById('resetView').onclick(); }
+  else if(k==='1'){ setCam('static'); } else if(k==='2'){ setCam('follow'); } else if(k==='3'){ setCam('treadmill'); }
+});
+
+// resize
+let resizeRAF=0;
+addEventListener('resize',()=>{ cancelAnimationFrame(resizeRAF); resizeRAF=requestAnimationFrame(()=>{
+  resizePanels(); syncSegPill(); tlStaticDirty=true; if(DATA) drawTimeline(frame); invalidate(); }); });
+document.fonts && document.fonts.ready.then(()=>{ syncSegPill(); resizePanels(); if(DATA) drawTimeline(frame); invalidate(); });
+requestAnimationFrame(()=>{ syncSegPill(); });
+
+// ====================== RENDER LOOP (on-demand) ======================
+function resize(){ const w=canvas.clientWidth, h=canvas.clientHeight, dpr=Math.min(devicePixelRatio,2);
+  const bw=Math.round(w*dpr), bh=Math.round(h*dpr);
+  if(canvas.width!==bw||canvas.height!==bh){ renderer.setSize(w,h,false); camera.aspect=w/h||1; camera.updateProjectionMatrix(); invalidate(); } }
+function tick(now){
+  requestAnimationFrame(tick); resize();
+  if(DATA&&playing){ const dt=(now-lastT)/1000; lastT=now;
+    framePos+=dt*DATA.frameRate*speed;
+    if(framePos>=trimOut){ setFrame(trimOut); framePos=trimIn; } else setFrame(framePos); }
+  if(controls.update()) invalidate();
+  if(!DATA&&ghostVisible&&!RM&&now-lastGhost>33){ ghost.rotation.z+=0.00021*(now-lastGhost); invalidate(); lastGhost=now; }
+  if(needsRender){ renderer.render(scene,camera); needsRender=false; }
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
