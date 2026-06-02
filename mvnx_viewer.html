@@ -535,7 +535,7 @@ const BONES = [
 const LOWER = new Set(['Pelvis','RightUpperLeg','RightLowerLeg','RightFoot','RightToe','LeftUpperLeg','LeftLowerLeg','LeftFoot','LeftToe']);
 const COL = { left:0x2dd4bf, right:0xf5a623, axial:0x8b94a6, contact:0x34d399, com:0xfbbf24 };
 const side = lab => lab.startsWith('Left') ? 'left' : lab.startsWith('Right') ? 'right' : 'axial';
-const CONTACTS = new Set(['LeftFoot','LeftToe','RightFoot','RightToe']);
+const CONTACTS = new Set(['LeftToe','RightToe']);   // ball/forefoot glow on the joint; the heel-strike glow now rides the heel node
 
 // MVN calibration T-pose for the idle empty-state ghost (the iconic mocap reference pose; Z-up, metres)
 const GHOST = {
@@ -571,8 +571,17 @@ function parseMVNX(text){
   const com = new Float32Array(nframes * 3); let hasCoM = false;
   const jang = njoints ? new Float32Array(nframes * njoints * 3) : null; let hasJoints = false;
   const jangX = njoints ? new Float32Array(nframes * njoints * 3) : null; let hasJointsX = false;  // XZY sequence (preferred for shoulders, per MVN manual §23.7.2)
-  const pIdx = label2idx['Pelvis'];                                              // pelvis orientation → facing-aware default camera
-  const pq = (pIdx!=null) ? new Float32Array(nframes * 4) : null; let hasPQ = false;
+  const quat = new Float32Array(nframes * nseg * 4); let hasOrient = false;       // per-segment GBq (w,x,y,z): facing camera + planted-foot heel
+  // heel landmark offsets in foot body-frame (manual §23.5.2) — used to draw the calcaneus, which is a <point>, not a joint
+  const heelOffset = {};
+  for (const s of segEls){ const lab = s.getAttribute('label');
+    if (lab === 'LeftFoot' || lab === 'RightFoot'){
+      const pts = [...s.getElementsByTagNameNS('*','point')];
+      const hp = pts.find(p => /HeelFoot$/.test(p.getAttribute('label')||'')) || pts.find(p => /Heel/.test(p.getAttribute('label')||''));
+      const pb = hp && hp.getElementsByTagNameNS('*','pos_b')[0];
+      if (pb){ const a = pb.textContent.trim().split(/\s+/).map(parseFloat); heelOffset[lab] = [a[0],a[1],a[2]]; }
+    }
+  }
   const contacts = []; let hasContacts = false, ncontact = 0;
   for (let fi = 0; fi < nframes; fi++){
     const f = frameEls[fi];
@@ -590,10 +599,10 @@ function parseMVNX(text){
       if (jx){ const xv = jx.textContent.trim().split(/\s+/);
         if (xv.length >= njoints*3){ hasJointsX = true; for (let k = 0; k < njoints*3; k++) jangX[fi*njoints*3 + k] = parseFloat(xv[k]); } }
     }
-    if (pq){ const or = f.getElementsByTagNameNS('*','orientation')[0];
+    { const or = f.getElementsByTagNameNS('*','orientation')[0];
       if (or){ const ov = or.textContent.trim().split(/\s+/);
-        if (ov.length >= (pIdx+1)*4){ hasPQ = true; const o = pIdx*4;
-          pq[fi*4]=parseFloat(ov[o]); pq[fi*4+1]=parseFloat(ov[o+1]); pq[fi*4+2]=parseFloat(ov[o+2]); pq[fi*4+3]=parseFloat(ov[o+3]); } } }
+        if (ov.length >= nseg*4){ hasOrient = true; const b = fi*nseg*4;
+          for (let k = 0; k < nseg*4; k++) quat[b+k] = parseFloat(ov[k]); } } }
     const cm = f.getElementsByTagNameNS('*','centerOfMass')[0]; let cmOK=false;
     if (cm){ const cv = cm.textContent.trim().split(/\s+/);
       if (cv.length >= 3){ hasCoM = true; cmOK=true; com[fi*3]=parseFloat(cv[0]); com[fi*3+1]=parseFloat(cv[1]); com[fi*3+2]=parseFloat(cv[2]); } }
@@ -605,7 +614,7 @@ function parseMVNX(text){
   }
   if (!contactLabels.length && hasContacts && ncontact === 4)
     contactLabels = ['LeftFoot_Heel','LeftFoot_Toe','RightFoot_Heel','RightFoot_Toe'];
-  return { labels, nseg, label2idx, jointLabels, njoints, jang, hasJoints, jangX, hasJointsX, pq, hasPQ,
+  return { labels, nseg, label2idx, jointLabels, njoints, jang, hasJoints, jangX, hasJointsX, quat, hasOrient, heelOffset,
            frameRate, nframes, pos, com, hasCoM, contacts, hasContacts, contactLabels };
 }
 
@@ -680,6 +689,7 @@ const boneMat = { left:boneMaterial(COL.left), right:boneMaterial(COL.right), ax
 const jointMat = { left:jointMaterial(COL.left), right:jointMaterial(COL.right), axial:jointMaterial(COL.axial) };
 const contactJointMat = { LeftFoot:jointMaterial(COL.left), LeftToe:jointMaterial(COL.left),
                           RightFoot:jointMaterial(COL.right), RightToe:jointMaterial(COL.right) };
+const heelMat = { left:jointMaterial(COL.left), right:jointMaterial(COL.right) };   // dedicated so contact emissive on the heel doesn't leak to shared joints
 const ghostMat = new THREE.MeshStandardMaterial({ color:0x3a4456, roughness:0.85, metalness:0, transparent:true, opacity:0.20, envMapIntensity:0.3 });
 const comMat = new THREE.MeshPhysicalMaterial({ color:0xfbbf24, roughness:0.18, metalness:0, clearcoat:0.8, clearcoatRoughness:0.2,
   emissive:new THREE.Color(0xfbbf24), emissiveIntensity:0.55, envMapIntensity:1.2 });
@@ -709,13 +719,13 @@ function makeGlow(rgb){
 }
 
 // ====================== STATE ======================
-let DATA=null, renderedBones=[], renderedSegs=[], boneMeshes=[], jointMeshes=[], contactGlows={},
+let DATA=null, renderedBones=[], renderedSegs=[], boneMeshes=[], jointMeshes=[], contactGlows={}, heelParts=[],
     comMarker=null, comTrail=null, comTrailGeom=null,
     frame=0, framePos=0, playing=false, speed=1, lastT=0, homeCam=null, homeTarget=null,
     camMode='static', lastPelvis=null, fitCenter={x:0,y:0,z:0}, travels=false,
     trimIn=0, trimOut=0, draggingTrim=null, scrubbing=false, hoverX=null,
     needsRender=true, ghostVisible=true, lastGhost=0;
-const _lit={}, _lastPel={x:0,y:0};
+const _lit={}, _lastPel={x:0,y:0}, _fq=new THREE.Quaternion(), _hv=new THREE.Vector3(), _heel=new THREE.Vector3();
 function invalidate(){ needsRender=true; }
 
 // ---- build skeleton (capsules + lit joints) ----
@@ -723,6 +733,7 @@ function buildSkeleton(){
   boneMeshes.forEach(m=>subject.remove(m)); boneMeshes=[];
   jointMeshes.forEach(m=>subject.remove(m)); jointMeshes=[];
   Object.values(contactGlows).forEach(s=>{ subject.remove(s); s.material.dispose(); }); contactGlows={};
+  heelParts.forEach(h=>{ subject.remove(h.node); subject.remove(h.ankleHeel); subject.remove(h.heelBall); if(h.glow){ subject.remove(h.glow); h.glow.material.dispose(); } }); heelParts=[];
   const lowerOnly = document.getElementById('lower').checked;
   const present = lab => DATA.label2idx[lab] !== undefined && (!lowerOnly || LOWER.has(lab));
   renderedBones = BONES.filter(([a,b]) => present(a) && present(b));
@@ -740,6 +751,25 @@ function buildSkeleton(){
       s.scale.setScalar(0.16); s.visible=false; subject.add(s); contactGlows[lab]=s;
     }
   });
+  // heel (calcaneus): a <point>, not a joint — draw it from the foot orientation so the foot reads as planted, not tip-toe
+  if (DATA.hasOrient) for (const foot of ['LeftFoot','RightFoot']){
+    const toe = foot==='LeftFoot'?'LeftToe':'RightToe';
+    if (!present(foot) || !present(toe) || !DATA.heelOffset[foot]) continue;
+    const sd = side(foot);
+    const node = new THREE.Mesh(JOINT_GEO, heelMat[sd]); node.scale.setScalar(JOINT_R*0.92); node.castShadow=true; subject.add(node);
+    const ankleHeel = new THREE.Mesh(BONE_GEO, boneMat[sd]); ankleHeel.castShadow=true; ankleHeel.frustumCulled=false; subject.add(ankleHeel);
+    const heelBall  = new THREE.Mesh(BONE_GEO, boneMat[sd]); heelBall.castShadow=true;  heelBall.frustumCulled=false;  subject.add(heelBall);
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map:contactGlowTex, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, toneMapped:false }));
+    glow.scale.setScalar(0.16); glow.visible=false; subject.add(glow);
+    heelParts.push({ foot, footIdx:DATA.label2idx[foot], toeIdx:DATA.label2idx[toe], off:DATA.heelOffset[foot], sd, node, ankleHeel, heelBall, glow });
+  }
+}
+// world heel position = ankle origin + foot-orientation · heel body-frame offset
+function heelWorld(fi, footIdx, off, out){
+  const qo=(fi*DATA.nseg+footIdx)*4, b=fi*DATA.nseg*3+footIdx*3;
+  _fq.set(DATA.quat[qo+1],DATA.quat[qo+2],DATA.quat[qo+3],DATA.quat[qo]);   // MVNX (w,x,y,z) → THREE (x,y,z,w)
+  _hv.set(off[0],off[1],off[2]).applyQuaternion(_fq);
+  out.set(DATA.pos[b]+_hv.x, DATA.pos[b+1]+_hv.y, DATA.pos[b+2]+_hv.z);
 }
 
 function buildCoM(){
@@ -869,6 +899,12 @@ function computeContacts(){
   for(let f=0;f<N;f++){ const c=DATA.contacts[f]; if(!c) continue; let l=0,r=0;
     for(let k=0;k<c.length;k++){ if(!c[k]) continue; if(sd[k]==='L')l=1; else if(sd[k]==='R')r=1; } cL[f]=l; cR[f]=r; }
   const minRun=Math.max(2,Math.round(0.04*DATA.frameRate)); cL=debounce(cL,minRun); cR=debounce(cR,minRun);
+  // per-point contact (heel vs toe, debounced) so each glow lights only when ITS point actually touches the ground
+  const contactPt={};
+  for(let k=0;k<DATA.contactLabels.length;k++){ const a=new Uint8Array(N);
+    for(let f=0;f<N;f++){ const c=DATA.contacts[f]; if(c&&c[k]) a[f]=1; }
+    contactPt[DATA.contactLabels[k]]=debounce(a,minRun); }
+  DATA.contactPt=contactPt;
   const edges=[];
   for(const [arr,s] of [[cL,'L'],[cR,'R']]) for(let f=1;f<N;f++) if(arr[f]!==arr[f-1]) edges.push({f,side:s,on:arr[f]===1});
   DATA.cL=cL; DATA.cR=cR; DATA.edges=edges;
@@ -952,7 +988,7 @@ function fitCamera(){
   fitCenter={x:c.x,y:c.y,z:fb.min.z};
   // facing-aware default view: a 3/4 FRONT angle from the subject's anatomical forward (body +X axis)
   let fx=null, fy=null;
-  if(DATA.hasPQ){ const o=fitFi*4, w=DATA.pq[o], x=DATA.pq[o+1], y=DATA.pq[o+2], z=DATA.pq[o+3];
+  if(DATA.hasOrient&&DATA.pelvisIdx!=null){ const o=(fitFi*DATA.nseg+DATA.pelvisIdx)*4, w=DATA.quat[o], x=DATA.quat[o+1], y=DATA.quat[o+2], z=DATA.quat[o+3];
     let ax=1-2*(y*y+z*z), ay=2*(x*y+z*w), m=Math.hypot(ax,ay);   // body +X rotated into the world ground plane
     if(m>1e-4){ fx=ax/m; fy=ay/m; } }
   const camZ=fb.min.z+size.z*0.6+0.3;
@@ -969,7 +1005,11 @@ function fitCamera(){
       const x=DATA.pos[b+i*3],y=DATA.pos[b+i*3+1],z=DATA.pos[b+i*3+2];
       if(isFinite(x)&&isFinite(y)&&isFinite(z)) tb.expandByPoint(v.set(x,y,z)); } }
   const tc=tb.getCenter(new THREE.Vector3()), ts=tb.getSize(new THREE.Vector3());
-  floor.position.set(tc.x,tc.y,fb.min.z); gridPlane.position.set(tc.x,tc.y,fb.min.z+0.002);
+  // ground = lowest sole point over the trial (heel reaches below the ball origin), so the planted foot rests on the grid
+  let groundZ = tb.min.z;
+  for(let fi=0;fi<DATA.nframes;fi++) for(const hp of heelParts){ heelWorld(fi,hp.footIdx,hp.off,_heel); if(_heel.z<groundZ) groundZ=_heel.z; }
+  fitCenter.z = groundZ;
+  floor.position.set(tc.x,tc.y,groundZ); gridPlane.position.set(tc.x,tc.y,groundZ+0.002);
   travels = Math.max(ts.x,ts.y) > Math.max(size.x,size.y,0.3)*2.0;
 }
 
@@ -982,14 +1022,25 @@ function setFrame(fi){
     const ia=DATA.label2idx[m.userData.a]*3+base, ib=DATA.label2idx[m.userData.b]*3+base;
     placeCapsule(m, P[ia],P[ia+1],P[ia+2], P[ib],P[ib+1],P[ib+2]); }
   const useC=document.getElementById('contacts').checked&&DATA.hasContacts;
-  const litL=useC&&DATA.cL&&DATA.cL[frame], litR=useC&&DATA.cR&&DATA.cR[frame];
-  _lit.LeftFoot=litL; _lit.LeftToe=litL; _lit.RightFoot=litR; _lit.RightToe=litR;
+  const cp=useC?DATA.contactPt:null;
+  const ct=lbl=>(cp&&cp[lbl])?cp[lbl][frame]:0;        // per-point contact → glow lights only when that point touches
+  _lit.LeftToe=ct('LeftFoot_Toe'); _lit.RightToe=ct('RightFoot_Toe');   // ball/forefoot glow ← toe contact
   for(let k=0;k<jointMeshes.length;k++){ const m=jointMeshes[k], lab=m.userData.label, i=DATA.label2idx[lab]*3+base;
     m.position.set(P[i],P[i+1],P[i+2]);
     if(CONTACTS.has(lab)){ const on=_lit[lab], mat=m.material;
       mat.emissive.copy(on?_CC.setHex(COL.contact):_CC.setHex(COL[side(lab)]).multiplyScalar(0.06));
       mat.emissiveIntensity=on?1.7:1.0; m.scale.setScalar(on?JOINT_R*1.5:JOINT_R);
       const s=contactGlows[lab]; if(s){ s.visible=on; if(on) s.position.copy(m.position); } } }
+  for(let h=0;h<heelParts.length;h++){ const hp=heelParts[h];
+    heelWorld(frame, hp.footIdx, hp.off, _heel); const hx=_heel.x, hy=_heel.y, hz=_heel.z;  // heel world position
+    const ai=hp.footIdx*3+base, ti=hp.toeIdx*3+base;                                      // ankle origin, ball (toe) origin
+    hp.node.position.set(hx,hy,hz);
+    placeCapsule(hp.ankleHeel, P[ai],P[ai+1],P[ai+2], hx,hy,hz);
+    placeCapsule(hp.heelBall,  hx,hy,hz, P[ti],P[ti+1],P[ti+2]);
+    const on=ct(hp.foot+'_Heel'), mat=hp.node.material;                                   // heel glow ← heel contact only (lifts off at toe-off)
+    mat.emissive.copy(on?_CC.setHex(COL.contact):_CC.setHex(COL[hp.sd]).multiplyScalar(0.06));
+    mat.emissiveIntensity=on?1.7:1.0; hp.node.scale.setScalar(on?JOINT_R*1.4:JOINT_R*0.92);
+    if(hp.glow){ hp.glow.visible=on; if(on) hp.glow.position.set(hx,hy,hz); } }
   if(DATA.hasCoM&&comMarker){ const show=document.getElementById('com').checked;
     comMarker.visible=show; comTrail.visible=show; comGlow.visible=show;
     if(show){ const c=frame*3; comMarker.position.set(DATA.com[c],DATA.com[c+1],DATA.com[c+2]);
@@ -1005,7 +1056,7 @@ function setFrame(fi){
     // the shadow light's frustum is small (±3 m), so ride it under the figure wherever it is
     key.position.set(px+2.6,py-3.4,4.2); key.target.position.set(px,py,0); key.target.updateMatrixWorld();
     // forward chevron rides just ahead of the figure, pointing along anatomical forward (body +X)
-    if(fwdArrow.visible){ const o=frame*4, w=DATA.pq[o], qx=DATA.pq[o+1], qy=DATA.pq[o+2], qz=DATA.pq[o+3];
+    if(fwdArrow.visible){ const o=(frame*DATA.nseg+DATA.pelvisIdx)*4, w=DATA.quat[o], qx=DATA.quat[o+1], qy=DATA.quat[o+2], qz=DATA.quat[o+3];
       let ax=1-2*(qy*qy+qz*qz), ay=2*(qx*qy+qz*w), m=Math.hypot(ax,ay);
       if(m>1e-4){ ax/=m; ay/=m; fwdArrow.position.set(px+ax*0.5, py+ay*0.5, fitCenter.z+0.004);
         fwdArrow.rotation.set(0,0,Math.atan2(ay,ax)-Math.PI/2); } }
@@ -1022,7 +1073,7 @@ function setFrame(fi){
 function load(data,name){
   DATA=data; frame=0; framePos=0; stopPlay();
   document.getElementById('drop').classList.add('hidden'); ghost.visible=false; ghostVisible=false;
-  fwdArrow.visible=DATA.hasPQ;
+  fwdArrow.visible=DATA.hasOrient&&DATA.label2idx['Pelvis']!=null;
   document.getElementById('scaleNote').style.display='';
   document.getElementById('contacts').disabled=!DATA.hasContacts;
   document.getElementById('com').disabled=!DATA.hasCoM;
