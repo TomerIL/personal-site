@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Many Exoskeletons Are Used Weekly Worldwide? — A Bottom-Up Estimate</title>
+<style>
+  :root{
+    --ink:#12181f; --ink2:#414d5c; --ink3:#6b7885;
+    --line:#e2e6eb; --bg:#ffffff; --panel:#f6f8fa;
+    --a1:#2f5d8a; --a2:#5b8db8; --a3:#9dbdd6;
+    --warn:#8a5a2f; --good:#2f6b4f;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ink:#e8edf2; --ink2:#b3bfcc; --ink3:#8593a3;
+      --line:#2a3038; --bg:#12161a; --panel:#1a1f25;
+      --a1:#7fb3dc; --a2:#5b8db8; --a3:#3d6484; --warn:#d8a56a; --good:#7fc4a0;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-text-size-adjust:100%}
+  .wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:1.85rem;line-height:1.25;letter-spacing:-.02em;margin:0 0 .3em}
+  h2{font-size:1.18rem;letter-spacing:-.01em;margin:2.4em 0 .6em;padding-top:1.1em;border-top:1px solid var(--line)}
+  h3{font-size:1rem;margin:1.6em 0 .4em;color:var(--ink2)}
+  p{margin:.7em 0;color:var(--ink2)}
+  .lede{font-size:1.05rem;color:var(--ink2)}
+  .meta{font-size:.82rem;color:var(--ink3);margin:0 0 1.6em}
+  .headline{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:22px 24px;margin:24px 0 8px}
+  .big{font-size:2.5rem;font-weight:650;letter-spacing:-.03em;color:var(--ink);line-height:1.05}
+  .big small{display:block;font-size:.85rem;font-weight:400;color:var(--ink3);letter-spacing:0;margin-top:8px}
+  table{width:100%;border-collapse:collapse;margin:1.1em 0;font-size:.86rem}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:600;color:var(--ink3);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr.tot td{border-top:2px solid var(--ink3);border-bottom:none;font-weight:650;color:var(--ink)}
+  .bar{position:relative;height:26px;background:var(--panel);border-radius:4px;overflow:hidden}
+  .bar i{position:absolute;top:0;bottom:0;background:var(--a2);display:block}
+  .bar b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.75}
+  .chart{margin:1.2em 0}
+  .row{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;margin:7px 0;font-size:.8rem}
+  .row span{color:var(--ink2)}
+  .axis{display:grid;grid-template-columns:150px 1fr;gap:10px;font-size:.7rem;color:var(--ink3);margin-top:6px}
+  .axis div:last-child{display:flex;justify-content:space-between}
+  ul{padding-left:1.15em;color:var(--ink2)} li{margin:.35em 0}
+  .note{background:var(--panel);border-left:3px solid var(--a2);padding:12px 16px;margin:1.2em 0;
+    font-size:.88rem;border-radius:0 6px 6px 0}
+  .note.caution{border-left-color:var(--warn)}
+  a{color:var(--a1)}
+  code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size:.85em}
+  .src{font-size:.78rem;color:var(--ink3)}
+  .src a{color:var(--ink3)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}.row,.axis{grid-template-columns:96px 1fr}
+    .big{font-size:2rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>How many exoskeletons are actually used in a given week?</h1>
+<p class="meta">Bottom-up estimate from publicly disclosed figures only · compiled 31 July 2026 · ~580 web retrievals across four parallel research passes, run to search saturation</p>
+
+<div class="headline">
+  <div class="big">~65,000
+    <small>exoskeleton units worn at least once in a typical week, worldwide<br>
+    defensible range: <strong>35,000 – 115,000</strong></small>
+  </div>
+</div>
+<p class="lede">Counting <em>people</em> rather than devices gives a somewhat higher number — roughly <strong>75,000–80,000 individuals per week</strong> (range 45,000–150,000) — because clinical devices and Chinese rental units each serve several different users in a week.</p>
+
+<div class="note caution">
+<strong>The honest headline caveat.</strong> No organisation publishes this number, and no organisation publishes the input that matters most: <em>what fraction of sold exoskeletons are actually worn</em>. I searched specifically for a "% of purchased units used daily/weekly" statistic and it does not exist publicly — the closest proxies are eight years old. The unit-count side of this estimate is reasonably well anchored; the utilisation side is the weak leg, and it is where the ±3× spread comes from.
+</div>
+
+<h2>The estimate, by segment</h2>
+
+<table>
+<thead><tr>
+<th>Segment</th><th class="n">Active installed base</th><th class="n">Used in a given week</th><th class="n">Units used weekly</th>
+</tr></thead>
+<tbody>
+<tr><td><strong>Industrial / occupational</strong><br><span class="src">factory, logistics, construction, agriculture, care lifting</span></td>
+    <td class="n">70,000–140,000</td><td class="n">30–60%</td><td class="n">21,000–84,000</td></tr>
+<tr><td><strong>Consumer-owned</strong><br><span class="src">hiking &amp; mobility assist, mostly China + crowdfunding</span></td>
+    <td class="n">60,000–120,000</td><td class="n">10–25%</td><td class="n">8,000–22,000</td></tr>
+<tr><td><strong>Clinical rehabilitation</strong><br><span class="src">gait/limb exoskeletons in hospitals &amp; rehab centres</span></td>
+    <td class="n">5,000–7,000</td><td class="n">60–75%</td><td class="n">3,000–5,000</td></tr>
+<tr><td><strong>Rental fleets</strong><br><span class="src">Chinese scenic areas &amp; parks; seasonal</span></td>
+    <td class="n">1,500–2,500</td><td class="n">80–95%</td><td class="n">1,200–2,300</td></tr>
+<tr><td><strong>Military</strong><br><span class="src">almost entirely trials, not fielded units</span></td>
+    <td class="n">1,000–4,000</td><td class="n">20–50%</td><td class="n">300–1,500</td></tr>
+<tr><td><strong>Personal / home medical</strong><br><span class="src">ReWalk, Indego, HAL wellbeing, Myosuit</span></td>
+    <td class="n">1,000–1,500</td><td class="n">55–70%</td><td class="n">600–1,000</td></tr>
+<tr class="tot"><td>Total</td><td class="n">~140,000–275,000</td><td class="n">—</td><td class="n">~34,000–116,000</td></tr>
+</tbody>
+</table>
+
+<div class="chart">
+<h3>Where the weekly use actually is</h3>
+<div class="row"><span>Industrial</span><div class="bar"><i style="left:18%;width:55.5%"></i><b style="left:39%"></b></div></div>
+<div class="row"><span>Consumer-owned</span><div class="bar"><i style="left:7%;width:12%"></i><b style="left:11%"></b></div></div>
+<div class="row"><span>Clinical rehab</span><div class="bar"><i style="left:2.6%;width:1.7%"></i><b style="left:3.4%"></b></div></div>
+<div class="row"><span>Rental (China)</span><div class="bar"><i style="left:1%;width:1%"></i><b style="left:1.5%"></b></div></div>
+<div class="row"><span>Military</span><div class="bar"><i style="left:0.3%;width:1%"></i><b style="left:0.7%"></b></div></div>
+<div class="row"><span>Home medical</span><div class="bar"><i style="left:0.5%;width:0.4%"></i><b style="left:0.7%"></b></div></div>
+<div class="axis"><div></div><div><span>0</span><span>30k</span><span>60k</span><span>90k</span><span>120k</span></div></div>
+<p class="src">Bars show the plausible range; the tick marks the central estimate. Industrial use dominates and also carries nearly all of the uncertainty.</p>
+</div>
+
+<h2>How each number was built</h2>
+
+<h3>1. Industrial — 21,000–84,000 units worn weekly (central ~45,000)</h3>
+<p>Directly disclosed cumulative shipments I could find add to roughly <strong>55,000–60,000 units</strong>:</p>
+<ul>
+<li><strong>40,000</strong> — Innophys Muscle Suit series, cumulative since 2014, as of 30 Apr 2026 (23 countries). This is the largest disclosed installed base of any exoskeleton maker on earth, and it grew 10k→20k→40k across 2020, 2021, 2026.</li>
+<li><strong>~10,000</strong> — ErgoSanté HAPO, cumulative since 2019 <em>(weakest source in the set — French Wikipedia only; no primary confirmation)</em>.</li>
+<li><strong>1,474</strong> — Cyberdyne HAL Lumbar Type in operation (1,063 wellbeing + 411 labour support), 31 Mar 2026. Audited quarterly disclosure.</li>
+<li><strong>~470 + "thousands of workers in 30+ countries"</strong> — HeroWear Apex 2 (RAAF order) plus company claim.</li>
+<li>Named site deployments: Toyota Princeton <strong>200+</strong>, Airbus <strong>118</strong> in test across 3 countries, Ford <strong>75</strong> across 15 plants, Verve Motion sites of <strong>25–250</strong>, Cyberdyne/Hampshire County Council <strong>127</strong> on a 5-year rental, GEODIS Venlo <strong>3</strong>.</li>
+<li>Cross-vendor census: <strong>585 devices</strong> across BMW, Ford, Honda, Nissan, Toyota and VW combined (Wearable Robotics Association, 2019).</li>
+</ul>
+<p>Nine major vendors disclose <em>nothing</em> — German Bionic, Hilti, Comau, Skelex, Laevo, Auxivo, Japet, and every Chinese industrial vendor. To size that remainder I used the only current market-wide unit figure available: ABI Research's estimate of <strong>67,000 units shipped in 2025</strong> (50,000 passive + 17,000 powered), with industrial and commercial at ~85% of the market. Innophys alone is only ~4,000/yr of that, so the non-disclosing tail is large. Rolling shipments back to 2018 (IFR's last hard count: 7,300 powered units sold globally that year) gives cumulative industrial shipments of roughly <strong>120,000–200,000</strong>; applying a 4–6 year service life leaves an active fleet of <strong>70,000–140,000</strong>.</p>
+<p>For the weekly-wear fraction, the evidence is thin and points both ways:</p>
+<ul>
+<li><strong>86% of shifts</strong> — Ford employees wore the EksoVest during the 16-month trial. Still the most-cited real wear figure, and it is from 2018, vendor-supplied, one deployment.</li>
+<li><strong>~592,000 exosuit-hours</strong> across nine named customer sites over 8–23 months (HeroWear, Apr 2026) — implies ~20 hours per suit per week where deployed, but is vendor-published and self-selected.</li>
+<li><strong>50% task-failure rate</strong> for one commercial device (Laevo) in a 29-participant donning study; assembly times 6.5–24.6 minutes. Authors name setup burden as an abandonment driver (PLOS One, Apr 2026).</li>
+<li><strong>5% of construction enterprises</strong> use any wearable device at all — EU ESENER-3, n=3,267 establishments. Best population-level penetration figure that exists.</li>
+</ul>
+<p>I used <strong>30–60%</strong>. Below 30% is hard to square with the HeroWear hour counts and Innophys' repeat-purchase business; above 60% is hard to square with the setup-friction literature and the fact that no deployment larger than Ford's 75 units has been publicised in eight years.</p>
+
+<h3>2. Consumer-owned — 8,000–22,000 units worn weekly (central ~13,000)</h3>
+<p>Almost all of this appeared after 2024. The Chinese trade press states that <strong>fewer than 2,000</strong> consumer-grade exoskeletons had been sold globally, cumulatively, before 2023. Disclosed figures now:</p>
+<ul>
+<li><strong>~20,000</strong> Hypershell cumulative across 4 SKUs (Feb 2026), described as "tens of thousands" in 70 countries by May 2026 → ~25,000–35,000 by mid-2026.</li>
+<li><strong>~10,000</strong> Dnsys X1 (CEO-stated, Jul 2025), plus 2,099–2,214 Z1 crowdfunding backers → ~13,000–18,000.</li>
+<li><strong>&gt;1,000 units in May 2026 alone, &gt;1,200 in June</strong> — Haier W3, China.</li>
+<li><strong>2,000+ units per hero SKU on JD.com</strong> each for RoboCT, Hypershell and Kenqing.</li>
+<li>Hard crowdfunding backer counts (= units pre-ordered): Hypershell 2,638 · Dnsys X1 1,612 · Dnsys Z1 2,214 · IRMO M1 1,229 · Sportsmate 5 185.</li>
+<li><strong>500</strong> WIRobotics WIM units in South Korea (Jan 2025). Skip / Arc'teryx MO/GO has <em>never</em> published a unit number.</li>
+</ul>
+<p>Cumulative: <strong>60,000–120,000</strong>, essentially none retired yet. A Chinese industry piece from 6 Jul 2026 independently characterises current <em>global annual</em> consumer sales as "only tens of thousands of units," which brackets this well.</p>
+<p>The weekly-use fraction here is the single softest number in the whole estimate. Everything found points down: Chinese retail trade press states online return rates are "generally high" (declining to quantify); the industry "has not released repurchase rate data"; Haier's own experience stores convert 100+ daily walk-ins into only 20–30 sales; Hypershell's Trustpilot sits at 2.5/5 across 30 reviews with repeated refund complaints; a GearJunkie reviewer said outright of the Dnsys X1 that "it's not a system I see myself using all that often." Against that, hiking exoskeletons are inherently trip-based rather than daily, and the Boston Globe documented a genuine sustained-use case. I used <strong>10–25%</strong>.</p>
+
+<h3>3. Clinical rehabilitation — 3,000–5,000 devices used weekly (central ~4,000)</h3>
+<p>This is the best-documented segment, because three vendors file audited unit counts:</p>
+<ul>
+<li><strong>~1,219 Lokomat</strong> systems installed in 650+ facilities (DIH Holding 10-K, FY ending Mar 2025).</li>
+<li><strong>1,000+ Ekso devices</strong> across 500+ centres (investor deck, Mar 2026) — marketing, not audited; the 10-Ks disclose no unit counts.</li>
+<li><strong>558 medical HAL lower-limb units</strong> operating worldwide, of which only <strong>120</strong> are in reimbursed Japanese hospital use; plus 710 HAL single-joint and 375 wellbeing lower-limb (Cyberdyne, 31 Mar 2026 — the cleanest disclosure in the industry).</li>
+<li><strong>131 ReWalk rehabilitation units</strong> and <strong>48 ReStore</strong> (Lifeward 10-K, 31 Dec 2025). The rehab count has been flat at 131 since 2023.</li>
+<li><strong>100+ centres</strong> with Wandercraft Atalante; <strong>165 units</strong> supplied by Angel Robotics to 126 Korean institutions.</li>
+</ul>
+<p>Summing these plus an allowance for China (RoboCT is in 200–300 hospitals; Fourier and Milebot disclose nothing) gives <strong>5,000–7,000</strong> worn gait/limb exoskeletons in facilities. Usage is well measured for once:</p>
+<ul>
+<li><strong>1.05–1.73 exoskeleton sessions per patient per week</strong> in real inpatient practice (228 patients, one US rehab hospital, 2016–2022) — against clinical guidelines recommending 3×/week. Real practice runs at roughly a third of protocol.</li>
+<li><strong>~200 device-uses per device per year</strong> (4,208 uses / 21 devices / 12 months, Australian provider) ≈ ~4 uses/device/week.</li>
+<li><strong>~60 patient steps per device per day</strong> across Ekso's fleet; <strong>&gt;1M steps/month across 100+ Wandercraft centres</strong> ≈ 10,000 steps/centre/month.</li>
+</ul>
+<p>Those three independent fleet-level signals converge on ~1–4 sessions per device per week, and imply <strong>2–3 distinct patients per active device per week</strong>. I assumed 60–75% of installed devices see any use in a given week.</p>
+
+<h3>4. Chinese rental fleets — 1,200–2,300 units, but ~7,000 people weekly</h3>
+<p>This segment barely existed 18 months ago and is now the most <em>intensively used</em> exoskeleton category on earth.</p>
+<ul>
+<li><strong>Mount Tai:</strong> 10 units at launch (Jan 2025, 3–5 rentals/day) → 100 units by Mar 2025 → <strong>500 units across three rental points</strong> by mid-2026, at <strong>100–200 rentals/day</strong> typical and <strong>80% fleet utilisation</strong> in peak season. Note the operator publicly targeted 5,000 units by Oct 2025 and reached 500 — one tenth of plan.</li>
+<li><strong>&gt;50 scenic areas nationwide</strong> now offer rentals (Jun 2026). Known per-site fleets: Mount Emei 30 rentals/day, Enshi Grand Canyon ~50 over a holiday, Hangzhou Banshan Park 30+ units at 100+ rentals/day, Mutianyu Great Wall 10 units, Shenzhen Safari Park 3. Huangshan's operation has been <em>suspended</em>.</li>
+<li>Rental prices ¥9.9–200; unit payback quoted at 88 days.</li>
+</ul>
+<p>That gives a national fleet of ~1,500–2,500 units. At 0.3–0.8 rentals per unit per day it produces roughly <strong>3,000–14,000 distinct users per week in season</strong> — each a different person, and 50–62% of them aged 60+. Deep winter is near zero, so the annualised figure is lower than the summer figure.</p>
+
+<h3>5. Military — 300–1,500 units (essentially a rounding error)</h3>
+<p>Two decades of programmes have fielded almost nothing. TALOS ran 2013–2019 and was cancelled with zero units fielded; Lockheed's ONYX was a $6.9M <em>development</em> agreement with no production order; PLA border-defence deliveries are real but batch sizes are undisclosed; the French Army began logistics trials in Jan 2026 with no quantity stated. The hardest bound available: the entire global military powered exoskeleton market is put at <strong>$17.6M in 2025</strong> at $50k–150k per unit — implying roughly <strong>120–350 powered military units per year</strong> globally, growing at just 4.7%, the slowest of any exoskeleton segment.</p>
+
+<h3>6. Personal / home medical — 600–1,000 units (central ~800)</h3>
+<p><strong>778 ReWalk Personal units</strong> placed in home use as of 31 Dec 2025 (up 89 net in the year), plus a small Indego Personal fleet (~50 in the CMS reimbursement pipeline; the first Medicare claim was approved only in 2024) and a few hundred HAL wellbeing, Myosuit and Keeogo units. Total ~1,000–1,500.</p>
+<p>Home usage is documented and modest: in a Dutch study, 14 people with complete SCI used a ReWalk at home on a median of <strong>9 days out of 16</strong>; in a Myosuit home study with sensor-logged frequency, <strong>five of seven users used it roughly once a week</strong> and two used it ~5×/week, with the authors noting use "did not meet WHO physical activity recommendations." An Italian long-term supply study identified caregiver availability as the dominant abandonment driver. Lifeward's own European data — <strong>47 users producing 18,000 stair steps over 7+ years</strong>, ≈383 per user per year — is roughly one flight of stairs per week.</p>
+
+<h2>What this estimate deliberately excludes</h2>
+<ul>
+<li><strong>Stationary rehab robotics that aren't worn:</strong> Hocoma Andago (400), Erigo (600), Armeo (~1,046), AlterG anti-gravity treadmills (~6,000 units in 6,000+ facilities), Tyromotion's 3,700 devices. Including all rehab robotics would roughly double the clinical line to ~10,000 weekly device-uses.</li>
+<li>Powered prosthetics, static orthoses, and non-robotic back belts.</li>
+<li>Prototypes, research-lab units, and the 62+ industrial exoskeletons that were "under development" but never reached market.</li>
+</ul>
+
+<h2>Confidence, and what would move the number</h2>
+<p><strong>What I'm confident about:</strong> the order of magnitude. This is a <em>tens of thousands</em> phenomenon, not hundreds of thousands and not millions. Three independent lines converge on that: IFR's audited series (4,970 → 7,300 powered units sold per year, 2015–2018, ~13%/yr growth), Innophys' 40,000 cumulative units over 12 years, and the fact that global exoskeleton hardware revenue is only ~$580–850M against segment ASPs of $1,400 (passive) to $90,000+ (medical).</p>
+<p><strong>What I'm confident about, negatively:</strong> every forecaster who published a 2025 number before 2020 has since revised it down by 50–90%. ABI forecast 107,000 commercial/industrial units for 2025 back in 2017 and now estimates ~67,000 total across all segments; it forecast $5.8B by 2028 in 2018 and now says ">$2B" by 2030. IFR recorded stagnation, called 2019's growth "an underperformance compared to their potential," and then dropped exoskeleton unit reporting from its reports entirely. Anchoring on pre-2020 forecasts would put you badly high.</p>
+<p><strong>The three things that would most change this estimate:</strong></p>
+<ol>
+<li>A real utilisation survey. There is <em>no</em> published exoskeleton-specific abandonment rate anywhere, and no "% of units used weekly" statistic. Session-level utilisation data exists at exactly three sites worldwide in the literature. If real industrial wear is 20% rather than 45%, the total drops to ~40,000; if it's 70%, it rises to ~110,000.</li>
+<li>China industrial and consumer unit data. No Chinese vendor discloses units; MOFCOM published only a <em>value</em> growth rate (+785.5% YoY online retail sales of walking-assist exoskeletons, Jan–Apr 2026). This is probably the largest single volume market and it is undocumented.</li>
+<li>The disclosure gap among the nine silent industrial vendors. Ottobock says "2,000+ customers" and "1,000+ projects" but no units; German Bionic, Hilti and Comau say nothing at all. If average deployment size is 20 units rather than 5, the industrial base is 3× bigger.</li>
+</ol>
+
+<div class="note">
+<strong>Sources that were unreachable and would sharpen this:</strong> IFR World Robotics Service Robots (full report), MarketsandMarkets' "Thousand Units" volume tables ($4,950), Statista's IFR-derived 2018–2020 exoskeleton sales series, QYResearch reports #6470401/#5709890, and the ASCE paper "Evaluating the Role of Short-Term Pilots in Exoskeleton Adoption in Construction" — which is directly on-topic for the pilot-to-deployment conversion rate and is paywalled.
+</div>
+
+<h2>Key sources</h2>
+<p class="src">
+Unit counts —
+<a href="https://innophys.jp/en/news/innophys-40k-shipment-milestone/">Innophys 40,000 milestone</a> ·
+<a href="https://www.cyberdyne.jp/media/25104/20260514_tanshin_eng.pdf">Cyberdyne FY2026 Q4 results</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1607962/000117891326001208/zk2634619.htm">Lifeward FY2025 10-K</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1883788/000149315225018682/form10-k.htm">DIH Holding 10-K (Lokomat)</a> ·
+<a href="https://d1io3yog0oux5.cloudfront.net/_02af3c0fbc890003b91ef0c5f2c69544/eksobionics/db/261/2946/pdf/Ekso_IR_Presentation_Mar+2026.pdf">Ekso investor presentation, Mar 2026</a> ·
+<a href="https://www.wandercraft.eu/articles/wandercraft-announces-series-d-round-bringing-75m-in-total-funding-secured-for-global-acceleration-of-ai-powered-robotics">Wandercraft Series D</a> ·
+<a href="https://www.bostonglobe.com/2026/02/18/business/exoskeleton-technology-hypershell-auxivo-liftsuit/">Boston Globe on Hypershell</a> ·
+<a href="https://www.forbes.com/sites/borislavmarinov/2025/07/30/qa-dnsys-ceo-sage-dong-bringing-affordable-exoskeletons-to-consumers/">Forbes Q&amp;A with Dnsys CEO</a>
+<br><br>
+Market-level —
+<a href="https://ifr.org/downloads/press2018/Executive_Summary_WR_Service_Robots_2019.pdf">IFR World Robotics 2019</a> ·
+<a href="https://www.abiresearch.com/blog/exciting-future-exoskeletons">ABI Research shipment &amp; ASP forecasts</a> ·
+<a href="https://www.abiresearch.com/news-resources/chart-data/exoskeleton-market-forecast-size-outlook">ABI market outlook</a> ·
+<a href="https://www.grandviewresearch.com/industry-analysis/exoskeleton-market">Grand View Research</a> ·
+<a href="https://www.intelmarketresearch.com/military-powered-exoskeleton-market-24911">Military powered exoskeleton market size</a>
+<br><br>
+Utilisation &amp; skepticism —
+<a href="https://doi.org/10.1186/s12984-023-01220-w">Gillespie et al. 2023, sessions/week in inpatient rehab</a> ·
+<a href="https://doi.org/10.2196/60374">JMIR 2024, device-uses per device per year</a> ·
+<a href="https://doi.org/10.1186/s12984-022-01103-6">Myosuit home-use frequency study</a> ·
+<a href="https://doi.org/10.1038/s41598-020-72397-6">van Dijsseldonk et al., ReWalk home use</a> ·
+<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0348001">PLOS One 2026, donning failure rates</a> ·
+<a href="https://www.frontiersin.org/journals/robotics-and-ai/articles/10.3389/frobt.2025.1645150/full">ESENER-3 construction wearable penetration</a> ·
+<a href="https://www.therobotreport.com/industrial-exoskeletons/">The Robot Report on why adoption is unquantifiable</a> ·
+<a href="https://www.therobotreport.com/sarcos-pivots-from-robotics-to-ai-software-development/">Sarcos pivot away from hardware</a>
+<br><br>
+China —
+<a href="https://www.caixinglobal.com/2026-02-27/in-depth-exoskeletons-offer-consumer-robotics-a-chance-to-find-its-footing-102417653.html">Caixin in-depth, Feb 2026</a> ·
+<a href="https://m.thepaper.cn/newsDetail_forward_33443089">The Paper, Jun 2026</a> ·
+<a href="https://news.pedaily.cn/202606/565468.shtml">PEDaily</a> ·
+<a href="https://www.globaltimes.cn/page/202605/1361954.shtml">Global Times / MOFCOM data</a> ·
+<a href="https://english.news.cn/20260507/72faed7402b34e88b71ad0ea61d2afb5/c.html">Xinhua, May Day 2026</a> ·
+<a href="https://xinwen.bjd.com.cn/content/s688ac688e4b0bd64e2e1ace5.html">Beijing Daily scenic-area survey</a>
+</p>
+
+</div>
+</body>
+</html>
