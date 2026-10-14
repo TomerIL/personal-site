@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Tomer Yona, PhD — Wearable sensor measurement, validation, and evidence generation. Helping teams turn sensor data into defensible claims." />
+  <meta name="description" content="Tomer Yona, PhD — wearable sensor measurement, validation and evidence generation. Open IMU gait data and free research tools." />
   <title>Tomer Yona, PhD — Wearable Sensors, Measurement & Evidence</title>
  
   <!-- Canonical URL -->
@@ -12,55 +12,168 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Tomer Yona, PhD — Wearable Sensors, Measurement & Evidence" />
-  <meta property="og:description" content="Helping teams turn wearable sensor data into evidence they can act on. Study design, multi-sensor measurement, validation, and reproducible analysis." />
+  <meta property="og:description" content="Tomer Yona, PhD — wearable sensor measurement, validation and evidence generation. Open IMU gait data and free research tools." />
   <meta property="og:url" content="https://www.tomeryona.com/" />
   <meta property="og:image" content="https://www.tomeryona.com/Headshot.jpg" />
+  <meta property="og:image:alt" content="Portrait of Tomer Yona" />
   <meta property="og:site_name" content="Tomer Yona" />
  
   <!-- Twitter/X card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Tomer Yona, PhD — Wearable Sensors, Measurement & Evidence" />
-  <meta name="twitter:description" content="Helping teams turn wearable sensor data into evidence they can act on." />
+  <meta name="twitter:description" content="Tomer Yona, PhD — wearable sensor measurement, validation and evidence generation. Open IMU gait data and free research tools." />
   <meta name="twitter:image" content="https://www.tomeryona.com/Headshot.jpg" />
  
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://www.tomeryona.com/#person",
-    "name": "Tomer Yona",
-    "url": "https://www.tomeryona.com/",
-    "image": "https://www.tomeryona.com/Headshot.jpg",
-    "jobTitle": "Postdoctoral Researcher",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Maastricht University"
+   "@type": "WebSite",
+   "@id": "https://www.tomeryona.com/#website",
+   "url": "https://www.tomeryona.com/",
+   "name": "Tomer Yona",
+   "publisher": {
+    "@id": "https://www.tomeryona.com/#person"
+   }
+  },
+  {
+   "@type": "ProfilePage",
+   "@id": "https://www.tomeryona.com/#page",
+   "url": "https://www.tomeryona.com/",
+   "isPartOf": {
+    "@id": "https://www.tomeryona.com/#website"
+   },
+   "mainEntity": {
+    "@id": "https://www.tomeryona.com/#person"
+   },
+   "dateModified": "2026-10-14"
+  },
+  {
+   "@type": "Person",
+   "@id": "https://www.tomeryona.com/#person",
+   "name": "Tomer Yona",
+   "url": "https://www.tomeryona.com/",
+   "image": "https://www.tomeryona.com/Headshot.jpg",
+   "jobTitle": "Postdoctoral Researcher",
+   "worksFor": {
+    "@type": "Organization",
+    "name": "Maastricht University"
+   },
+   "alumniOf": [
+    {
+     "@type": "Organization",
+     "name": "Technion – Israel Institute of Technology"
     },
-    "alumniOf": [
-      {
-        "@type": "Organization",
-        "name": "Technion – Israel Institute of Technology"
-      },
-      {
-        "@type": "Organization",
-        "name": "Tel Aviv University"
-      }
-    ],
-    "knowsAbout": ["Wearable Sensors", "Biomechanics", "Gait Analysis", "Device Validation", "IMU", "EMG", "Physical Activity", "Digital Health"],
-    "sameAs": [
-      "https://www.linkedin.com/in/tomerpt/",
-      "https://scholar.google.com/citations?user=PSc2gH4AAAAJ&hl"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Aachen",
-      "addressCountry": "DE"
+    {
+     "@type": "Organization",
+     "name": "Tel Aviv University"
     }
+   ],
+   "knowsAbout": [
+    "Wearable Sensors",
+    "Biomechanics",
+    "Gait Analysis",
+    "Device Validation",
+    "IMU",
+    "EMG",
+    "Physical Activity",
+    "Digital Health"
+   ],
+   "sameAs": [
+    "https://www.linkedin.com/in/tomerpt/",
+    "https://scholar.google.com/citations?user=PSc2gH4AAAAJ"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Aachen",
+    "addressCountry": "DE"
+   }
+  },
+  {
+   "@type": "Dataset",
+   "@id": "https://doi.org/10.5281/zenodo.15624356",
+   "name": "The COMPWALK-ACL dataset",
+   "description": "Lower-limb IMU gait dataset (Xsens Awinda) from 92 participants: 25 healthy adults, 27 healthy adolescents and 40 people with an ACL injury, 27 of whom were measured again three months after reconstruction. Each walked overground at self-selected slow, normal and fast speeds. Files are .mvnx with paired .xlsx spreadsheets.",
+   "url": "https://doi.org/10.5281/zenodo.15624356",
+   "identifier": "https://doi.org/10.5281/zenodo.15624356",
+   "license": "https://creativecommons.org/licenses/by/4.0/",
+   "isAccessibleForFree": true,
+   "measurementTechnique": "Inertial measurement units (Xsens Awinda, MVN Analyze)",
+   "variableMeasured": [
+    "Lower-limb joint angles",
+    "Spatiotemporal gait parameters",
+    "Segment kinematics",
+    "Centre of mass"
+   ],
+   "keywords": [
+    "gait",
+    "IMU",
+    "wearable sensors",
+    "ACL reconstruction",
+    "adolescents",
+    "walking speed",
+    "kinematics"
+   ],
+   "citation": {
+    "@id": "https://doi.org/10.1038/s41597-025-06307-8"
+   },
+   "alternateName": "COMPWALK-ACL: multi-pace IMU gait kinematics in adolescents, adults and ACL-injured patients",
+   "sameAs": "https://zenodo.org/records/15624356",
+   "datePublished": "2025-06-09",
+   "creator": [
+    {
+     "@id": "https://www.tomeryona.com/#person"
+    },
+    {
+     "@type": "Person",
+     "name": "Betsalel Peskin"
+    },
+    {
+     "@type": "Person",
+     "name": "Arielle Fischer"
+    }
+   ],
+   "includedInDataCatalog": {
+    "@type": "DataCatalog",
+    "name": "Zenodo",
+    "url": "https://zenodo.org/"
+   }
+  },
+  {
+   "@type": "ScholarlyArticle",
+   "@id": "https://doi.org/10.1038/s41597-025-06307-8",
+   "headline": "The COMPWALK-ACL: A Dataset of Multi-pace IMU Gait Kinematics in Adolescents, Adults, and ACL Injured Patients",
+   "url": "https://doi.org/10.1038/s41597-025-06307-8",
+   "datePublished": "2025-12-09",
+   "isPartOf": {
+    "@type": "Periodical",
+    "name": "Scientific Data"
+   },
+   "author": [
+    {
+     "@id": "https://www.tomeryona.com/#person"
+    },
+    {
+     "@type": "Person",
+     "name": "Bezalel Peskin"
+    },
+    {
+     "@type": "Person",
+     "name": "Arielle Fischer"
+    }
+   ],
+   "name": "The COMPWALK-ACL: A Dataset of Multi-pace IMU Gait Kinematics in Adolescents, Adults, and ACL Injured Patients",
+   "identifier": "https://doi.org/10.1038/s41597-025-06307-8",
+   "isBasedOn": {
+    "@id": "https://doi.org/10.5281/zenodo.15624356"
+   }
   }
+ ]
+}
   </script>
  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
  
   <style>
     :root {
@@ -119,12 +232,30 @@
     /* Mobile nav toggle */
     .nav-toggle {
       display: none;
+      width: 44px;
+      height: 44px;
+      margin: -8px -10px -8px 0;
+      place-items: center;
       background: none;
       border: none;
-      font-size: 1.5rem;
+      border-radius: 8px;
+      font-size: 1.4rem;
       color: var(--secondary);
       cursor: pointer;
     }
+    .nav-toggle .ico-close { display: none; }
+    .nav-toggle[aria-expanded="true"] .ico-open { display: none; }
+    .nav-toggle[aria-expanded="true"] .ico-close { display: inline; }
+
+    /* Shared */
+    .ico { width: 1em; height: 1em; flex: none; fill: currentColor; vertical-align: -0.125em; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .skip-link { position: absolute; left: 1rem; top: -100px; z-index: 2000; background: var(--primary); color: #fff; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; text-decoration: none; }
+    .skip-link:focus { top: 0.6rem; }
+    main:focus { outline: none; }
+    .btn .ext { font-size: 0.75rem; opacity: 0.75; margin-left: -4px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    [id] { scroll-margin-top: 80px; }
  
     /* Hero Section */
     .hero {
@@ -184,6 +315,15 @@
       letter-spacing: -0.02em;
     }
  
+    .hero-creds {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .hero-creds .cred { white-space: nowrap; }
+    .hero-creds .sep { color: var(--text-light); font-weight: 400; margin: 0 0.45rem 0 0.1rem; }
     .hero-subtitle {
       font-size: 1.15rem;
       color: var(--text-light);
@@ -243,11 +383,7 @@
       padding: 1.5rem;
       transition: all 0.25s ease;
     }
-    .cap-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 20px -12px rgba(0, 0, 0, 0.12);
-      border-color: rgba(37, 99, 235, 0.35);
-    }
+
     .cap-icon { font-size: 1.3rem; color: var(--accent); margin-bottom: 0.8rem; }
     .cap-item h3 {
       font-size: 1rem;
@@ -286,11 +422,7 @@
       transition: all 0.3s ease;
     }
  
-    .case-study:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.10), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      border-color: var(--accent);
-    }
+
  
     .case-meta {
       min-width: 170px;
@@ -336,19 +468,35 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
     }
+    .resource-group {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 1rem;
+    }
+    .resources-grid + .resource-group { margin-top: 2.6rem; }
     .resource-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
       background: var(--bg-alt);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 1.8rem;
-      transition: all 0.25s ease;
     }
-    .resource-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px -6px rgba(0,0,0,0.1);
-      border-color: var(--accent);
+    .tool-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      flex: none;
     }
-    .resource-card h3 {
+    .tool-icon.neutral { background: #eff6ff; border: 1px solid #dbeafe; color: var(--accent); font-size: 1.15rem; }
+    .resource-card h4 {
       font-size: 1.05rem;
       color: var(--secondary);
       margin-bottom: 0.5rem;
@@ -357,16 +505,40 @@
     .resource-card p {
       font-size: 0.92rem;
       color: var(--text-light);
-      margin-bottom: 0.8rem;
       line-height: 1.55;
+      margin-bottom: 1rem;
     }
+    .resource-card p a { color: var(--accent); font-weight: 500; text-underline-offset: 2px; }
+    .resource-foot { margin-top: auto; display: flex; flex-direction: column; gap: 0; }
     .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      align-self: flex-start;
+      padding-block: 0.35rem;
       font-size: 0.88rem;
       color: var(--accent);
       text-decoration: none;
       font-weight: 700;
     }
-    .resource-link:hover { text-decoration: underline; }
+    .resource-link .ico { font-size: 0.8rem; }
+    a.resource-link:hover { text-decoration: underline; }
+    /* whole-card link: the title link stretches over the card */
+    .card-link { color: inherit; text-decoration: none; }
+    .card-link::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+    .card-link:focus-visible { outline: none; }
+    .card-link:focus-visible::after { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .tool-card { transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .tool-card:hover, .tool-card:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 8px 16px -6px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    .tool-card .resource-link .ico { transition: transform 0.2s; }
+    .tool-card:hover .resource-link .ico, .tool-card:focus-within .resource-link .ico { transform: translateX(2px); }
+    .case-desc a { color: var(--accent); font-weight: 500; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+    .case-desc a:hover { color: var(--primary); }
+    .ext-inline { font-size: 0.7em; vertical-align: 0.05em; }
  
     /* CTA Section */
     .cta { text-align: center; max-width: 760px; margin: 0 auto; }
@@ -375,6 +547,8 @@
     .cta .btn { padding: 1rem 2.4rem; border-radius: 10px; }
  
     /* Footer */
+    footer a { color: var(--text-light); font-weight: 600; }
+    footer a:hover { color: var(--accent); }
     footer {
       text-align: center;
       padding: 2rem 0;
@@ -418,6 +592,7 @@
       }
       h1 { font-size: 2.2rem; }
       .nav-links { display: none; }
+      .nav-links.open a { display: block; padding: 0.65rem 0; }
       .nav-links.open {
         display: flex;
         flex-direction: column;
@@ -431,7 +606,7 @@
         gap: 1rem;
         box-shadow: 0 8px 24px -8px rgba(0,0,0,0.15);
       }
-      .nav-toggle { display: block; }
+      .nav-toggle { display: grid; }
       .hero { padding-top: 130px; }
     }
  
@@ -452,67 +627,80 @@
       .btn { width: 100%; }
       .hero-cta { gap: 0.6rem; }
       h1 { font-size: 2rem; }
+      h1 br { display: none; }
+      .hero-photo { order: -1; margin-top: 0; }
+      .hero-creds .cred { display: block; white-space: normal; }
+      .hero-creds .sep { display: none; }
+      .role-pill { font-size: 0.72rem; letter-spacing: 0.03em; }
+      .section-padding { padding: 4rem 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .btn, .tool-card { transition: none !important; }
+      .btn:hover, .tool-card:hover, .tool-card:focus-within { transform: none !important; }
     }
   </style>
 </head>
  
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
  
   <nav>
     <div class="container nav-container">
-      <a href="#" class="logo">Tomer Yona <span style="font-weight:400; opacity:0.6;">| PhD</span></a>
-      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-        <i class="fa-solid fa-bars"></i>
+      <a href="/" class="logo">Tomer Yona <span style="font-weight:400; color: var(--text-light);">| PhD</span></a>
+      <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        <svg class="ico ico-open" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
+        <svg class="ico ico-close" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
       </button>
-      <ul class="nav-links">
-        <li><a href="#capabilities">What I Do</a></li>
-        <li><a href="#work">Selected Work</a></li>
-        <li><a href="#resources">Tools & Output</a></li>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#capabilities">What I do</a></li>
+        <li><a href="#work">Selected work</a></li>
+        <li><a href="#resources">Tools & output</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
  
+  <main id="main" tabindex="-1">
   <section class="hero">
     <div class="container">
       <div class="hero-layout">
         <div class="hero-content">
           <div class="role-pill">
-            <i class="fa-solid fa-location-dot"></i>
+            <svg class="ico" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
             Aachen, Germany &bull; open to remote/hybrid
           </div>
  
-          <h1>Turning sensor data into<br>evidence you can act on.</h1>
+          <h1>Turning sensor data into <br>evidence you can act on.</h1>
+
+          <p class="hero-creds"><span class="cred">Postdoctoral researcher, Maastricht University (NUTRIM)</span> <span class="cred"><span class="sep" aria-hidden="true">&middot;</span>PhD in Biomedical Engineering, Technion</span> <span class="cred"><span class="sep" aria-hidden="true">&middot;</span>Licensed physiotherapist (Israel)</span></p>
  
           <p class="hero-subtitle">
-            I help teams turn wearable sensor data into evidence they can act on &mdash; whether that's a validation claim, a clinical endpoint, or a product decision.
-            My background spans clinical practice, study design, multi-sensor data collection, and building the analysis tools to make it all reproducible.
-            I've worked across IMU, EMG, PPG, and accelerometry systems, from single-patient assessments to 10,000-participant cohorts.
+            I'm looking for <strong>Application Science</strong>, <strong>Clinical &amp; Scientific Affairs</strong>, <strong>Evidence Generation</strong> and <strong>R&amp;D</strong> roles in wearable sensors, digital health and assistive technology.
+            My background spans clinical practice, study design and reproducible analysis tooling across IMU, EMG, PPG and accelerometry, from single patients to 10,000-participant cohorts.
           </p>
  
           <div class="hero-cta">
-            <a class="btn" href="mailto:hello@tomeryona.com"><i class="fa-solid fa-envelope"></i>hello@tomeryona.com</a>
-            <a class="btn secondary" href="https://www.linkedin.com/in/tomerpt/" target="_blank" rel="noreferrer">
-              <i class="fa-brands fa-linkedin"></i>LinkedIn
-            </a>
-            <a class="btn secondary" href="https://scholar.google.com/citations?user=PSc2gH4AAAAJ&hl" target="_blank" rel="noreferrer">
-              <i class="fa-solid fa-graduation-cap"></i>Google Scholar
-            </a>
-            <a class="btn secondary" href="reading-notes-1.html">
-              <i class="fa-solid fa-book-open"></i>Reading Notes
+            <a class="btn" href="mailto:hello@tomeryona.com"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>hello@tomeryona.com</a>
+            <a class="btn secondary" href="mailto:hello@tomeryona.com?subject=CV%20request"><svg class="ico" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM112 256H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>CV on request</a>
+            <a class="btn secondary" href="https://www.linkedin.com/in/tomerpt/" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>LinkedIn<span class="sr-only"> (opens in new tab)</span> <svg class="ico ext" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
             </a>
           </div>
         </div>
  
         <div class="hero-photo">
-          <img src="Headshot.jpg" alt="Tomer Yona" />
+          <picture>
+            <source srcset="headshot-440.webp" type="image/webp" />
+            <img src="headshot-440.jpg" alt="Tomer Yona" width="220" height="220" fetchpriority="high" />
+          </picture>
         </div>
       </div>
  
       <!-- Capabilities -->
       <div class="capabilities-grid" id="capabilities">
         <div class="cap-item">
-          <div class="cap-icon"><i class="fa-solid fa-signal"></i></div>
+          <div class="cap-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M576 0c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V32c0-17.7 14.3-32 32-32zM448 96c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V128c0-17.7 14.3-32 32-32zM352 224V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32s32 14.3 32 32zM192 288c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32zM96 416v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V416c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg></div>
           <h3>Multi-Sensor Measurement Systems</h3>
           <p>
             IMU, EMG, PPG/ECG, and accelerometry &mdash; from single-device setups to synchronized multi-sensor protocols.
@@ -521,7 +709,7 @@
         </div>
  
         <div class="cap-item">
-          <div class="cap-icon"><i class="fa-solid fa-flask-vial"></i></div>
+          <div class="cap-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M175 389.4c-9.8 16-15 34.3-15 53.1c-10 3.5-20.8 5.5-32 5.5c-53 0-96-43-96-96V64C14.3 64 0 49.7 0 32S14.3 0 32 0H96h64 64c17.7 0 32 14.3 32 32s-14.3 32-32 32V309.9l-49 79.6zM96 64v96h64V64H96zM352 0H480h32c17.7 0 32 14.3 32 32s-14.3 32-32 32V214.9L629.7 406.2c6.7 10.9 10.3 23.5 10.3 36.4c0 38.3-31.1 69.4-69.4 69.4H261.4c-38.3 0-69.4-31.1-69.4-69.4c0-12.8 3.6-25.4 10.3-36.4L320 214.9V64c-17.7 0-32-14.3-32-32s14.3-32 32-32h32zm32 64V224c0 5.9-1.6 11.7-4.7 16.8L330.5 320h171l-48.8-79.2c-3.1-5-4.7-10.8-4.7-16.8V64H384z"/></svg></div>
           <h3>Evidence Generation & Study Design</h3>
           <p>
             End-to-end study execution: protocols, endpoints, feasibility, adherence, and data-quality checks.
@@ -530,7 +718,7 @@
         </div>
  
         <div class="cap-item">
-          <div class="cap-icon"><i class="fa-solid fa-person-walking"></i></div>
+          <div class="cap-icon"><svg class="ico" viewBox="0 0 320 512" aria-hidden="true" focusable="false"><path d="M160 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM126.5 199.3c-1 .4-1.9 .8-2.9 1.2l-8 3.5c-16.4 7.3-29 21.2-34.7 38.2l-2.6 7.8c-5.6 16.8-23.7 25.8-40.5 20.2s-25.8-23.7-20.2-40.5l2.6-7.8c11.4-34.1 36.6-61.9 69.4-76.5l8-3.5c20.8-9.2 43.3-14 66.1-14c44.6 0 84.8 26.8 101.9 67.9L281 232.7l21.4 10.7c15.8 7.9 22.2 27.1 14.3 42.9s-27.1 22.2-42.9 14.3L247 287.3c-10.3-5.2-18.4-13.8-22.8-24.5l-9.6-23-19.3 65.5 49.5 54c5.4 5.9 9.2 13 11.2 20.8l23 92.1c4.3 17.1-6.1 34.5-23.3 38.8s-34.5-6.1-38.8-23.3l-22-88.1-70.7-77.1c-14.8-16.1-20.3-38.6-14.7-59.7l16.9-63.5zM68.7 398l25-62.4c2.1 3 4.5 5.8 7 8.6l40.7 44.4-14.5 36.2c-2.4 6-6 11.5-10.6 16.1L54.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L68.7 398z"/></svg></div>
           <h3>Human Movement & Clinical Domain</h3>
           <p>
             Five years of clinical physiotherapy plus a PhD in biomedical engineering.
@@ -539,7 +727,7 @@
         </div>
  
         <div class="cap-item">
-          <div class="cap-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="cap-icon"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg></div>
           <h3>Real-World Data & Population Analytics</h3>
           <p>
             Working with large wearable datasets (10,000+ participants) to derive interpretable activity-pattern metrics
@@ -548,7 +736,7 @@
         </div>
  
         <div class="cap-item">
-          <div class="cap-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+          <div class="cap-icon"><svg class="ico" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M192 0c-41.8 0-77.4 26.7-90.5 64H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H282.5C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM305 273L177 401c-9.4 9.4-24.6 9.4-33.9 0L79 337c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L271 239c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg></div>
           <h3>Validation & Regulatory-Ready Measurement</h3>
           <p>
             Gold-standard comparisons, reliability testing, synchronization, artifact handling, and transparent error reporting.
@@ -557,7 +745,7 @@
         </div>
  
         <div class="cap-item">
-          <div class="cap-icon"><i class="fa-solid fa-arrows-left-right-to-line"></i></div>
+          <div class="cap-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M32 64c17.7 0 32 14.3 32 32l0 320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96C0 78.3 14.3 64 32 64zm214.6 73.4c12.5 12.5 12.5 32.8 0 45.3L205.3 224l229.5 0-41.4-41.4c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l96 96c12.5 12.5 12.5 32.8 0 45.3l-96 96c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L434.7 288l-229.5 0 41.4 41.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-96-96c-12.5-12.5-12.5-32.8 0-45.3l96-96c12.5-12.5 32.8-12.5 45.3 0zM640 96V416c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg></div>
           <h3>Clinical-Technical Translation</h3>
           <p>
             Bridging clinical needs and technical implementation. Previously embedded in a product team as clinical consultant,
@@ -584,16 +772,14 @@
           <h3 class="case-title">Population-scale physical activity analytics</h3>
           <p class="case-desc">
             <strong>Challenge:</strong> Large accelerometry datasets are messy, and summary metrics like "steps/day" miss meaningful behavior patterns.<br><br>
-            <strong>What I did:</strong> Built reproducible Python workflows to quantify activity-pattern metrics (bout distributions, fragmentation, transitions, intensity distribution) from The Maastricht Study's activPAL dataset (~10,000 participants).
-            Also built the <strong>activPAL Explorer</strong>, an interactive analysis tool for researchers to explore and QA their own activPAL data.<br><br>
-            <strong>Output:</strong> Analysis-ready measures linked to cardiometabolic outcomes, plus a reusable open-source tool.
+            <strong>What I did:</strong> Built reproducible Python workflows to quantify activity-pattern metrics (bout distributions, fragmentation, transitions, intensity distribution) from The Maastricht Study's activPAL dataset (~10,000 participants).<br><br>
+            <strong>Output:</strong> Analysis-ready measures linked to cardiometabolic outcomes.
           </p>
           <div class="tech-tags">
             <span class="ttag">Python</span>
             <span class="ttag">activPAL</span>
             <span class="ttag">Time-series</span>
             <span class="ttag">Quality Control</span>
-            <span class="ttag">Streamlit</span>
           </div>
         </div>
       </div>
@@ -635,7 +821,7 @@
             <strong>Challenge:</strong> Lab snapshots miss day-to-day movement strategies during rehabilitation. Wearable-derived endpoints need the same rigor as lab measures.<br><br>
             <strong>What I did:</strong> Designed a wearable IMU workflow for multi-pace gait and stair tasks in real-world settings.
             Ran a randomized sham-controlled trial of vibrational stimulation post-surgery.
-            Published the full dataset (COMPWALK-ACL) in <em>Scientific Data</em> for open reuse.<br><br>
+            Published the full dataset (<a href="https://doi.org/10.5281/zenodo.15624356" target="_blank" rel="noopener">COMPWALK-ACL<span class="sr-only"> (opens in new tab)</span> <svg class="ico ext-inline" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>) in <a href="https://doi.org/10.1038/s41597-025-06307-8" target="_blank" rel="noopener"><em>Scientific Data</em><span class="sr-only"> (opens in new tab)</span> <svg class="ico ext-inline" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a> for open reuse.<br><br>
             <strong>Output:</strong> 5 peer-reviewed papers, 1 open dataset, reusable pipeline components. Protocol to publication, end-to-end.
           </p>
           <div class="tech-tags">
@@ -679,28 +865,42 @@
   <section id="resources" class="section-padding resources-section">
     <div class="container">
       <h2 class="section-title">Tools & output</h2>
-      <p class="section-subtitle">Open resources from my research &mdash; datasets, tools, and publications.</p>
- 
+      <p class="section-subtitle">Open data and research software I've released, my publications, and a side project.</p>
+
+      <h3 class="resource-group">Open data &amp; research software</h3>
       <div class="resources-grid">
         <div class="resource-card">
-          <h3>activPAL Explorer</h3>
-          <p>Interactive analysis and QA tool for activPAL accelerometer data. Built with Python/Streamlit for researchers working with physical activity and sedentary behavior data.</p>
+          <span class="tool-icon neutral"><svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M448 80v48c0 44.2-100.3 80-224 80S0 172.2 0 128V80C0 35.8 100.3 0 224 0S448 35.8 448 80zM393.2 214.7c20.8-7.4 39.9-16.9 54.8-28.6V288c0 44.2-100.3 80-224 80S0 332.2 0 288V186.1c14.9 11.8 34 21.2 54.8 28.6C99.7 230.7 159.5 240 224 240s124.3-9.3 169.2-25.3zM0 346.1c14.9 11.8 34 21.2 54.8 28.6C99.7 390.7 159.5 400 224 400s124.3-9.3 169.2-25.3c20.8-7.4 39.9-16.9 54.8-28.6V432c0 44.2-100.3 80-224 80S0 476.2 0 432V346.1z"/></svg></span>
+          <h4>COMPWALK-ACL dataset</h4>
+          <p>Multi-pace IMU gait kinematics from 92 participants: 25 healthy adults, 27 healthy adolescents, and 40 people with an ACL injury, 27 of them measured again three months after reconstruction. Slow, normal and fast walking. Open under CC BY 4.0; the trials are .mvnx files, which open in <a href="mvnx-viewer/">MVNX Viewer</a>.</p>
+          <div class="resource-foot">
+            <a class="resource-link" href="https://doi.org/10.5281/zenodo.15624356" target="_blank" rel="noopener"><span>Dataset on Zenodo</span><span class="sr-only"> (opens in new tab)</span> <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>
+            <a class="resource-link" href="https://doi.org/10.1038/s41597-025-06307-8" target="_blank" rel="noopener"><span>Paper in <em>Scientific Data</em> (2025)</span><span class="sr-only"> (opens in new tab)</span> <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>
+          </div>
         </div>
- 
-        <div class="resource-card">
-          <h3>Cuewand</h3>
-          <p>Free phone remote for PowerPoint on Windows: Next and Back, speaker notes per animation step, the time left, and a laser pointer. Nothing to install on the phone.</p>
-          <a class="resource-link" href="cuewand/">Cuewand: phone remote for PowerPoint <i class="fa-solid fa-arrow-right" style="font-size:0.8rem;"></i></a>
+        <div class="resource-card tool-card">
+          <span class="tool-icon"><svg viewBox="0 0 32 32" width="44" height="44" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="7" fill="#0f172a"/><path d="M12 9l11 7-11 7z" fill="#3b82f6"/></svg></span>
+          <h4><a class="card-link" href="mvnx-viewer/">MVNX Viewer</a></h4>
+          <p>A free browser viewer I built for .mvnx motion-capture files (Movella / Xsens MVN): 3D skeleton playback, joint-angle charts, foot contacts and centre of mass. Files are not uploaded.</p>
+          <div class="resource-foot"><span class="resource-link" aria-hidden="true"><span>Open the viewer</span> <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></span></div>
         </div>
+      </div>
+
+      <h3 class="resource-group">Publications &amp; side projects</h3>
+      <div class="resources-grid">
         <div class="resource-card">
-          <h3>COMPWALK-ACL Dataset</h3>
-          <p>Open dataset of multi-pace IMU gait kinematics in adolescents, adults, and ACL-injured patients. Published in <em>Scientific Data</em> (2025).</p>
+          <span class="tool-icon neutral"><svg class="ico" viewBox="0 0 576 512" aria-hidden="true" focusable="false"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5V78.6c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8V454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5V83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11V456c0 11.4 11.7 19.3 22.4 15.5z"/></svg></span>
+          <h4>25+ peer-reviewed publications</h4>
+          <p>Research spanning wearable biomechanics, device validation, patient-reported outcomes, and population health. Editorial board member, BMJ Open Sport &amp; Exercise Medicine.</p>
+          <div class="resource-foot">
+            <a class="resource-link" href="https://scholar.google.com/citations?user=PSc2gH4AAAAJ" target="_blank" rel="noopener"><span>View on Google Scholar</span><span class="sr-only"> (opens in new tab)</span> <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>
+          </div>
         </div>
- 
-        <div class="resource-card">
-          <h3>25 Peer-Reviewed Publications</h3>
-          <p>Research spanning wearable biomechanics, device validation, patient-reported outcomes, and population health. Editor at BMJ Open Sport & Exercise Medicine.</p>
-          <a class="resource-link" href="https://scholar.google.com/citations?user=PSc2gH4AAAAJ&hl" target="_blank" rel="noreferrer">View on Google Scholar <i class="fa-solid fa-arrow-right" style="font-size:0.8rem;"></i></a>
+        <div class="resource-card tool-card">
+          <span class="tool-icon"><img src="cuewand/img/cuewand-icon.svg" alt="" width="44" height="44"></span>
+          <h4><a class="card-link" href="cuewand/">Cuewand</a></h4>
+          <p>A side project I built and maintain: a free phone remote for PowerPoint on Windows, with Next and Back, speaker notes per animation step, a talk timer and a laser pointer. Nothing to install on the phone.</p>
+          <div class="resource-foot"><span class="resource-link" aria-hidden="true"><span>Try the demo and download</span> <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></span></div>
         </div>
       </div>
     </div>
@@ -710,31 +910,47 @@
     <div class="container">
       <h2>Let's talk.</h2>
       <p>
-        I'm exploring opportunities in <strong>Application Science</strong>, <strong>Clinical & Scientific Affairs</strong>,
-        <strong>Evidence Generation</strong>, and <strong>R&D</strong> &mdash; particularly in wearable sensors, digital health, and assistive technology.
-        Open to both industry and applied research roles.
+        Open to industry and applied research roles. The quickest route is email; my CV is available on request.
       </p>
  
-      <a href="mailto:hello@tomeryona.com" class="btn"><i class="fa-solid fa-paper-plane"></i>Get in Touch</a>
+      <div class="hero-cta" style="justify-content:center">
+        <a href="mailto:hello@tomeryona.com" class="btn"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg>Get in touch</a>
+        <a href="mailto:hello@tomeryona.com?subject=CV%20request" class="btn secondary"><svg class="ico" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM112 256H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>CV on request</a>
+      </div>
  
       <div style="margin-top: 1.6rem; display: flex; justify-content: center; gap: 2rem;">
-        <a href="https://www.linkedin.com/in/tomerpt/" target="_blank" rel="noreferrer"
+        <a href="https://www.linkedin.com/in/tomerpt/" target="_blank" rel="noopener"
            style="color: var(--text-light); text-decoration: none; font-weight: 700; font-size: 0.95rem;">
-          <i class="fab fa-linkedin" style="margin-right: 6px; color: var(--accent);"></i>LinkedIn
+          <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false" style="margin-right: 6px; color: var(--accent);"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>LinkedIn<span class="sr-only"> (opens in new tab)</span> <svg class="ico ext" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
         </a>
-        <a href="https://scholar.google.com/citations?user=PSc2gH4AAAAJ&hl" target="_blank" rel="noreferrer"
+        <a href="https://scholar.google.com/citations?user=PSc2gH4AAAAJ" target="_blank" rel="noopener"
            style="color: var(--text-light); text-decoration: none; font-weight: 700; font-size: 0.95rem;">
-          <i class="fa-solid fa-graduation-cap" style="margin-right: 6px; color: var(--accent);"></i>Google Scholar
+          <svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false" style="margin-right: 6px; color: var(--accent);"><path d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9v28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c4.2 1.1 8.7 .3 12.4-2s6.3-6.1 7.1-10.4c8.6-42.8 4.3-81.2-2.1-108.7C90.3 344.3 86 329.8 80 316.5V291.9c0-30.2 10.2-58.7 27.9-81.5c12.9-15.5 29.6-28 49.2-35.7l157-61.7c8.2-3.2 17.5 .8 20.7 9s-.8 17.5-9 20.7l-157 61.7c-12.4 4.9-23.3 12.4-32.2 21.6l159.6 57.6c7.6 2.7 15.6 4.1 23.7 4.1s16.1-1.4 23.7-4.1L624.2 182.6c9.5-3.4 15.8-12.5 15.8-22.6s-6.3-19.1-15.8-22.6L343.7 36.1C336.1 33.4 328.1 32 320 32zM128 408c0 35.3 86 72 192 72s192-36.7 192-72L496.7 262.6 354.5 314c-11.1 4-22.8 6-34.5 6s-23.5-2-34.5-6L143.3 262.6 128 408z"/></svg>Google Scholar<span class="sr-only"> (opens in new tab)</span> <svg class="ico ext" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
         </a>
       </div>
     </div>
   </section>
  
+  </main>
+
   <footer>
     <div class="container">
-      &copy; 2025 Tomer Yona. All rights reserved.
+      <a href="mailto:hello@tomeryona.com">hello@tomeryona.com</a> &middot; <a href="reading-notes-1.html">Reading notes</a><br>
+      &copy; 2026 Tomer Yona. All rights reserved.
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var t = document.querySelector('.nav-toggle'), l = document.getElementById('nav-links');
+      function setOpen(o) { l.classList.toggle('open', o); t.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+      t.addEventListener('click', function () { setOpen(!l.classList.contains('open')); });
+      l.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && l.classList.contains('open')) { setOpen(false); t.focus(); } });
+      document.addEventListener('click', function (e) { if (!e.target.closest('nav')) setOpen(false); });
+      document.querySelector('nav').addEventListener('focusout', function (e) { if (!e.relatedTarget || !e.target.closest('nav').contains(e.relatedTarget)) setOpen(false); });
+    })();
+  </script>
  
 </body>
 </html>

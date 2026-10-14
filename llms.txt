@@ -36,8 +36,14 @@ Price and licence: free, open source (MIT). No accounts, ads, analytics or track
 
 - [MVNX Viewer](https://www.tomeryona.com/mvnx-viewer/): free browser-based viewer for .mvnx motion-capture files (Movella / Xsens MVN export): 3D skeleton playback, joint-angle charts, foot contacts, centre of mass. Files are not uploaded.
 
+## Open data
+
+- [COMPWALK-ACL dataset on Zenodo](https://doi.org/10.5281/zenodo.15624356): multi-pace IMU gait kinematics (Xsens Awinda) from 92 participants: healthy adults, healthy adolescents, and people with an ACL injury before and three months after reconstruction. CC BY 4.0. Trials are .mvnx files with paired .xlsx spreadsheets.
+- [The COMPWALK-ACL paper, Scientific Data (2025)](https://doi.org/10.1038/s41597-025-06307-8): Yona T, Peskin B, Fischer A.
+
 ## About
 
 - [Home](https://www.tomeryona.com/): postdoctoral researcher at Maastricht University; PhD in Biomedical Engineering (Technion); licensed physiotherapist. Work spans IMU, EMG, PPG and accelerometry, from single-patient assessments to 10,000-participant cohorts.
+- [Reading notes](https://www.tomeryona.com/reading-notes-1.html)
 - [LinkedIn](https://www.linkedin.com/in/tomerpt/)
-- [Google Scholar](https://scholar.google.com/citations?user=PSc2gH4AAAAJ&hl)
+- [Google Scholar](https://scholar.google.com/citations?user=PSc2gH4AAAAJ)
