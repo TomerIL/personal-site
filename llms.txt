@@ -9,8 +9,9 @@ Cuewand turns a phone into a remote control for Microsoft PowerPoint on a Window
 What the phone does:
 - Next and Back (slide clicker / presentation clicker / wireless presenter replacement)
 - Speaker notes on the phone, split at each animation step when the notes contain [click]; pictures of the current and next slide
-- A countdown for the talk on the Next button, with on-screen alerts; on Android it also vibrates (iPhones do not let web pages vibrate)
+- A countdown for the talk on the Next button, with on-screen alerts; on Android it also vibrates (iPhones do not let web pages vibrate). The clock starts when the slide show starts or with the first Next, as chosen; for a lesson it can be turned off ("No clock")
 - Laser pointer: holding the slide picture moves PowerPoint's red laser dot on the big screen
+- Zoom on the big screen (a trial in 2.6): + and - on the phone zoom PowerPoint's slide show; zoomed in, dragging the picture moves around the slide
 - Find a slide by title, slide text, notes or number and jump to it; after a jump to a hidden backup slide, Back returns to where you were
 - Black out the screen
 - Rehearsal timing, then "ahead / behind" pacing during the talk
@@ -19,12 +20,12 @@ What the phone does:
 - Tablet presenter view in landscape; left-handed layout
 
 Requirements and limits:
-- 64-bit Windows laptop with the PowerPoint desktop app, run on the computer that shows the slides and set up before the talk (not meant for an unfamiliar lectern PC). No Mac version; Keynote and PowerPoint on the web are not supported. The Windows download bundles its own Python.
+- 64-bit Windows laptop with the PowerPoint desktop app, run on the computer that shows the slides and set up before the talk (not meant for an unfamiliar lectern PC). No Mac version; Keynote and PowerPoint on the web are not supported. The Windows download bundles its own Python, and every program file in it is signed, so Windows Smart App Control lets it run.
 - Phone and laptop connect over the same Wi-Fi, the phone's own hotspot, or an optional internet link relayed encrypted through Cloudflare quick tunnels. Same Wi-Fi traffic is not encrypted.
 - Without a PowerPoint deck open, Next and Back press the laptop's arrow keys, which works for Google Slides or a full-screen PDF (no notes, slide pictures or pace; the clock still runs).
 - Anyone with the pairing code or 6-digit number can control the slides while Cuewand runs; codes last twelve hours, and Make new codes on the pairing page cancels them sooner.
 
-Testing status (version 2.3): earlier versions ran on real PowerPoint 16 on Windows 11 with one presenter. Later changes were checked against a PowerPoint simulator with 598 automated checks and an automated accessibility audit. Not yet tried: any iPhone, a real Android phone since version 1.6, vibration on a real phone, the hotspot route, the internet link since a reported failure, [click] notes and sections on a real deck, PowerPoint Presenter View with two screens, and a real screen reader. The version 2.2 changes to how presses are timed are not yet confirmed on real PowerPoint.
+Testing status (version 2.6): version 2.1 passed a full self-test on real PowerPoint 16 on Windows 11, and version 2.6 ran there with presses, slide pictures and notes from a real phone (one presenter). Every change is checked against a PowerPoint simulator with 667 automated checks and an automated accessibility audit. Not yet tried: any iPhone, a real Android phone since version 1.6, vibration on a real phone, the hotspot route, the internet link since a reported failure, [click] notes and sections on a real deck, PowerPoint Presenter View with two screens, and a real screen reader. The full self-test has not been rerun on real PowerPoint since version 2.1, and zoom on the big screen is a trial.
 
 Price and licence: free, open source (MIT). No accounts, ads, analytics or tracking; nothing is sent to the author.
 
