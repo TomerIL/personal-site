@@ -33,6 +33,24 @@ Price and licence: free, open source (MIT). No accounts, ads, analytics or track
 - [Source code and full manual on GitHub](https://github.com/TomerIL/cuewand)
 - [Download for Windows (Cuewand-for-Windows.zip)](https://github.com/TomerIL/cuewand/releases/latest)
 
+## The Jefferson curl, measured
+
+The Jefferson curl is a loaded spinal flexion exercise: a standing lifter holds a weight and flexes the spine sequentially from the neck downward, lowering the weight toward the feet.
+
+The page shows one lifter performing the Jefferson curl and the Romanian deadlift (RDL) side by side with the same 45 kg, as an interactive film reconstructed from motion capture (41 markers) and surface EMG (10 sensors), with three stills: standing, halfway down and the bottom. At the bottom of the lift this lifter's spine was flexed 38 degrees in the Jefferson curl and 10 degrees in the Romanian deadlift; the hips 109 and 122 degrees; the knees 2 and 32 degrees.
+
+What the study found (the first surface EMG characterization of the Jefferson curl; 21 resistance-trained adults; the same absolute load in both lifts, mean 41.9 kg, set in the Jefferson curl at a Borg rating of perceived exertion of 16). Muscle activity, as a percentage of maximal voluntary isometric contraction, Jefferson curl vs Romanian deadlift:
+- Upper erector spinae: 63 vs 45 (higher in the Jefferson curl)
+- Lower erector spinae: 60 vs 48 (higher in the Jefferson curl)
+- Biceps femoris: 54 vs 42 (higher in the Jefferson curl)
+- Middle erector spinae: 52 vs 56 (no significant difference)
+- Gluteus maximus: 31 vs 31 (no significant difference)
+
+Not measured: load on the spine, injury risk, flexibility, training outcomes. The study supports no claim about safety.
+
+- [The Jefferson curl, measured](https://www.tomeryona.com/jefferson-curl/)
+- [The paper, open access](https://doi.org/10.26603/001c.172559): Yona T, Kalifa B, Gildar S, Margi R, Har-Nir I, Fischer AG. Surface EMG Characterization of the Jefferson Curl at a Submaximal Load Matched to the Romanian Deadlift: A Cross-Sectional Study in Resistance-Trained Adults. International Journal of Sports Physical Therapy. 2026;21(11):1100-1116.
+
 ## Other tools
 
 - [MVNX Viewer](https://www.tomeryona.com/mvnx-viewer/): free browser-based viewer for .mvnx motion-capture files (Movella / Xsens MVN export): 3D skeleton playback, joint-angle charts, foot contacts, centre of mass. Files are not uploaded.
