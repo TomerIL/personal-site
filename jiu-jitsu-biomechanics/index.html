@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jiu-Jitsu Biomechanics in 3D from One Photo | Tomer Yona</title>
-<meta name="description" content="A jiu-jitsu arm bar reconstructed in 3D from one photo with computer vision: body models, joint angles and an anatomical skeleton to walk around in the browser.">
+<meta name="description" content="A jiu-jitsu arm bar and an Americana reconstructed in 3D from single photos with computer vision: body models, joint angles and an anatomical skeleton.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <link rel="canonical" href="https://www.tomeryona.com/jiu-jitsu-biomechanics/">
 <meta name="author" content="Tomer Yona">
@@ -14,7 +14,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Tomer Yona">
 <meta property="og:title" content="Jiu-jitsu biomechanics in 3D, from one photo">
-<meta property="og:description" content="An arm bar reconstructed in 3D with computer vision: body models, joint angles and an anatomical skeleton inside each grappler. Walk around it in the browser.">
+<meta property="og:description" content="An arm bar and an Americana reconstructed in 3D with computer vision: body models, joint angles and an anatomical skeleton inside each grappler. Walk around it in the browser.">
 <meta property="og:url" content="https://www.tomeryona.com/jiu-jitsu-biomechanics/">
 <meta property="og:image" content="https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta property="article:published_time" content="2026-11-16">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jiu-jitsu biomechanics in 3D, from one photo">
-<meta name="twitter:description" content="An arm bar reconstructed in 3D with computer vision: body models, joint angles and an anatomical skeleton inside each grappler.">
+<meta name="twitter:description" content="An arm bar and an Americana reconstructed in 3D with computer vision: body models, joint angles and an anatomical skeleton inside each grappler.">
 <meta name="twitter:image" content="https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg">
 <meta name="twitter:image:alt" content="A jiu-jitsu arm bar: on the left the two grapplers as 3D bodies with skeletons inside, on the right the drawing of the photo they were reconstructed from.">
 <script type="application/ld+json">
@@ -36,7 +36,7 @@
    "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#page",
    "url": "https://www.tomeryona.com/jiu-jitsu-biomechanics/",
    "name": "Jiu-Jitsu Biomechanics in 3D from One Photo | Tomer Yona",
-   "description": "A jiu-jitsu arm bar reconstructed in 3D from one photo with computer vision: body models, joint angles and an anatomical skeleton to walk around in the browser.",
+   "description": "A jiu-jitsu arm bar and an Americana reconstructed in 3D from single photos with computer vision: body models, joint angles and an anatomical skeleton.",
    "inLanguage": "en",
    "isPartOf": {
     "@id": "https://www.tomeryona.com/#website"
@@ -96,7 +96,7 @@
     "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#page"
    },
    "headline": "Jiu-jitsu biomechanics in 3D, from one photo",
-   "description": "A jiu-jitsu arm bar reconstructed in 3D from one photo with computer vision: body models, joint angles and an anatomical skeleton to walk around in the browser.",
+   "description": "A jiu-jitsu arm bar and an Americana reconstructed in 3D from single photos with computer vision: body models, joint angles and an anatomical skeleton.",
    "image": [
     "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg",
     "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-4-anatomical-skeleton-in-3d.jpg",
@@ -149,6 +149,9 @@
     "arm bar",
     "armbar",
     "juji-gatame",
+    "Americana",
+    "keylock",
+    "ude-garami",
     "3D human pose estimation",
     "human mesh recovery",
     "markerless motion capture",
@@ -326,7 +329,7 @@ table.ang tbody th{color:var(--ink-soft)}
 <main>
 <div class="wrap">
   <p class="hero">One photo. Two bodies. The bones inside.</p>
-  <p class="lede">Each scene above starts from a single photo of two people grappling on the mat. Computer vision models estimate a 3D body for each person (monocular 3D human pose estimation and human mesh recovery), both bodies are placed on the mat, and an anatomical skeleton is posed inside each one. Open "The photo's view" to stand where the camera stood, then walk around the position.</p>
+  <p class="lede">The two scenes above are an arm bar (armbar, juji-gatame) and an Americana (keylock, ude-garami). Each starts from a single photo of two people grappling on the mat. Computer vision models estimate a 3D body for each person (monocular 3D human pose estimation and human mesh recovery), both bodies are placed on the mat, and an anatomical skeleton is posed inside each one. Open "The photo's view" to stand where the camera stood, then walk around the position.</p>
 </div>
 
 <section class="band" aria-labelledby="steps-h">
@@ -359,7 +362,7 @@ table.ang tbody th{color:var(--ink-soft)}
 
 <section class="band" aria-labelledby="ang-h">
 <div class="wrap">
-  <h2 id="ang-h">Estimated joint angles in the two positions</h2>
+  <h2 id="ang-h">Estimated joint angles in the arm bar and the Americana</h2>
   <p>Flexion is 0° for a straight elbow or knee. Shoulder elevation and hip flexion are the angles between the upper arm or thigh and the long axis of the trunk. All values come from one image and are rounded to the degree.</p>
   <div class="tables">
     <table class="ang">
@@ -377,8 +380,8 @@ table.ang tbody th{color:var(--ink-soft)}
       </tbody>
     </table>
     <table class="ang">
-      <caption>Position 2</caption>
-      <thead><tr><th scope="col">Joint angle</th><th scope="col">Bottom person (orange)</th><th scope="col">Top person (blue)</th></tr></thead>
+      <caption>Americana</caption>
+      <thead><tr><th scope="col">Joint angle</th><th scope="col">Defender (orange)</th><th scope="col">Attacker (blue)</th></tr></thead>
       <tbody>
         <tr><th scope="row">Right elbow flexion</th><td>94°</td><td>81°</td></tr>
         <tr><th scope="row">Left elbow flexion</th><td>77°</td><td>68°</td></tr>
@@ -438,7 +441,7 @@ table.ang tbody th{color:var(--ink-soft)}
         integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf"
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-const MAN = {"scenes":[{"name":"Arm bar","photo":"img/jiu-jitsu-arm-bar-drawing.jpg","cam":{"pos":[-8.7,1669.7,1271.7],"target":[76.1,130.5,41.3],"fov":55.57,"aspect":1.2994},"center":[0.0,159.3,-0.0],"people":[{"bone":{"pos":[4099996,440139],"lo":[-848.24,-3.19,-468.03],"hi":[626.26,570.0,1062.05],"nv":146713},"skin":{"pos":[4980276,55317],"lo":[-849.89,-8.25,-474.67],"hi":[630.46,576.4,1068.19],"nv":18439},"angles":[57,13,91,103,52,101,38,54]},{"bone":{"pos":[5090912,440139],"lo":[-559.99,13.96,-484.4],"hi":[904.86,513.16,56.0],"nv":146713},"skin":{"pos":[5971192,55317],"lo":[-564.83,-1.0,-500.55],"hi":[910.45,520.9,61.99],"nv":18439},"angles":[109,79,84,93,16,19,60,85]}]},{"name":"Position 2","photo":"img/jiu-jitsu-top-position-drawing.jpg","cam":{"pos":[234.4,1612.1,1346.8],"target":[272.4,287.7,9.3],"fov":53.44,"aspect":1.3589},"center":[0.0,289.3,0.0],"people":[{"bone":{"pos":[6081828,440139],"lo":[-906.71,16.87,-266.2],"hi":[651.41,632.1,894.01],"nv":146713},"skin":{"pos":[6962108,55317],"lo":[-913.67,-1.0,-270.84],"hi":[657.05,637.51,900.39],"nv":18439},"angles":[94,77,86,116,91,77,34,53]},{"bone":{"pos":[7072744,440139],"lo":[-175.98,14.0,-1131.95],"hi":[603.91,767.47,601.89],"nv":146713},"skin":{"pos":[7953024,55317],"lo":[-184.99,-1.0,-1136.16],"hi":[608.79,774.43,607.86],"nv":18439},"angles":[81,68,19,64,102,94,7,40]}]}],"bone":{"idx":[0,877698],"ao":[3510792,146713]},"skin":{"idx":[3657508,110622]},"angle_names":["right elbow flexion","left elbow flexion","right knee flexion","left knee flexion","right shoulder elevation","left shoulder elevation","right hip flexion","left hip flexion"],"bytes":8063660,"file":"model-68a4b023.txt","ztext":6789588};
+const MAN = {"scenes":[{"name":"Arm bar","photo":"img/jiu-jitsu-arm-bar-drawing.jpg","cam":{"pos":[-8.7,1669.7,1271.7],"target":[76.1,130.5,41.3],"fov":55.57,"aspect":1.2994},"center":[0.0,159.3,-0.0],"people":[{"bone":{"pos":[4099996,440139],"lo":[-848.24,-3.19,-468.03],"hi":[626.26,570.0,1062.05],"nv":146713},"skin":{"pos":[4980276,55317],"lo":[-849.89,-8.25,-474.67],"hi":[630.46,576.4,1068.19],"nv":18439},"angles":[57,13,91,103,52,101,38,54]},{"bone":{"pos":[5090912,440139],"lo":[-559.99,13.96,-484.4],"hi":[904.86,513.16,56.0],"nv":146713},"skin":{"pos":[5971192,55317],"lo":[-564.83,-1.0,-500.55],"hi":[910.45,520.9,61.99],"nv":18439},"angles":[109,79,84,93,16,19,60,85]}]},{"name":"Americana","photo":"img/jiu-jitsu-americana-drawing.jpg","cam":{"pos":[234.4,1612.1,1346.8],"target":[272.4,287.7,9.3],"fov":53.44,"aspect":1.3589},"center":[0.0,289.3,0.0],"people":[{"bone":{"pos":[6081828,440139],"lo":[-906.71,16.87,-266.2],"hi":[651.41,632.1,894.01],"nv":146713},"skin":{"pos":[6962108,55317],"lo":[-913.67,-1.0,-270.84],"hi":[657.05,637.51,900.39],"nv":18439},"angles":[94,77,86,116,91,77,34,53]},{"bone":{"pos":[7072744,440139],"lo":[-175.98,14.0,-1131.95],"hi":[603.91,767.47,601.89],"nv":146713},"skin":{"pos":[7953024,55317],"lo":[-184.99,-1.0,-1136.16],"hi":[608.79,774.43,607.86],"nv":18439},"angles":[81,68,19,64,102,94,7,40]}]}],"bone":{"idx":[0,877698],"ao":[3510792,146713]},"skin":{"idx":[3657508,110622]},"angle_names":["right elbow flexion","left elbow flexion","right knee flexion","left knee flexion","right shoulder elevation","left shoulder elevation","right hip flexion","left hip flexion"],"bytes":8063660,"file":"model-68a4b023.txt","ztext":6789588};
 const T = window.THREE || {};
 const COL = {bone:'#F2E8D5', people:['#FF5B1E', '#1838C8'], field:'#1E1F24', border:'#1838C8', pad:'#C9CBCF', paint:'#ECE9E2', ceiling:'#2A2C31', steel:'#3A3D44'};
 /* the academy, in millimetres: mats wall to wall, a cobalt border round a charcoal field, wall pads to 1.83 m, painted block above */
