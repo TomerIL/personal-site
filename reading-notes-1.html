@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reading Notes №1 — When the verbs outrun the design</title>
 <meta name="description" content="Reading notes on Machado et al. (2024), a cross-sectional rugby study whose claims outrun its design.">
+<link rel="canonical" href="https://www.tomeryona.com/reading-notes-1.html">
  
 <!-- Social -->
 <meta property="og:type" content="article">
@@ -361,7 +362,13 @@
  
   /* accessibility focus */
   a:focus-visible{outline:2px solid var(--mustard); outline-offset:3px; border-radius:2px}
+/* page-to-page transition (default cross-fade); both pages opt in */
+@media (prefers-reduced-motion: no-preference){ @view-transition{ navigation:auto } }
 </style>
+<!-- Fetch a same-site page when its link is hovered, so it opens faster -->
+<script type="speculationrules">
+{ "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+</script>
 </head>
 <body>
  

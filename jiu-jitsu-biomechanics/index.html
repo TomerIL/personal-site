@@ -182,17 +182,17 @@
 }
 </script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231230C8'/%3E%3Crect x='6' y='14' width='20' height='4' rx='1' fill='%23F6F3EC'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="fonts/archivo-latin-wdth-normal.woff2" crossorigin>
 <style>
+/* Archivo (variable, Latin subset), served from this site. Licence: fonts/OFL.txt */
+@font-face{font-family:"Archivo"; font-style:normal; font-display:swap; font-weight:100 900; font-stretch:62% 125%; src:url(fonts/archivo-latin-wdth-normal.woff2) format("woff2")}
 :root{
   --blue:#1230C8; --paper:#F6F3EC; --ink:#070B24; --ink-soft:#454C6B; --rule:#D9D4C7; --hot:#F04A12; --hot-text:#C23A0A;
   --font:"Archivo","Helvetica Neue",Arial,sans-serif; color-scheme:light;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper); color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased}
+body{background:var(--paper); color:var(--ink); font-family:var(--font); font-size:16px; font-size-adjust:from-font; line-height:1.5; -webkit-font-smoothing:antialiased}
 h1,h2,p{margin:0}
 button{font:inherit}
 :focus-visible{outline:3px solid var(--hot); outline-offset:3px}
@@ -287,7 +287,13 @@ table.ang tbody th{color:var(--ink-soft)}
 @media (max-width:900px){ .steps{grid-template-columns:1fr 1fr} }
 @media (max-width:560px){ .steps{grid-template-columns:1fr} }
 @media (max-width:760px){ .two, .tables, .qa{grid-template-columns:1fr} .top .home{display:none} }
+/* page-to-page transition (default cross-fade); both pages opt in */
+@media (prefers-reduced-motion: no-preference){ @view-transition{ navigation:auto } }
 </style>
+<!-- Fetch a same-site page when its link is hovered, so it opens faster -->
+<script type="speculationrules">
+{ "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+</script>
 </head>
 <body>
 <div class="app">
@@ -424,8 +430,13 @@ table.ang tbody th{color:var(--ink-soft)}
 </footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<!-- integrity: the browser refuses the file if the CDN ever serves different bytes -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+        integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"
+        integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 const MAN = {"scenes":[{"name":"Arm bar","photo":"img/jiu-jitsu-arm-bar-drawing.jpg","cam":{"pos":[-8.7,1669.7,1271.7],"target":[76.1,130.5,41.3],"fov":55.57,"aspect":1.2994},"center":[0.0,159.3,-0.0],"people":[{"bone":{"pos":[4099996,440139],"lo":[-848.24,-3.19,-468.03],"hi":[626.26,570.0,1062.05],"nv":146713},"skin":{"pos":[4980276,55317],"lo":[-849.89,-8.25,-474.67],"hi":[630.46,576.4,1068.19],"nv":18439},"angles":[57,13,91,103,52,101,38,54]},{"bone":{"pos":[5090912,440139],"lo":[-559.99,13.96,-484.4],"hi":[904.86,513.16,56.0],"nv":146713},"skin":{"pos":[5971192,55317],"lo":[-564.83,-1.0,-500.55],"hi":[910.45,520.9,61.99],"nv":18439},"angles":[109,79,84,93,16,19,60,85]}]},{"name":"Position 2","photo":"img/jiu-jitsu-top-position-drawing.jpg","cam":{"pos":[234.4,1612.1,1346.8],"target":[272.4,287.7,9.3],"fov":53.44,"aspect":1.3589},"center":[0.0,289.3,0.0],"people":[{"bone":{"pos":[6081828,440139],"lo":[-906.71,16.87,-266.2],"hi":[651.41,632.1,894.01],"nv":146713},"skin":{"pos":[6962108,55317],"lo":[-913.67,-1.0,-270.84],"hi":[657.05,637.51,900.39],"nv":18439},"angles":[94,77,86,116,91,77,34,53]},{"bone":{"pos":[7072744,440139],"lo":[-175.98,14.0,-1131.95],"hi":[603.91,767.47,601.89],"nv":146713},"skin":{"pos":[7953024,55317],"lo":[-184.99,-1.0,-1136.16],"hi":[608.79,774.43,607.86],"nv":18439},"angles":[81,68,19,64,102,94,7,40]}]}],"bone":{"idx":[0,877698],"ao":[3510792,146713]},"skin":{"idx":[3657508,110622]},"angle_names":["right elbow flexion","left elbow flexion","right knee flexion","left knee flexion","right shoulder elevation","left shoulder elevation","right hip flexion","left hip flexion"],"bytes":8063660,"file":"model-68a4b023.txt","ztext":6789588};
 const T = window.THREE || {};
