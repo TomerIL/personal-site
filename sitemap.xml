@@ -2,7 +2,7 @@
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
   <loc>https://www.tomeryona.com/</loc>
-  <lastmod>2026-10-14</lastmod>
+  <lastmod>2026-11-16</lastmod>
   <changefreq>monthly</changefreq>
   <priority>1.0</priority>
   </url>
@@ -25,6 +25,30 @@
   </image:image>
   <image:image>
   <image:loc>https://www.tomeryona.com/cuewand/img/cuewand-qr-code-pairing-page.png</image:loc>
+  </image:image>
+  </url>
+  <url>
+  <loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/</loc>
+  <lastmod>2026-11-16</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+  <image:image>
+  <image:loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg</image:loc>
+  </image:image>
+  <image:image>
+  <image:loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-1-jiu-jitsu-arm-bar-picture.jpg</image:loc>
+  </image:image>
+  <image:image>
+  <image:loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-2-3d-pose-estimation-joint-centres.jpg</image:loc>
+  </image:image>
+  <image:image>
+  <image:loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-3-3d-body-model-mesh.jpg</image:loc>
+  </image:image>
+  <image:image>
+  <image:loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-4-anatomical-skeleton-in-3d.jpg</image:loc>
+  </image:image>
+  <image:image>
+  <image:loc>https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-top-position-drawing.jpg</image:loc>
   </image:image>
   </url>
   <url>

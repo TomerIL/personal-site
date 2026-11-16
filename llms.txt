@@ -37,6 +37,8 @@ Price and licence: free, open source (MIT). No accounts, ads, analytics or track
 
 - [MVNX Viewer](https://www.tomeryona.com/mvnx-viewer/): free browser-based viewer for .mvnx motion-capture files (Movella / Xsens MVN export): 3D skeleton playback, joint-angle charts, foot contacts, centre of mass. Files are not uploaded.
 
+- [Jiu-jitsu biomechanics in 3D](https://www.tomeryona.com/jiu-jitsu-biomechanics/): two grappling positions (an arm bar and a second position) reconstructed in 3D from single photos with computer vision. SAM 3 separates the two people, MoGe-2 estimates the camera and the mat, and SAM 3D Body estimates each person's 3D joint centres and body mesh; eight joint angles per person are computed from the joint centres, and an anatomical skeleton (BodyParts3D) is posed inside each body. Interactive 3D view in the browser. The values are estimates from one image.
+
 ## Open data
 
 - [COMPWALK-ACL dataset on Zenodo](https://doi.org/10.5281/zenodo.15624356): multi-pace IMU gait kinematics (Xsens Awinda) from 92 participants: healthy adults, healthy adolescents, and people with an ACL injury before and three months after reconstruction. CC BY 4.0. Trials are .mvnx files with paired .xlsx spreadsheets.

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jiu-Jitsu Biomechanics in 3D from One Photo | Tomer Yona</title>
+<meta name="description" content="A jiu-jitsu arm bar reconstructed in 3D from one photo with computer vision: body models, joint angles and an anatomical skeleton to walk around in the browser.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://www.tomeryona.com/jiu-jitsu-biomechanics/">
+<meta name="author" content="Tomer Yona">
+<meta name="theme-color" content="#070B24">
+<link rel="alternate" type="text/plain" title="Site summary for AI assistants" href="https://www.tomeryona.com/llms.txt">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Tomer Yona">
+<meta property="og:title" content="Jiu-jitsu biomechanics in 3D, from one photo">
+<meta property="og:description" content="An arm bar reconstructed in 3D with computer vision: body models, joint angles and an anatomical skeleton inside each grappler. Walk around it in the browser.">
+<meta property="og:url" content="https://www.tomeryona.com/jiu-jitsu-biomechanics/">
+<meta property="og:image" content="https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A jiu-jitsu arm bar: on the left the two grapplers as 3D bodies with skeletons inside, on the right the drawing of the photo they were reconstructed from.">
+<meta property="article:author" content="https://www.tomeryona.com/">
+<meta property="article:published_time" content="2026-11-16">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jiu-jitsu biomechanics in 3D, from one photo">
+<meta name="twitter:description" content="An arm bar reconstructed in 3D with computer vision: body models, joint angles and an anatomical skeleton inside each grappler.">
+<meta name="twitter:image" content="https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg">
+<meta name="twitter:image:alt" content="A jiu-jitsu arm bar: on the left the two grapplers as 3D bodies with skeletons inside, on the right the drawing of the photo they were reconstructed from.">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebPage",
+   "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#page",
+   "url": "https://www.tomeryona.com/jiu-jitsu-biomechanics/",
+   "name": "Jiu-Jitsu Biomechanics in 3D from One Photo | Tomer Yona",
+   "description": "A jiu-jitsu arm bar reconstructed in 3D from one photo with computer vision: body models, joint angles and an anatomical skeleton to walk around in the browser.",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://www.tomeryona.com/#website"
+   },
+   "primaryImageOfPage": {
+    "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#image"
+   },
+   "breadcrumb": {
+    "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#breadcrumb"
+   },
+   "datePublished": "2026-11-16",
+   "dateModified": "2026-11-16",
+   "author": {
+    "@id": "https://www.tomeryona.com/#person"
+   },
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "Brazilian jiu-jitsu",
+     "sameAs": "https://en.wikipedia.org/wiki/Brazilian_jiu-jitsu"
+    },
+    {
+     "@type": "Thing",
+     "name": "Biomechanics",
+     "sameAs": "https://en.wikipedia.org/wiki/Biomechanics"
+    },
+    {
+     "@type": "Thing",
+     "name": "Computer vision",
+     "sameAs": "https://en.wikipedia.org/wiki/Computer_vision"
+    },
+    {
+     "@type": "Thing",
+     "name": "Motion capture",
+     "sameAs": "https://en.wikipedia.org/wiki/Motion_capture"
+    },
+    {
+     "@type": "Thing",
+     "name": "Armlock",
+     "sameAs": "https://en.wikipedia.org/wiki/Armlock"
+    }
+   ]
+  },
+  {
+   "@type": "ImageObject",
+   "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#image",
+   "url": "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg",
+   "contentUrl": "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg",
+   "width": 1200,
+   "height": 630,
+   "caption": "A jiu-jitsu arm bar: on the left the two grapplers as 3D bodies with skeletons inside, on the right the drawing of the photo they were reconstructed from."
+  },
+  {
+   "@type": "Article",
+   "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#article",
+   "mainEntityOfPage": {
+    "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#page"
+   },
+   "headline": "Jiu-jitsu biomechanics in 3D, from one photo",
+   "description": "A jiu-jitsu arm bar reconstructed in 3D from one photo with computer vision: body models, joint angles and an anatomical skeleton to walk around in the browser.",
+   "image": [
+    "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/jiu-jitsu-biomechanics-3d-og.jpg",
+    "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-4-anatomical-skeleton-in-3d.jpg",
+    "https://www.tomeryona.com/jiu-jitsu-biomechanics/img/step-2-3d-pose-estimation-joint-centres.jpg"
+   ],
+   "datePublished": "2026-11-16",
+   "dateModified": "2026-11-16",
+   "author": {
+    "@type": "Person",
+    "@id": "https://www.tomeryona.com/#person",
+    "name": "Tomer Yona",
+    "url": "https://www.tomeryona.com/"
+   },
+   "publisher": {
+    "@id": "https://www.tomeryona.com/#person"
+   },
+   "inLanguage": "en",
+   "isAccessibleForFree": true,
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "Brazilian jiu-jitsu",
+     "sameAs": "https://en.wikipedia.org/wiki/Brazilian_jiu-jitsu"
+    },
+    {
+     "@type": "Thing",
+     "name": "Biomechanics",
+     "sameAs": "https://en.wikipedia.org/wiki/Biomechanics"
+    },
+    {
+     "@type": "Thing",
+     "name": "Computer vision",
+     "sameAs": "https://en.wikipedia.org/wiki/Computer_vision"
+    },
+    {
+     "@type": "Thing",
+     "name": "Motion capture",
+     "sameAs": "https://en.wikipedia.org/wiki/Motion_capture"
+    },
+    {
+     "@type": "Thing",
+     "name": "Armlock",
+     "sameAs": "https://en.wikipedia.org/wiki/Armlock"
+    }
+   ],
+   "keywords": [
+    "jiu-jitsu biomechanics",
+    "Brazilian jiu-jitsu",
+    "BJJ",
+    "arm bar",
+    "armbar",
+    "juji-gatame",
+    "3D human pose estimation",
+    "human mesh recovery",
+    "markerless motion capture",
+    "computer vision",
+    "joint angles",
+    "anatomy",
+    "SAM 3D Body",
+    "SAM 3",
+    "MoGe-2"
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://www.tomeryona.com/jiu-jitsu-biomechanics/#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Tomer Yona",
+     "item": "https://www.tomeryona.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Jiu-jitsu biomechanics in 3D",
+     "item": "https://www.tomeryona.com/jiu-jitsu-biomechanics/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231230C8'/%3E%3Crect x='6' y='14' width='20' height='4' rx='1' fill='%23F6F3EC'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1230C8; --paper:#F6F3EC; --ink:#070B24; --ink-soft:#454C6B; --rule:#D9D4C7; --hot:#F04A12; --hot-text:#C23A0A;
+  --font:"Archivo","Helvetica Neue",Arial,sans-serif; color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper); color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased}
+h1,h2,p{margin:0}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--hot); outline-offset:3px}
+
+.app{display:flex; flex-direction:column; height:100vh; height:100svh; min-height:560px; max-height:1200px}
+.top{flex:none; display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:14px 28px 12px}
+.top h1{font-weight:850; font-stretch:112%; font-size:clamp(20px,2.2vw,30px); line-height:1.05; letter-spacing:-.025em}
+.help{font-size:13.5px; font-weight:600; color:var(--ink-soft); text-align:right}
+.help .touch{display:none}
+.stage{position:relative; flex:1 1 auto; min-height:0; overflow:hidden; background:#1B1C21}
+#gl{position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; cursor:grab; opacity:0; transition:opacity .8s cubic-bezier(.22,1,.36,1)}
+#gl.on{opacity:1} #gl:active{cursor:grabbing}
+.load{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-weight:700; font-size:15px; color:rgba(246,243,236,.8); text-align:center; padding:0 20px}
+.load.hide{display:none}
+
+.strip{flex:none; display:flex; flex-wrap:wrap; align-items:center; gap:10px 22px; padding:12px 28px 14px; background:var(--paper)}
+.peel{width:260px; display:flex; flex-direction:column}
+.stops{display:flex; justify-content:space-between}
+.stops button{font-size:12.5px; font-weight:700; padding:0; border:0; background:none; color:var(--ink-soft); cursor:pointer}
+.stops button:hover{color:var(--ink)}
+input[type=range]{-webkit-appearance:none; appearance:none; width:100%; height:24px; background:transparent; margin:0; cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px; border-radius:2px; background:var(--rule)}
+input[type=range]::-moz-range-track{height:4px; border-radius:2px; background:var(--rule)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--ink); margin-top:-7px; border:0}
+input[type=range]::-moz-range-thumb{width:18px; height:18px; border-radius:50%; background:var(--ink); border:0}
+.seg{display:flex; gap:2px; padding:3px; border-radius:999px; background:#E9E5DB}
+.seg button{font-size:14px; font-weight:700; padding:7px 13px; border-radius:999px; border:0; cursor:pointer; background:transparent; color:var(--ink-soft); white-space:nowrap; transition:color .25s, background-color .25s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.spacer{flex:1 1 auto}
+
+main{background:var(--paper)}
+.wrap{max-width:1180px; margin:0 auto; padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px); display:flex; flex-direction:column; gap:22px}
+.wrap h2{font-weight:900; font-stretch:118%; font-size:clamp(28px,4.2vw,56px); line-height:.95; letter-spacing:-.035em; max-width:16ch}
+.lede{max-width:62ch; font-size:clamp(16px,1.4vw,19px); color:var(--ink-soft)}
+.fine{font-size:14px; color:var(--ink-soft); max-width:80ch}
+.fine a{color:var(--blue); font-weight:700}
+
+@media (max-width:760px){
+  .top{padding:12px 16px 10px} .help{display:none}
+  .strip{padding:10px 16px 14px; gap:10px 10px}
+  .peel{width:100%}
+  .seg button{padding:7px 11px; font-size:13.5px}
+  .app{min-height:0; height:auto} .stage{flex:none; height:68vh; height:68svh; min-height:380px}
+  .touchhelp{display:block!important}
+}
+.touchhelp{display:none; width:100%; font-size:13px; font-weight:600; color:var(--ink-soft)}
+@media (prefers-reduced-motion:reduce){ #gl{transition-duration:.2s} }
+
+.inset{position:absolute; left:18px; bottom:18px; width:min(30%,340px); margin:0; border:4px solid var(--paper); background:var(--paper); box-shadow:0 10px 30px rgba(0,0,0,.45); transition:opacity .3s, transform .3s; transform-origin:left bottom}
+.inset img{display:block; width:100%; height:auto}
+.inset.off{opacity:0; pointer-events:none; transform:scale(.92)}
+.readout{position:absolute; right:18px; top:16px; margin:0; padding:12px 16px; background:rgba(7,11,36,.82); color:var(--paper); font-size:14px; font-weight:600; line-height:1.55; border-left:5px solid var(--hot)}
+.readout b{font-weight:850; font-size:15px} .readout .o{color:#FF7A45} .readout .b{color:#8FA4FF} .readout td{padding:0 0 0 14px; text-align:right; font-variant-numeric:tabular-nums} .readout th{font-weight:600; text-align:left; padding:0}
+@media (max-width:760px){ .inset{left:10px; bottom:10px; width:42%} .readout{display:none} }
+
+/* ---- the website's text sections */
+.top{align-items:center}
+.top .home{font-size:13.5px; font-weight:700; color:var(--ink-soft); text-decoration:none; white-space:nowrap}
+.top .home:hover{color:var(--ink)}
+.top .left{display:flex; flex-direction:column; gap:1px; min-width:0}
+main section, .foot{border-top:1px solid var(--rule)}
+.band{background:#EFEBE1}
+.wrap{padding-top:clamp(40px,5.5vw,76px); padding-bottom:clamp(40px,5.5vw,76px)}
+.hero{font-weight:900; font-stretch:118%; font-size:clamp(28px,4.2vw,56px); line-height:.95; letter-spacing:-.035em; max-width:16ch}
+.wrap h2{font-weight:850; font-stretch:112%; font-size:clamp(24px,2.6vw,36px); line-height:1.05; letter-spacing:-.025em; max-width:26ch}
+.wrap h3{margin:0; font-weight:800; font-size:18px; line-height:1.25}
+.wrap p{max-width:68ch}
+.wrap section p, main section p{color:var(--ink-soft)}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,64px); align-items:start}
+.two > div{display:flex; flex-direction:column; gap:14px}
+.steps{list-style:none; margin:6px 0 0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; counter-reset:step}
+.steps li{counter-increment:step}
+.steps figure{margin:0}
+.steps img{display:block; width:100%; height:auto; background:#1B1C21}
+.steps figcaption{margin-top:10px; font-size:15px; color:var(--ink-soft); padding-left:38px; position:relative}
+.steps figcaption::before{content:counter(step); position:absolute; left:0; top:-3px; font-weight:900; font-stretch:118%; font-size:30px; line-height:1; color:var(--hot-text)}
+.steps figcaption b, .pipe b{color:var(--ink)}
+.pipe{margin:0; padding-left:1.3em; display:flex; flex-direction:column; gap:12px; color:var(--ink-soft)}
+.pipe li::marker{font-weight:850; color:var(--hot-text)}
+.tables{display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,48px)}
+table.ang{width:100%; border-collapse:collapse; font-size:15.5px; font-variant-numeric:tabular-nums}
+table.ang caption{text-align:left; font-weight:850; font-stretch:112%; font-size:20px; padding-bottom:8px; color:var(--ink)}
+table.ang th, table.ang td{padding:8px 10px 8px 0; border-bottom:1px solid var(--rule); text-align:left; font-weight:500}
+table.ang thead th{font-weight:750; font-size:13.5px; color:var(--ink-soft); border-bottom:2px solid var(--ink)}
+table.ang td{text-align:right; font-weight:700; color:var(--ink)}
+table.ang thead th:nth-child(n+2){text-align:right}
+table.ang tbody th{color:var(--ink-soft)}
+.qa{display:grid; grid-template-columns:1fr 1fr; gap:26px clamp(24px,4vw,64px)}
+.qa > div{display:flex; flex-direction:column; gap:8px}
+.foot .by{font-size:16px; color:var(--ink)} .foot a, main section a{color:var(--blue); font-weight:700}
+@media (max-width:900px){ .steps{grid-template-columns:1fr 1fr} }
+@media (max-width:560px){ .steps{grid-template-columns:1fr} }
+@media (max-width:760px){ .two, .tables, .qa{grid-template-columns:1fr} .top .home{display:none} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="left"><a class="home" href="https://www.tomeryona.com/">Tomer Yona</a><h1>Jiu-jitsu biomechanics in 3D, from one photo</h1></div>
+    <p class="help">Drag to circle around · Scroll to zoom · Right-drag to move · Double-click to centre on a spot</p>
+  </header>
+  <section class="stage" id="stage" aria-label="Interactive 3D view: two grapplers reconstructed from a photo, in a jiu-jitsu academy">
+    <canvas id="gl" role="img" aria-label="Two people in a grappling position on the mats of a jiu-jitsu academy, reconstructed in 3D from one photo. Each body is see-through, with a skeleton inside. The view can be turned and zoomed."></canvas>
+    <figure class="inset" id="inset"><img id="photo" alt="Drawing of the photo the 3D reconstruction was made from" src="img/jiu-jitsu-arm-bar-drawing.jpg" width="960" height="718" fetchpriority="high"></figure>
+    <table class="readout" id="readout" aria-label="Estimated joint angles"></table>
+    <p class="load" id="load">Loading the two skeletons</p>
+  </section>
+  <div class="strip">
+    <div class="peel">
+      <input type="range" id="peel" min="0" max="1" step="0.01" value="0.62" aria-label="From the body surface to the skeleton">
+      <div class="stops"><button type="button" data-peel="0">Body</button><button type="button" data-peel="0.62">Both</button><button type="button" data-peel="1">Skeleton</button></div>
+    </div>
+    <div class="seg" role="group" aria-label="Which position" id="scenes"></div>
+    <div class="seg" role="group" aria-label="Viewing angle">
+      <button type="button" data-view="photo" aria-pressed="true">The photo's view</button>
+      <button type="button" data-view="around" aria-pressed="false">From the side</button>
+      <button type="button" data-view="above" aria-pressed="false">From above</button>
+    </div>
+    <div class="seg" role="group" aria-label="Show the drawing of the photo"><button type="button" id="photoBtn" aria-pressed="true">Drawing</button></div>
+    <p class="touchhelp">Drag to circle around · Pinch to zoom · Two fingers to move · Double-tap to centre on a spot</p>
+  </div>
+</div>
+
+<main>
+<div class="wrap">
+  <p class="hero">One photo. Two bodies. The bones inside.</p>
+  <p class="lede">Each scene above starts from a single photo of two people grappling on the mat. Computer vision models estimate a 3D body for each person (monocular 3D human pose estimation and human mesh recovery), both bodies are placed on the mat, and an anatomical skeleton is posed inside each one. Open "The photo's view" to stand where the camera stood, then walk around the position.</p>
+</div>
+
+<section class="band" aria-labelledby="steps-h">
+<div class="wrap">
+  <h2 id="steps-h">From a photo of an arm bar to a 3D skeleton, in four steps</h2>
+  <ol class="steps">
+    <li><figure><img src="img/step-1-jiu-jitsu-arm-bar-picture.jpg" width="960" height="720" loading="lazy" decoding="async" alt="Drawing of a jiu-jitsu arm bar seen from above: one grappler lies on his back while the other holds his arm across the hips."><figcaption><b>The picture.</b> One photo of an arm bar (armbar, juji-gatame), shown here as a drawing of the original photo.</figcaption></figure></li>
+    <li><figure><img src="img/step-2-3d-pose-estimation-joint-centres.jpg" width="960" height="720" loading="lazy" decoding="async" alt="The same arm bar with a stick figure drawn over each grappler, connecting the estimated joint centres of the shoulders, elbows, wrists, hips, knees and ankles."><figcaption><b>Joint centres.</b> 3D pose estimation finds 70 keypoints per person, including shoulders, elbows, wrists, hips, knees and ankles.</figcaption></figure></li>
+    <li><figure><img src="img/step-3-3d-body-model-mesh.jpg" width="960" height="720" loading="lazy" decoding="async" alt="The same arm bar with a 3D body model laid over each grappler, one orange and one blue."><figcaption><b>Body model.</b> Human mesh recovery fits a full 3D body surface to each person (18,439 vertices each).</figcaption></figure></li>
+    <li><figure><img src="img/step-4-anatomical-skeleton-in-3d.jpg" width="960" height="720" loading="lazy" decoding="async" alt="The two grapplers as see-through 3D bodies in the same arm bar, each with a complete anatomical skeleton inside."><figcaption><b>Anatomical skeleton.</b> The bones of an anatomical atlas are posed inside each body, so the position can be viewed from any side.</figcaption></figure></li>
+  </ol>
+</div>
+</section>
+
+<section aria-labelledby="pipe-h">
+<div class="wrap two">
+  <div>
+    <h2 id="pipe-h">The computer vision pipeline</h2>
+    <p>Three publicly released models process the photo, each with its own job, followed by two steps of geometry. The whole pipeline runs on a home PC with one consumer graphics card.</p>
+  </div>
+  <ol class="pipe">
+    <li><b>Segmentation.</b> SAM 3 (Segment Anything Model 3) separates the two people, also where their arms and legs are intertwined.</li>
+    <li><b>Camera and mat.</b> MoGe-2 estimates the camera's field of view and a depth map of the scene, from which the tilt of the mat is fitted.</li>
+    <li><b>3D pose and body shape.</b> SAM 3D Body estimates each person's 3D joint positions and a full body mesh from the single image, a form of markerless motion capture.</li>
+    <li><b>Joint angles.</b> Eight angles per person are computed from the 3D joint centres: elbow and knee flexion, shoulder elevation and hip flexion, on both sides.</li>
+    <li><b>Skeleton.</b> One adult skeleton from the BodyParts3D atlas is scaled segment by segment and posed to follow each person's joints, the hand bones finger joint by finger joint.</li>
+  </ol>
+</div>
+</section>
+
+<section class="band" aria-labelledby="ang-h">
+<div class="wrap">
+  <h2 id="ang-h">Estimated joint angles in the two positions</h2>
+  <p>Flexion is 0° for a straight elbow or knee. Shoulder elevation and hip flexion are the angles between the upper arm or thigh and the long axis of the trunk. All values come from one image and are rounded to the degree.</p>
+  <div class="tables">
+    <table class="ang">
+      <caption>Arm bar</caption>
+      <thead><tr><th scope="col">Joint angle</th><th scope="col">Defender (orange)</th><th scope="col">Attacker (blue)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Right elbow flexion</th><td>57°</td><td>109°</td></tr>
+        <tr><th scope="row">Left elbow flexion</th><td>13°</td><td>79°</td></tr>
+        <tr><th scope="row">Right knee flexion</th><td>91°</td><td>84°</td></tr>
+        <tr><th scope="row">Left knee flexion</th><td>103°</td><td>93°</td></tr>
+        <tr><th scope="row">Right shoulder elevation</th><td>52°</td><td>16°</td></tr>
+        <tr><th scope="row">Left shoulder elevation</th><td>101°</td><td>19°</td></tr>
+        <tr><th scope="row">Right hip flexion</th><td>38°</td><td>60°</td></tr>
+        <tr><th scope="row">Left hip flexion</th><td>54°</td><td>85°</td></tr>
+      </tbody>
+    </table>
+    <table class="ang">
+      <caption>Position 2</caption>
+      <thead><tr><th scope="col">Joint angle</th><th scope="col">Bottom person (orange)</th><th scope="col">Top person (blue)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Right elbow flexion</th><td>94°</td><td>81°</td></tr>
+        <tr><th scope="row">Left elbow flexion</th><td>77°</td><td>68°</td></tr>
+        <tr><th scope="row">Right knee flexion</th><td>86°</td><td>19°</td></tr>
+        <tr><th scope="row">Left knee flexion</th><td>116°</td><td>64°</td></tr>
+        <tr><th scope="row">Right shoulder elevation</th><td>91°</td><td>102°</td></tr>
+        <tr><th scope="row">Left shoulder elevation</th><td>77°</td><td>94°</td></tr>
+        <tr><th scope="row">Right hip flexion</th><td>34°</td><td>7°</td></tr>
+        <tr><th scope="row">Left hip flexion</th><td>53°</td><td>40°</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fine">In the arm bar, the defender's left arm is the one being extended (13° of elbow flexion). Part of that arm is hidden between the attacker's legs in the photo, so its angle rests on the model's completion of the hidden part.</p>
+</div>
+</section>
+
+<section aria-labelledby="use-h">
+<div class="wrap two">
+  <div>
+    <h2 id="use-h">What it is for</h2>
+    <p>A 3D reconstruction from one photo gives the approximate posture of both people, which is what illustration and teaching need: showing a patient or an athlete how a submission loads a joint, teaching anatomy on real grappling positions, or documenting a position from training.</p>
+    <p>The aim of the project is to describe grappling positions in 3D, so that each one can be examined from any side.</p>
+  </div>
+  <div>
+    <h2 id="read-h">How to read it</h2>
+    <p>The body surfaces and joint positions are estimates from one image. A point's position across the image is more certain than its depth along the camera's line of sight, and limbs hidden behind the partner are completed by the model from what it has learned about human bodies.</p>
+    <p>The skeleton is one atlas skeleton fitted to each body: each group of bones is shifted, turned or slimmed slightly to lie under the reconstructed surface, the skull is seated by its shape inside the head, and where a bone would still show through (bent knees, shins, parts of the head and pelvis) the surface is lifted locally by 3 cm at most. It shows where the bones lie approximately; the kneecaps and the bones around strongly bent knees are the least exact, and the wrists are kept straight.</p>
+  </div>
+</div>
+</section>
+
+<section class="band" aria-labelledby="qa-h">
+<div class="wrap">
+  <h2 id="qa-h">Questions</h2>
+  <div class="qa">
+    <div><h3>Can joint angles be estimated from a single photo?</h3><p>Yes, as estimates. A 3D pose estimation model returns the 3D position of each joint centre, and the angle at a joint follows from the directions of the two segments that meet there. The angles here describe posture (how bent an elbow or a knee is); they do not separate flexion from abduction or rotation.</p></div>
+    <div><h3>Does 3D motion analysis of jiu-jitsu need a motion capture lab?</h3><p>For a picture of a position, a phone photo is enough: the reconstruction uses no markers, suits or calibrated cameras. For measuring joint kinematics over time, a motion capture laboratory is the reference.</p></div>
+    <div><h3>Which models reconstruct the two grapplers?</h3><p>SAM 3 separates the two people, MoGe-2 estimates the camera and the mat, and SAM 3D Body estimates the 3D joints and body mesh of each person. All three are published with their weights on Hugging Face.</p></div>
+    <div><h3>Where do the bones come from?</h3><p>From BodyParts3D, an open anatomical atlas of one adult body. The same skeleton is scaled and posed for both people, so the bones show position and joint posture, and individual bone shape is the atlas's.</p></div>
+  </div>
+</div>
+</section>
+
+<footer class="foot">
+<div class="wrap">
+  <p class="by"><a href="https://www.tomeryona.com/">Tomer Yona, PhD</a> is a physiotherapist and biomechanics researcher who works on movement measurement with wearable sensors. More of his tools: <a href="https://www.tomeryona.com/mvnx-viewer/">MVNX Viewer</a>, a free browser viewer for motion-capture files.</p>
+  <p class="fine">Skeleton: adapted from BodyParts3D, © The Database Center for Life Science, licensed under <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/">CC Attribution-Share Alike 2.1 Japan</a>; the adapted skeleton on this page is shared under the same licence. Reconstruction: SAM 3D Body and SAM 3 (Meta, SAM License), MoGe-2 (Microsoft, MIT). Scenery: the academy is drawn for this page; painted block wall adapted from Concrete Block Wall (Charlotte Baglioni, Poly Haven, CC0). three.js r128 with its OrbitControls, and fflate: MIT, loaded from public CDNs.</p>
+</div>
+</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const MAN = {"scenes":[{"name":"Arm bar","photo":"img/jiu-jitsu-arm-bar-drawing.jpg","cam":{"pos":[-8.7,1669.7,1271.7],"target":[76.1,130.5,41.3],"fov":55.57,"aspect":1.2994},"center":[0.0,159.3,-0.0],"people":[{"bone":{"pos":[4099996,440139],"lo":[-848.24,-3.19,-468.03],"hi":[626.26,570.0,1062.05],"nv":146713},"skin":{"pos":[4980276,55317],"lo":[-849.89,-8.25,-474.67],"hi":[630.46,576.4,1068.19],"nv":18439},"angles":[57,13,91,103,52,101,38,54]},{"bone":{"pos":[5090912,440139],"lo":[-559.99,13.96,-484.4],"hi":[904.86,513.16,56.0],"nv":146713},"skin":{"pos":[5971192,55317],"lo":[-564.83,-1.0,-500.55],"hi":[910.45,520.9,61.99],"nv":18439},"angles":[109,79,84,93,16,19,60,85]}]},{"name":"Position 2","photo":"img/jiu-jitsu-top-position-drawing.jpg","cam":{"pos":[234.4,1612.1,1346.8],"target":[272.4,287.7,9.3],"fov":53.44,"aspect":1.3589},"center":[0.0,289.3,0.0],"people":[{"bone":{"pos":[6081828,440139],"lo":[-906.71,16.87,-266.2],"hi":[651.41,632.1,894.01],"nv":146713},"skin":{"pos":[6962108,55317],"lo":[-913.67,-1.0,-270.84],"hi":[657.05,637.51,900.39],"nv":18439},"angles":[94,77,86,116,91,77,34,53]},{"bone":{"pos":[7072744,440139],"lo":[-175.98,14.0,-1131.95],"hi":[603.91,767.47,601.89],"nv":146713},"skin":{"pos":[7953024,55317],"lo":[-184.99,-1.0,-1136.16],"hi":[608.79,774.43,607.86],"nv":18439},"angles":[81,68,19,64,102,94,7,40]}]}],"bone":{"idx":[0,877698],"ao":[3510792,146713]},"skin":{"idx":[3657508,110622]},"angle_names":["right elbow flexion","left elbow flexion","right knee flexion","left knee flexion","right shoulder elevation","left shoulder elevation","right hip flexion","left hip flexion"],"bytes":8063660,"file":"model-68a4b023.txt","ztext":6789588};
+const T = window.THREE || {};
+const COL = {bone:'#F2E8D5', people:['#FF5B1E', '#1838C8'], field:'#1E1F24', border:'#1838C8', pad:'#C9CBCF', paint:'#ECE9E2', ceiling:'#2A2C31', steel:'#3A3D44'};
+/* the academy, in millimetres: mats wall to wall, a cobalt border round a charcoal field, wall pads to 1.83 m, painted block above */
+const ROOM = {x:6000, z:5000, h:5200}, BORDER = 1000, PAD_H = 1830, PAD_T = 50;
+const lin = h => new T.Color(h).convertSRGBToLinear();
+let renderer, scene, cam, controls, groups = [], current = 0, ready = false, dirty = true, peel = 0.62, view = 'photo';
+const stage = document.getElementById('stage'), canvas = document.getElementById('gl'), loadEl = document.getElementById('load');
+
+/* ---------------------------------------------------------------- the academy */
+const rnd = (() => { let q = 11; return () => (q = (q*16807) % 2147483647)/2147483647; })();
+function tex(w, h, draw, rx, ry, linear){ const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); draw(x, w, h);
+  const t = new T.CanvasTexture(c); t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(rx || 1, ry || 1); if (!linear) t.encoding = T.sRGBEncoding; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.userData = {x, w, h}; return t; }
+function normalFrom(ht, k){ const w = ht.image.width, h = ht.image.height, src = ht.userData.x.getImageData(0, 0, w, h).data, t = tex(w, h, () => {}, ht.repeat.x, ht.repeat.y, true), img = t.userData.x.createImageData(w, h), o = img.data;
+  for (let j = 0; j < h; j++) for (let i = 0; i < w; i++){ const nx = -(src[(j*w + (i + 1) % w)*4] - src[(j*w + (i + w - 1) % w)*4])*k/255, ny = (src[(((j + 1) % h)*w + i)*4] - src[(((j + h - 1) % h)*w + i)*4])*k/255, l = Math.hypot(nx, ny, 1), q = (j*w + i)*4;
+    o[q] = (nx/l*0.5 + 0.5)*255; o[q + 1] = (ny/l*0.5 + 0.5)*255; o[q + 2] = (0.5/l + 0.5)*255; o[q + 3] = 255; }
+  t.userData.x.putImageData(img, 0, 0); t.needsUpdate = true; return t; }
+function academy(){
+  const g = new T.Group(); scene.add(g);
+  const add = (geo, mat, x, y, z, cast, recv) => { const m = new T.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = !!cast; m.receiveShadow = recv !== false; g.add(m); return m; };
+  /* tatami vinyl, one metre square per tile: woven straw in relief, faint seams; the colour comes from each material */
+  const S = 512;
+  const weave = (x, w, h, lum) => {                       // a grey picture of the straw weave: fine ridges across, binding threads every 6 cm
+    x.fillStyle = lum ? '#8a8a8a' : '#d8d8d8'; x.fillRect(0, 0, w, h);
+    const row = w/170;
+    for (let r = 0; r < 170; r++){ const y = r*row; const v = lum ? 120 + Math.floor(rnd()*28) : 236 + Math.floor(rnd()*14);
+      x.fillStyle = 'rgb(' + v + ',' + v + ',' + v + ')'; x.fillRect(0, y, w, row*0.62); }
+    for (let c = 0; c < 16; c++){ const xx = c*w/16; x.fillStyle = lum ? 'rgba(60,60,60,.55)' : 'rgba(150,150,150,.35)'; x.fillRect(xx, 0, 2, h); }
+    x.fillStyle = lum ? 'rgba(20,20,20,.9)' : 'rgba(110,110,110,.6)'; x.fillRect(0, 0, w, 2); x.fillRect(0, 0, 2, h);   // tile seams
+  };
+  const matHt = tex(S, S, (x, w, h) => weave(x, w, h, true), 12, 10, true);
+  const matCol = tex(S, S, (x, w, h) => weave(x, w, h, false), 12, 10);
+  const matN = normalFrom(matHt, 1.6);
+  const mk = (col, rx, ry) => { const m = new T.MeshStandardMaterial({color:lin(col), map:matCol.clone(), normalMap:matN.clone(), roughness:0.78, metalness:0, envMapIntensity:0.35});
+    m.map.repeat.set(rx, ry); m.normalMap.repeat.set(rx, ry); m.map.needsUpdate = m.normalMap.needsUpdate = true; m.normalScale.set(0.9, 0.9); return m; };
+  const ix = ROOM.x - BORDER, iz = ROOM.z - BORDER;
+  const field = add(new T.PlaneGeometry(2*ix, 2*iz), mk(COL.field, 2*ix/1000, 2*iz/1000), 0, 0, 0); field.rotation.x = -Math.PI/2;
+  for (const [w, d, x, z] of [[2*ROOM.x, BORDER, 0, -ROOM.z + BORDER/2], [2*ROOM.x, BORDER, 0, ROOM.z - BORDER/2], [BORDER, 2*iz, -ROOM.x + BORDER/2, 0], [BORDER, 2*iz, ROOM.x - BORDER/2, 0]]){
+    const b = add(new T.PlaneGeometry(w, d), mk(COL.border, w/1000, d/1000), x, 0, z); b.rotation.x = -Math.PI/2; }
+  /* wall pads: 1.83 m of pale grey vinyl, 5 cm thick, in one-metre panels with a small gap; a timber rail on top */
+  const pads = [], padMat = new T.MeshStandardMaterial({color:lin(COL.pad), roughness:0.38, metalness:0, envMapIntensity:0.7});
+  for (const [len, axis, sgn] of [[2*ROOM.x, 'x', -1], [2*ROOM.x, 'x', 1], [2*ROOM.z, 'z', -1], [2*ROOM.z, 'z', 1]]){
+    const n = Math.round(len/1000);
+    for (let i = 0; i < n; i++){ const c = -len/2 + (i + 0.5)*len/n;
+      pads.push(axis === 'x' ? [c, sgn*(ROOM.z - PAD_T/2), len/n - 8, PAD_T] : [sgn*(ROOM.x - PAD_T/2), c, PAD_T, len/n - 8]); }
+  }
+  const padGeo = new T.BoxGeometry(1, PAD_H, 1), im = new T.InstancedMesh(padGeo, padMat, pads.length), M4 = new T.Matrix4();
+  pads.forEach(([x, z, w, d], i) => { M4.makeScale(w, 1, d).setPosition(x, PAD_H/2, z); im.setMatrixAt(i, M4); }); im.receiveShadow = true; g.add(im);
+  const rail = new T.MeshStandardMaterial({color:lin('#B79A73'), roughness:0.6});
+  add(new T.BoxGeometry(2*ROOM.x, 40, 70), rail, 0, PAD_H + 20, -ROOM.z + 35); add(new T.BoxGeometry(2*ROOM.x, 40, 70), rail, 0, PAD_H + 20, ROOM.z - 35);
+  add(new T.BoxGeometry(70, 40, 2*ROOM.z), rail, -ROOM.x + 35, PAD_H + 20, 0); add(new T.BoxGeometry(70, 40, 2*ROOM.z), rail, ROOM.x - 35, PAD_H + 20, 0);
+  /* painted block wall above the pads */
+  const wl = new T.TextureLoader(), ld = (u, linear, rx, ry) => { const t = wl.load(u, () => { dirty = true; }); t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(rx, ry); if (!linear) t.encoding = T.sRGBEncoding; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); return t; };
+  const H = ROOM.h - PAD_H, wallMat = (len) => { const m = new T.MeshStandardMaterial({map:ld('wall_paint.jpg', false, len/2000, H/2000), normalMap:ld('wall_n.jpg', true, len/2000, H/2000), roughnessMap:ld('wall_r.jpg', true, len/2000, H/2000), roughness:0.92, metalness:0, envMapIntensity:0.4}); m.normalScale.set(1.2, 1.2); return m; };
+  for (const [len, x, z, ry] of [[2*ROOM.x, 0, -ROOM.z, 0], [2*ROOM.x, 0, ROOM.z, Math.PI], [2*ROOM.z, -ROOM.x, 0, Math.PI/2], [2*ROOM.z, ROOM.x, 0, -Math.PI/2]]){
+    const w = add(new T.PlaneGeometry(len, H), wallMat(len), x, PAD_H + H/2, z); w.rotation.y = ry; }
+  /* ceiling: dark deck, steel beams, rows of linear lights */
+  const ceil = add(new T.PlaneGeometry(2*ROOM.x, 2*ROOM.z), new T.MeshStandardMaterial({color:lin(COL.ceiling), roughness:0.9}), 0, ROOM.h, 0); ceil.rotation.x = Math.PI/2;
+  const steel = new T.MeshStandardMaterial({color:lin(COL.steel), roughness:0.55, metalness:0.4});
+  for (let i = -2; i <= 2; i++) add(new T.BoxGeometry(2*ROOM.x, 360, 160), steel, 0, ROOM.h - 180, i*2200);
+  const lamp = new T.MeshBasicMaterial({color:new T.Color(1, 0.98, 0.94).multiplyScalar(2.2)}), housing = new T.MeshStandardMaterial({color:lin('#202227'), roughness:0.6});
+  for (let i = -2; i <= 2; i++) for (const zz of [-3300, -1100, 1100, 3300]){ add(new T.BoxGeometry(2400, 50, 160), housing, i*2400, ROOM.h - 400, zz); add(new T.BoxGeometry(2360, 6, 120), lamp, i*2400, ROOM.h - 428, zz, false, false); }
+  /* belt rack on the back wall: white, blue, purple, brown and black, each folded over a peg with its rank bar showing */
+  const rack = new T.Group(); rack.position.set(-1600, PAD_H + 760, -ROOM.z + 2); g.add(rack);
+  const wood = new T.MeshStandardMaterial({color:lin('#8C6B48'), roughness:0.55});
+  const addR = (geo, mat, x, y, z) => { const m = new T.Mesh(geo, mat); m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; rack.add(m); return m; };
+  addR(new T.BoxGeometry(1460, 150, 24), wood, 0, 0, 12);
+  const belts = [['#EDEBE4', '#121214'], ['#1F4FBF', '#121214'], ['#5B2A86', '#121214'], ['#5A3A22', '#121214'], ['#141416', '#B3202C']];
+  belts.forEach(([c, bar], i) => {
+    const x = -560 + i*280, bm = new T.MeshStandardMaterial({color:lin(c), roughness:0.85}), bb = new T.MeshStandardMaterial({color:lin(bar), roughness:0.8});
+    addR(new T.CylinderGeometry(9, 9, 70, 12), steel, x, -20, 55).rotation.x = Math.PI/2;
+    addR(new T.BoxGeometry(44, 30, 14), bm, x, -6, 84);                                           // over the peg
+    const l1 = 640 - (i % 2)*40, l2 = 560 + (i % 3)*30;
+    addR(new T.BoxGeometry(44, l1, 6), bm, x - 14, -6 - l1/2, 92).rotation.z = 0.025;              // front tail
+    addR(new T.BoxGeometry(44, l2, 6), bm, x + 16, -6 - l2/2, 80).rotation.z = -0.02;              // back tail
+    addR(new T.BoxGeometry(45, 110, 7), bb, x - 14 + (l1 - 220)*0.025, -6 - l1 + 170, 93);         // rank bar near the end
+  });
+  /* the round timer above the pads on the left wall: red seven-segment digits */
+  const digits = tex(1024, 400, (x, w, h) => { x.fillStyle = '#0B0B0D'; x.fillRect(0, 0, w, h);
+    const SEG = {0:'abcdef', 5:'afgcd'}, seg = (cx, cy, s, on) => { const L = s, Tk = s*0.18, pts = {a:[0, 0, 1, 0], b:[1, 0, 1, 1], c:[1, 1, 1, 2], d:[0, 2, 1, 2], e:[0, 1, 0, 2], f:[0, 0, 0, 1], g:[0, 1, 1, 1]};
+      for (const k in pts){ const [x0, y0, x1, y1] = pts[k]; x.strokeStyle = on.includes(k) ? '#FF2A1A' : 'rgba(255,42,26,.07)'; x.lineWidth = Tk; x.lineCap = 'round';
+        x.beginPath(); x.moveTo(cx + x0*L + (x1 - x0)*Tk*0.7, cy + y0*L + (y1 - y0)*Tk*0.7); x.lineTo(cx + x1*L - (x1 - x0)*Tk*0.7, cy + y1*L - (y1 - y0)*Tk*0.7); x.stroke(); } };
+    const s = 150, y0 = 50; seg(90, y0, s, SEG[0]); seg(300, y0, s, SEG[5]); x.fillStyle = '#FF2A1A'; x.beginPath(); x.arc(512, y0 + 95, 15, 0, 7); x.arc(512, y0 + 205, 15, 0, 7); x.fill();
+    seg(574, y0, s, SEG[0]); seg(784, y0, s, SEG[0]); }, 1, 1);
+  digits.wrapS = digits.wrapT = T.ClampToEdgeWrapping;
+  const timer = new T.Group(); timer.position.set(-ROOM.x + 2, PAD_H + 620, -2300); timer.rotation.y = Math.PI/2; g.add(timer);   // on the left wall, facing the mats
+  const tb = new T.Mesh(new T.BoxGeometry(820, 340, 70), new T.MeshStandardMaterial({color:lin('#16171B'), roughness:0.5})); tb.position.z = 35; tb.castShadow = true; timer.add(tb);
+  const face = new T.Mesh(new T.PlaneGeometry(760, 297), new T.MeshBasicMaterial({map:digits, toneMapped:false})); face.position.z = 71; timer.add(face);
+  return g;
+}
+/* what the vinyl and the figure reflect: the hall itself, simplified, baked once */
+function environment(){
+  const e = new T.Scene(), box = (w, h, d, x, y, z, col, k) => { const m = new T.Mesh(new T.BoxGeometry(w, h, d), new T.MeshBasicMaterial({color:lin(col).multiplyScalar(k), side:T.DoubleSide})); m.position.set(x, y, z); e.add(m); };
+  box(120, 52, 100, 0, 16, 0, '#E9E6DF', 0.55); box(118, 0.2, 98, 0, -9.9, 0, '#1E1F24', 1); box(118, 0.2, 98, 0, 41.8, 0, '#2A2C31', 1);   // 1 unit = 10 cm, the eye at 1 m
+  for (const x of [-48, -24, 0, 24, 48]) for (const z of [-33, -11, 11, 33]) box(23, 0.3, 1.4, x, 37.5, z, '#FFF8EE', 9);
+  for (const [w, d, x, z] of [[120, 1, 0, -49.5], [120, 1, 0, 49.5], [1, 98, -59.5, 0], [1, 98, 59.5, 0]]) box(w, 18, d, x, -1, z, '#C9CBCF', 0.5);
+  const pm = new T.PMREMGenerator(renderer), t = pm.fromScene(e, 0.02, 1, 200).texture; pm.dispose(); return t;
+}
+
+/* ---------------------------------------------------------------- the people: for each photo, each person's body surface and the skeleton posed inside it */
+function geom(buf, L, idx, ao){
+  const g = new T.BufferGeometry(), q = new Uint16Array(buf, L.pos[0], L.pos[1]), pos = new Float32Array(L.nv*3);
+  for (let i = 0; i < pos.length; i++){ const a = i % 3; pos[i] = L.lo[a] + q[i]/65535*(L.hi[a] - L.lo[a]); }
+  g.setAttribute('position', new T.BufferAttribute(pos, 3)); g.setIndex(new T.BufferAttribute(new Uint32Array(buf, idx[0], idx[1]), 1));
+  if (ao){ const s = new Uint8Array(buf, ao[0], ao[1]), c = new Float32Array(L.nv*3); for (let i = 0; i < L.nv; i++){ const v = Math.pow(0.35 + 0.65*s[i]/255, 2.2); c[3*i] = c[3*i + 1] = c[3*i + 2] = v; } g.setAttribute('color', new T.BufferAttribute(c, 3)); }   // the atlas's baked shading
+  g.computeVertexNormals(); g.computeBoundingSphere(); return g;
+}
+function init(buf){
+  renderer = new T.WebGLRenderer({canvas, antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
+  scene = new T.Scene(); scene.background = lin('#2A2C31');
+  cam = new T.PerspectiveCamera(30, 1, 10, 40000);
+  scene.environment = environment();
+  scene.add(new T.HemisphereLight(0xfff8ee, 0x26272c, 0.42));
+  const key = new T.DirectionalLight(0xfff6ea, 0.62); key.position.set(-1200, 4800, 2200); key.target.position.set(0, 300, 0); scene.add(key); scene.add(key.target);
+  key.castShadow = true; key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, {left:-1700, right:1700, top:1700, bottom:-1700, near:1000, far:9000}); key.shadow.bias = -0.0004; key.shadow.normalBias = 8; key.shadow.radius = 5;
+  const fill = new T.DirectionalLight(0xdfe6ff, 0.22); fill.position.set(3000, 2400, -2600); scene.add(fill);
+  academy();
+  MAN.scenes.forEach((sc, si) => {
+    const g = new T.Group(); g.visible = si === 0; scene.add(g); g.userData = {bones:[], skins:[]};
+    sc.people.forEach((pp, pi) => {
+      const bone = new T.Mesh(geom(buf, pp.bone, MAN.bone.idx, MAN.bone.ao), new T.MeshStandardMaterial({color:lin(COL.bone), vertexColors:true, roughness:0.62, metalness:0, envMapIntensity:0.5}));
+      bone.castShadow = true; bone.receiveShadow = true; g.add(bone); g.userData.bones.push(bone);
+      const skin = new T.Mesh(geom(buf, pp.skin, MAN.skin.idx), new T.MeshStandardMaterial({color:lin(COL.people[pi % 2]), roughness:0.55, metalness:0, envMapIntensity:0.55, transparent:true}));
+      skin.renderOrder = 2; skin.receiveShadow = true; g.add(skin); g.userData.skins.push(skin);
+    });
+    groups.push(g);
+  });
+  controls = new T.OrbitControls(cam, canvas);
+  controls.enableDamping = true; controls.dampingFactor = 0.09; controls.rotateSpeed = 0.7; controls.zoomSpeed = 0.9; controls.panSpeed = 0.8; controls.screenSpacePanning = true;
+  controls.minDistance = 150; controls.maxDistance = 5200;
+  controls.addEventListener('change', () => { dirty = true; });
+  canvas.addEventListener('webglcontextlost', ev => { ev.preventDefault(); fail('the graphics context was lost'); });
+  new ResizeObserver(fit).observe(stage); fit();
+  setScene(0, true); applyPeel(); renderer.render(scene, cam);
+  const bad = renderer.info.programs.find(p => p.diagnostics && !p.diagnostics.runnable);
+  if (bad) throw new Error('shader: ' + (bad.diagnostics.programLog || bad.diagnostics.vertexShader.log || bad.diagnostics.fragmentShader.log));
+  ready = true; loadEl.classList.add('hide'); canvas.classList.add('on');
+  requestAnimationFrame(loop);
+}
+function fail(why){ ready = false; canvas.classList.remove('on'); loadEl.classList.remove('hide'); loadEl.textContent = 'The scene could not start on this device (' + why + ').'; }
+/* the photo's view uses the photo's own field of view, fitted inside the stage; the other views a longer lens */
+function fit(){
+  const W = stage.clientWidth, H = stage.clientHeight; if (!W || !H) return;
+  renderer.setSize(W, H, false); cam.aspect = W/H;
+  const c = MAN.scenes[current].cam;
+  if (view === 'photo'){ const half = Math.tan(c.fov*Math.PI/360), need = half*c.aspect/cam.aspect; cam.fov = 2*Math.atan(Math.max(half, need))*180/Math.PI; }
+  else cam.fov = W/H < 0.8 ? 40 : 32;
+  cam.updateProjectionMatrix(); dirty = true;
+}
+/* body to skeleton: the body surface fades out; the skeleton is always there underneath */
+function applyPeel(){
+  const o = 1 - Math.min(1, Math.max(0, peel));
+  for (const g of groups){
+    for (const s of g.userData.skins){ s.material.opacity = o; s.material.transparent = o < 0.995; s.material.depthWrite = o >= 0.995; s.visible = o > 0.01; s.castShadow = o > 0.5; s.material.needsUpdate = true; }
+    for (const b of g.userData.bones){ b.visible = o < 0.995; b.castShadow = o <= 0.5; }
+  }
+  dirty = true;
+}
+function pick(cx, cy){
+  const r = canvas.getBoundingClientRect(), v = new T.Vector2((cx - r.left)/r.width*2 - 1, -(cy - r.top)/r.height*2 + 1), rc = new T.Raycaster(); rc.setFromCamera(v, cam);
+  const g = groups[current], hits = rc.intersectObjects([...g.userData.bones, ...g.userData.skins].filter(m => m.visible), false);
+  return hits.length ? hits[0].point : null;
+}
+
+/* ---------------------------------------------------------------- moving the camera */
+const VIEWS = {around:[52, 66, 3300, 260], above:[0, 6, 3700, 150]};     // azimuth, polar angle, distance, target height above the mat, around the pair
+const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+let flight = 0;
+function flyTo(target, pos, ms){
+  const t0 = target.clone(), id = ++flight, a = controls.target.clone(), b = cam.position.clone();
+  if (calm() || !ms){ controls.target.copy(t0); cam.position.copy(pos); controls.update(); dirty = true; return; }
+  const start = performance.now(), step = now => { if (id !== flight) return; const u = Math.min(1, (now - start)/ms), e = 1 - Math.pow(1 - u, 3);
+    controls.target.lerpVectors(a, t0, e); cam.position.lerpVectors(b, pos, e); controls.update(); dirty = true; if (u < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+const viewBtns = [...document.querySelectorAll('[data-view]')];
+function setView(name, now){
+  view = name; fit();
+  const sc = MAN.scenes[current];
+  if (name === 'photo') flyTo(new T.Vector3(...sc.cam.target), new T.Vector3(...sc.cam.pos), now ? 0 : 900);
+  else { const [az, po, d, ty] = VIEWS[name], A = az*Math.PI/180, P = po*Math.PI/180, t = new T.Vector3(sc.center[0], ty, sc.center[2]), dd = cam.aspect < 0.8 ? d*1.25 : d;
+    flyTo(t, new T.Vector3(t.x + dd*Math.sin(P)*Math.sin(A), t.y + dd*Math.cos(P), t.z + dd*Math.sin(P)*Math.cos(A)), now ? 0 : 900); }
+  viewBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.view === name ? 'true' : 'false'));
+}
+viewBtns.forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+canvas.addEventListener('pointerdown', () => { flight++; viewBtns.forEach(b => b.setAttribute('aria-pressed', 'false')); });
+function focusAt(cx, cy){
+  const p = pick(cx, cy); if (!p) return;
+  const dir = cam.position.clone().sub(controls.target).normalize(), d = Math.min(cam.position.distanceTo(controls.target), 800);
+  flyTo(p, p.clone().add(dir.multiplyScalar(d)), 700);
+}
+canvas.addEventListener('dblclick', e => focusAt(e.clientX, e.clientY));
+let lastTap = 0, tapXY = null;
+canvas.addEventListener('pointerup', e => { if (e.pointerType === 'mouse') return; const now = performance.now();
+  if (now - lastTap < 320 && tapXY && Math.hypot(e.clientX - tapXY[0], e.clientY - tapXY[1]) < 30){ focusAt(e.clientX, e.clientY); lastTap = 0; } else { lastTap = now; tapXY = [e.clientX, e.clientY]; } });
+
+/* ---------------------------------------------------------------- photos, the photo itself, the joint angles */
+const scenesEl = document.getElementById('scenes'), photoEl = document.getElementById('photo'), insetEl = document.getElementById('inset'), readEl = document.getElementById('readout');
+MAN.scenes.forEach((sc, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = sc.name; b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); b.addEventListener('click', () => setScene(i)); scenesEl.appendChild(b); });
+if (MAN.scenes.length < 2) scenesEl.style.display = 'none';
+function setScene(i, now){
+  current = i; groups.forEach((g, k) => { g.visible = k === i; });
+  [...scenesEl.children].forEach((b, k) => b.setAttribute('aria-pressed', k === i ? 'true' : 'false'));
+  const sc = MAN.scenes[i]; photoEl.src = sc.photo;
+  const short = n => n.replace(' flexion', '').replace(' elevation', '');
+  readEl.innerHTML = '<tr><th><b>Joint angles, estimated</b></th>' + sc.people.map((p, k) => '<td class="' + 'ob'[k % 2] + '"><b>' + (k ? 'blue' : 'orange') + '</b></td>').join('') + '</tr>' +
+    MAN.angle_names.map((n, a) => '<tr><th>' + short(n) + '</th>' + sc.people.map((p, k) => '<td class="' + 'ob'[k % 2] + '">' + p.angles[a] + '°</td>').join('') + '</tr>').join('');
+  setView('photo', now);
+}
+document.getElementById('photoBtn').addEventListener('click', e => { const on = insetEl.classList.toggle('off'); e.currentTarget.setAttribute('aria-pressed', on ? 'false' : 'true'); });
+
+/* body-to-skeleton controls */
+const peelEl = document.getElementById('peel'); let peelAnim = 0;
+function goPeel(to){ const p0 = peel, id = ++peelAnim; if (calm()){ peel = to; peelEl.value = to; applyPeel(); return; }
+  const start = performance.now(), step = now => { if (id !== peelAnim) return; const u = Math.min(1, (now - start)/700), e = 1 - Math.pow(1 - u, 4); peel = p0 + (to - p0)*e; peelEl.value = peel; applyPeel(); if (u < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step); }
+peelEl.addEventListener('input', () => { peelAnim++; peel = +peelEl.value; applyPeel(); });
+document.querySelectorAll('[data-peel]').forEach(b => b.addEventListener('click', () => goPeel(+b.dataset.peel)));
+
+/* the camera stays above the mats, inside the hall, and near the pair */
+const LIM = new T.Box3(new T.Vector3(-1600, 20, -1600), new T.Vector3(1600, 1500, 1600));
+function loop(){
+  if (!ready) return;
+  const d = cam.position.distanceTo(controls.target);
+  controls.maxPolarAngle = Math.min(Math.PI*0.94, Math.acos(Math.max(-1, Math.min(1, (60 - controls.target.y)/Math.max(d, 1)))));
+  controls.target.clamp(LIM.min, LIM.max);
+  if (controls.update()) dirty = true;
+  if (dirty){ const n = Math.min(300, Math.max(4, d*0.02)); if (Math.abs(cam.near - n) > 0.5){ cam.near = n; cam.updateProjectionMatrix(); } renderer.render(scene, cam); dirty = false; }
+  requestAnimationFrame(loop);
+}
+
+/* ---------------------------------------------------------------- loading: one binary file, gzipped and shipped as base64 text */
+(async () => {
+  try {
+    const read = async (url, total) => {
+      const r = await fetch(url); if (!r.ok) throw new Error(url + ' ' + r.status);
+      if (!r.body) return new Uint8Array(await r.arrayBuffer());
+      const rd = r.body.getReader(), parts = []; let n = 0;
+      for (;;){ const {done, value} = await rd.read(); if (done) break; parts.push(value); n += value.length; loadEl.textContent = 'Loading the two skeletons, ' + Math.min(99, Math.round(100*n/total)) + '%'; }
+      const out = new Uint8Array(n); let o = 0; for (const c of parts){ out.set(c, o); o += c.length; } return out;
+    };
+    const T64 = new Uint8Array(128); for (let i = 0; i < 64; i++) T64['ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.charCodeAt(i)] = i;
+    const unb64 = a => { let n = a.length; while (n && (a[n-1] === 61 || a[n-1] < 33)) n--; const out = new Uint8Array(Math.floor(n*3/4)); let o = 0;
+      for (let i = 0; i < n; i += 4){ const x = T64[a[i]] << 18 | T64[a[i+1]] << 12 | (i + 2 < n ? T64[a[i+2]] << 6 : 0) | (i + 3 < n ? T64[a[i+3]] : 0); out[o++] = x >> 16; if (o < out.length) out[o++] = x >> 8 & 255; if (o < out.length) out[o++] = x & 255; }
+      return out; };
+    const z = unb64(await read(MAN.file, MAN.ztext)); loadEl.textContent = 'Unpacking the two skeletons';
+    let bytes = null;
+    if ('DecompressionStream' in window) try { bytes = new Uint8Array(await new Response(new Blob([z]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()); } catch (err) { bytes = null; }
+    if (!bytes || bytes.length !== MAN.bytes){
+      await new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js'; sc.onload = ok; sc.onerror = () => no(new Error('the unpacking script did not load')); document.head.appendChild(sc); });
+      bytes = window.fflate.gunzipSync(z); }
+    if (bytes.length !== MAN.bytes) throw new Error('model size ' + bytes.length);
+    if (!window.THREE || !THREE.OrbitControls) throw new Error('the 3D library did not load');
+    init(bytes.buffer);
+  } catch (err) { console.error(err); fail(err.message); }
+})();
+</script>
+</body>
+</html>
