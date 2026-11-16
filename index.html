@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c1322" media="(prefers-color-scheme: dark)" />
   <meta name="description" content="Tomer Yona, PhD — wearable sensor measurement, validation and evidence generation. Open IMU gait data and free research tools." />
   <title>Tomer Yona, PhD — Wearable Sensors, Measurement & Evidence</title>
  
@@ -178,6 +181,7 @@
  
   <style>
     :root {
+      color-scheme: light dark;
       --primary: #1e3a8a;
       --accent: #2563eb;
       --secondary: #0f172a;
@@ -186,16 +190,56 @@
       --bg: #ffffff;
       --bg-alt: #f8fafc;
       --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --surface: #ffffff;
+      --surface-hover: #f8fafc;
+      --tint: #eff6ff;
+      --tint-border: #dbeafe;
+      --chip: #f1f5f9;
+      --btn-bg: #1e3a8a;
+      --btn-bg-hover: #2563eb;
+      --nav-bg: rgba(255, 255, 255, 0.98);
+      --hero-glow: #f1f5f9;
+      /* motion: one duration scale and one curve for the whole page */
+      --dur-fast: 130ms;
+      --dur: 175ms;
+      --dur-slow: 230ms;
+      --ease: cubic-bezier(0.24, 1, 0.4, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #bfdbfe;
+        --accent: #60a5fa;
+        --secondary: #f1f5f9;
+        --text: #cbd5e1;
+        --text-light: #94a3b8;
+        --bg: #0c1322;
+        --bg-alt: #101a2e;
+        --border: #26334d;
+        --border-strong: #475569;
+        --surface: #152038;
+        --surface-hover: #1b2947;
+        --tint: #172554;
+        --tint-border: #1e3a8a;
+        --chip: #1e293b;
+        --btn-bg: #2563eb;
+        --btn-bg-hover: #1d4ed8;
+        --nav-bg: rgba(12, 19, 34, 0.98);
+        --hero-glow: #14203a;
+      }
+      /* keeps dark project icons visible on a dark card */
+      .tool-icon:not(.neutral) { box-shadow: 0 0 0 1px var(--border-strong); }
     }
  
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       line-height: 1.6;
       color: var(--text);
       background: var(--bg);
     }
+    h1, h2, h3, h4 { text-wrap: balance; }
+    p { text-wrap: pretty; }
  
     .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
     .section-padding { padding: 6rem 0; }
@@ -205,7 +249,7 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(255, 255, 255, 0.98);
+      background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
       z-index: 1000;
       padding: 1rem 0;
@@ -221,14 +265,27 @@
       white-space: nowrap;
     }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links { scroll-target-group: auto; }
     .nav-links a {
+      display: inline-block;
+      padding-block: 0.25rem;
       color: var(--text);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 600;
-      transition: color 0.2s;
+      transition: color var(--dur) var(--ease);
     }
     .nav-links a:hover { color: var(--accent); }
+    /* the link whose section is on screen (class is the fallback set by script) */
+    .nav-links a:is(:target-current, .target-current) {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 6px;
+    }
+    @media (pointer: coarse) {
+      .nav-links a { padding-block: 0.6rem; }
+    }
  
     /* Mobile nav toggle */
     .nav-toggle {
@@ -251,9 +308,9 @@
     /* Shared */
     .ico { width: 1em; height: 1em; flex: none; fill: currentColor; vertical-align: -0.125em; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-    .skip-link { position: absolute; left: 1rem; top: -100px; z-index: 2000; background: var(--primary); color: #fff; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; text-decoration: none; }
+    .skip-link { position: absolute; left: 1rem; top: -100px; z-index: 2000; background: var(--btn-bg); color: #fff; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 700; text-decoration: none; }
     .skip-link:focus { top: 0.6rem; }
-    main:focus { outline: none; }
+    main:focus, section[tabindex="-1"]:focus, .capabilities-grid:focus { outline: none; }
     .btn .ext { font-size: 0.75rem; opacity: 0.75; margin-left: -4px; }
     a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
     [id] { scroll-margin-top: 80px; }
@@ -262,7 +319,7 @@
     .hero {
       padding-top: 140px;
       padding-bottom: 5rem;
-      background: radial-gradient(circle at top right, #f1f5f9 0%, #ffffff 60%);
+      background: radial-gradient(circle at top right, var(--hero-glow) 0%, var(--bg) 60%);
     }
  
     .hero-layout {
@@ -294,7 +351,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: #eff6ff;
+      background: var(--tint);
       color: var(--primary);
       padding: 7px 14px;
       border-radius: 999px;
@@ -303,12 +360,12 @@
       margin-bottom: 1.3rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      border: 1px solid #dbeafe;
+      border: 1px solid var(--tint-border);
     }
     .role-pill i { color: var(--accent); }
  
     h1 {
-      font-size: 3.2rem;
+      font-size: clamp(2rem, 1.1rem + 2.9vw, 3.2rem);
       font-weight: 800;
       line-height: 1.08;
       color: var(--secondary);
@@ -323,6 +380,7 @@
       margin-bottom: 1rem;
       line-height: 1.6;
     }
+    .hero-creds { text-wrap: wrap; }
     .hero-creds .cred { white-space: nowrap; }
     .hero-creds .sep { color: var(--text-light); font-weight: 400; margin: 0 0.45rem 0 0.1rem; }
     .hero-subtitle {
@@ -330,7 +388,7 @@
       color: var(--text-light);
       margin-bottom: 2rem;
       line-height: 1.7;
-      max-width: 680px;
+      max-width: 62ch;
       font-weight: 400;
     }
  
@@ -345,27 +403,27 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: var(--primary);
+      background: var(--btn-bg);
       color: white;
       padding: 0.85rem 1.3rem;
       border-radius: 10px;
       text-decoration: none;
       font-weight: 700;
       font-size: 0.92rem;
-      transition: all 0.2s;
+      transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), translate var(--dur) var(--ease);
       box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.18);
       border: 1px solid rgba(30, 58, 138, 0.25);
     }
-    .btn:hover { background: var(--accent); transform: translateY(-1px); }
+    .btn:hover { background: var(--btn-bg-hover); }
     .btn.secondary {
-      background: white;
+      background: var(--surface);
       color: var(--primary);
       border: 1px solid var(--border);
       box-shadow: none;
     }
     .btn.secondary:hover {
-      background: #f8fafc;
-      border-color: #cbd5e1;
+      background: var(--surface-hover);
+      border-color: var(--border-strong);
     }
  
     /* Capabilities Grid */
@@ -378,11 +436,10 @@
       padding-top: 2.5rem;
     }
     .cap-item {
-      background: white;
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 1.5rem;
-      transition: all 0.25s ease;
     }
 
     .cap-icon { font-size: 1.3rem; color: var(--accent); margin-bottom: 0.8rem; }
@@ -400,19 +457,19 @@
  
     .section-title {
       margin-bottom: 0.75rem;
-      font-size: 2.25rem;
+      font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.25rem);
       color: var(--secondary);
       letter-spacing: -0.02em;
     }
     .section-subtitle {
       color: var(--text-light);
       font-size: 1.05rem;
-      max-width: 760px;
+      max-width: 65ch;
       margin-bottom: 2.8rem;
     }
  
     .case-study {
-      background: white;
+      background: var(--surface);
       padding: 2.4rem;
       border-radius: 16px;
       margin-bottom: 1.5rem;
@@ -420,7 +477,6 @@
       display: flex;
       gap: 2.4rem;
       align-items: flex-start;
-      transition: all 0.3s ease;
     }
  
 
@@ -449,24 +505,24 @@
  
     .case-content { flex: 1; }
     .case-title { font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--secondary); font-weight: 800; }
-    .case-desc { color: var(--text-light); font-size: 0.98rem; margin-bottom: 1rem; line-height: 1.65; }
+    .case-desc { color: var(--text-light); font-size: 0.98rem; margin-bottom: 1rem; line-height: 1.65; max-width: 68ch; }
     .case-desc strong { color: var(--secondary); }
     .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
     .ttag {
-      background: #f1f5f9;
+      background: var(--chip);
       padding: 6px 10px;
       border-radius: 8px;
       font-size: 0.82rem;
       color: var(--text);
       font-weight: 600;
-      border: 1px solid #e2e8f0;
+      border: 1px solid var(--border);
     }
  
     /* Resources section */
     .resources-section { background: var(--bg); }
     .resources-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
       gap: 1.5rem;
     }
     .resource-group {
@@ -496,7 +552,7 @@
       margin-bottom: 1rem;
       flex: none;
     }
-    .tool-icon.neutral { background: #eff6ff; border: 1px solid #dbeafe; color: var(--accent); font-size: 1.15rem; }
+    .tool-icon.neutral { background: var(--tint); border: 1px solid var(--tint-border); color: var(--accent); font-size: 1.15rem; }
     .resource-card h4 {
       font-size: 1.05rem;
       color: var(--secondary);
@@ -529,26 +585,24 @@
     .card-link::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
     .card-link:focus-visible { outline: none; }
     .card-link:focus-visible::after { outline: 3px solid var(--accent); outline-offset: 3px; }
-    .tool-card { transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .tool-card { transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), translate var(--dur) var(--ease); }
     .tool-card:hover, .tool-card:focus-within {
       border-color: var(--accent);
       box-shadow: 0 8px 16px -6px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
     }
-    .tool-card .resource-link .ico { transition: transform 0.2s; }
-    .tool-card:hover .resource-link .ico, .tool-card:focus-within .resource-link .ico { transform: translateX(2px); }
+    .tool-card .resource-link .ico { transition: translate var(--dur) var(--ease); }
     .case-desc a { color: var(--accent); font-weight: 500; text-decoration-thickness: 1px; text-underline-offset: 2px; }
     .case-desc a:hover { color: var(--primary); }
     .ext-inline { font-size: 0.7em; vertical-align: 0.05em; }
  
     /* CTA Section */
     .cta { text-align: center; max-width: 760px; margin: 0 auto; }
-    .cta h2 { margin-bottom: 1.1rem; color: var(--primary); font-size: 2.1rem; letter-spacing: -0.02em; }
-    .cta p { color: var(--text-light); margin-bottom: 1.6rem; font-size: 1.05rem; line-height: 1.65; }
+    .cta h2 { margin-bottom: 1.1rem; color: var(--primary); font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.1rem); letter-spacing: -0.02em; }
+    .cta p { color: var(--text-light); margin: 0 auto 1.6rem; max-width: 60ch; font-size: 1.05rem; line-height: 1.65; }
     .cta .btn { padding: 1rem 2.4rem; border-radius: 10px; }
  
     /* Footer */
-    footer a { color: var(--text-light); font-weight: 600; }
+    footer a { display: inline-block; padding-block: 0.2rem; color: var(--text-light); font-weight: 600; }
     footer a:hover { color: var(--accent); }
     footer {
       text-align: center;
@@ -559,7 +613,7 @@
     }
  
     /* Responsive */
-    @media (max-width: 900px) {
+    @media (max-width: 56.25em) {
       .hero-layout {
         display: grid;
         grid-template-columns: 100px 1fr;
@@ -591,7 +645,6 @@
         align-items: baseline;
         flex-wrap: wrap;
       }
-      h1 { font-size: 2.2rem; }
       .nav-links { display: none; }
       .nav-links.open a { display: block; padding: 0.65rem 0; }
       .nav-links.open {
@@ -600,7 +653,7 @@
         position: absolute;
         top: 100%;
         right: 2rem;
-        background: white;
+        background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 1rem 1.5rem;
@@ -611,7 +664,7 @@
       .hero { padding-top: 130px; }
     }
  
-    @media (max-width: 520px) {
+    @media (max-width: 32.5em) {
       .container { padding: 0 1.25rem; }
       .hero-layout {
         display: flex;
@@ -627,7 +680,6 @@
       .hero-subtitle { font-size: 1.05rem; }
       .btn { width: 100%; }
       .hero-cta { gap: 0.6rem; }
-      h1 { font-size: 2rem; }
       h1 br { display: none; }
       .hero-photo { order: -1; margin-top: 0; }
       .hero-creds .cred { display: block; white-space: normal; }
@@ -635,17 +687,41 @@
       .role-pill { font-size: 0.72rem; letter-spacing: 0.03em; }
       .section-padding { padding: 4rem 0; }
     }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .btn, .tool-card { transition: none !important; }
-      .btn:hover, .tool-card:hover, .tool-card:focus-within { transform: none !important; }
+
+    /* Motion: everything that moves is opt-in, so reduced-motion users get a static page. */
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+      .btn:hover { translate: 0 -1px; }
+      .tool-card:hover, .tool-card:focus-within { translate: 0 -2px; }
+      .tool-card:hover .resource-link .ico, .tool-card:focus-within .resource-link .ico { translate: 2px 0; }
+
+      /* page-to-page transition (default cross-fade); both pages opt in */
+      @view-transition { navigation: auto; }
+
+      /* cards ease in as they scroll into view; decorative, so no script fallback */
+      @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        @keyframes rise-in {
+          from { opacity: 0; translate: 0 1rem; }
+        }
+        .cap-item, .case-study, .resource-card {
+          animation: rise-in auto linear backwards;
+          animation-timeline: view();
+          animation-range: cover 0% cover 9rem;
+        }
+      }
     }
   </style>
+
+  <!-- Fetch a same-site page when its link is hovered, so it opens faster -->
+  <script type="speculationrules">
+  { "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+  </script>
 </head>
  
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
  
+  <header>
   <nav>
     <div class="container nav-container">
       <a href="/" class="logo">Tomer Yona <span style="font-weight:400; color: var(--text-light);">| PhD</span></a>
@@ -661,6 +737,7 @@
       </ul>
     </div>
   </nav>
+  </header>
  
   <main id="main" tabindex="-1">
   <section class="hero">
@@ -699,70 +776,71 @@
       </div>
  
       <!-- Capabilities -->
-      <div class="capabilities-grid" id="capabilities">
-        <div class="cap-item">
+      <h2 class="sr-only">What I do</h2>
+      <div class="capabilities-grid" id="capabilities" tabindex="-1">
+        <article class="cap-item">
           <div class="cap-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M576 0c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V32c0-17.7 14.3-32 32-32zM448 96c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V128c0-17.7 14.3-32 32-32zM352 224V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32s32 14.3 32 32zM192 288c17.7 0 32 14.3 32 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320c0-17.7 14.3-32 32-32zM96 416v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V416c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg></div>
           <h3>Multi-Sensor Measurement Systems</h3>
           <p>
             IMU, EMG, PPG/ECG, and accelerometry &mdash; from single-device setups to synchronized multi-sensor protocols.
             Practical experience with placement, synchronization, artifacts, drift, and emerging form factors including earables and smart glasses.
           </p>
-        </div>
+        </article>
  
-        <div class="cap-item">
+        <article class="cap-item">
           <div class="cap-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M175 389.4c-9.8 16-15 34.3-15 53.1c-10 3.5-20.8 5.5-32 5.5c-53 0-96-43-96-96V64C14.3 64 0 49.7 0 32S14.3 0 32 0H96h64 64c17.7 0 32 14.3 32 32s-14.3 32-32 32V309.9l-49 79.6zM96 64v96h64V64H96zM352 0H480h32c17.7 0 32 14.3 32 32s-14.3 32-32 32V214.9L629.7 406.2c6.7 10.9 10.3 23.5 10.3 36.4c0 38.3-31.1 69.4-69.4 69.4H261.4c-38.3 0-69.4-31.1-69.4-69.4c0-12.8 3.6-25.4 10.3-36.4L320 214.9V64c-17.7 0-32-14.3-32-32s14.3-32 32-32h32zm32 64V224c0 5.9-1.6 11.7-4.7 16.8L330.5 320h171l-48.8-79.2c-3.1-5-4.7-10.8-4.7-16.8V64H384z"/></svg></div>
           <h3>Evidence Generation & Study Design</h3>
           <p>
             End-to-end study execution: protocols, endpoints, feasibility, adherence, and data-quality checks.
             Experience across observational studies, RCTs, and longitudinal designs, translating questions into testable, defensible outcomes.
           </p>
-        </div>
+        </article>
  
-        <div class="cap-item">
+        <article class="cap-item">
           <div class="cap-icon"><svg class="ico" viewBox="0 0 320 512" aria-hidden="true" focusable="false"><path d="M160 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zM126.5 199.3c-1 .4-1.9 .8-2.9 1.2l-8 3.5c-16.4 7.3-29 21.2-34.7 38.2l-2.6 7.8c-5.6 16.8-23.7 25.8-40.5 20.2s-25.8-23.7-20.2-40.5l2.6-7.8c11.4-34.1 36.6-61.9 69.4-76.5l8-3.5c20.8-9.2 43.3-14 66.1-14c44.6 0 84.8 26.8 101.9 67.9L281 232.7l21.4 10.7c15.8 7.9 22.2 27.1 14.3 42.9s-27.1 22.2-42.9 14.3L247 287.3c-10.3-5.2-18.4-13.8-22.8-24.5l-9.6-23-19.3 65.5 49.5 54c5.4 5.9 9.2 13 11.2 20.8l23 92.1c4.3 17.1-6.1 34.5-23.3 38.8s-34.5-6.1-38.8-23.3l-22-88.1-70.7-77.1c-14.8-16.1-20.3-38.6-14.7-59.7l16.9-63.5zM68.7 398l25-62.4c2.1 3 4.5 5.8 7 8.6l40.7 44.4-14.5 36.2c-2.4 6-6 11.5-10.6 16.1L54.6 502.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L68.7 398z"/></svg></div>
           <h3>Human Movement & Clinical Domain</h3>
           <p>
             Five years of clinical physiotherapy plus a PhD in biomedical engineering.
             Deep knowledge of gait, functional movement, neuromuscular physiology, and what sensor signals can (and cannot) tell you about real humans.
           </p>
-        </div>
+        </article>
  
-        <div class="cap-item">
+        <article class="cap-item">
           <div class="cap-icon"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V400c0 44.2 35.8 80 80 80H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H80c-8.8 0-16-7.2-16-16V64zm406.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 210.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L240 221.3l57.4 57.4c12.5 12.5 32.8 12.5 45.3 0l128-128z"/></svg></div>
           <h3>Real-World Data & Population Analytics</h3>
           <p>
             Working with large wearable datasets (10,000+ participants) to derive interpretable activity-pattern metrics
             &mdash; bouts, fragmentation, transitions, intensity distribution &mdash; and relate them to health outcomes.
           </p>
-        </div>
+        </article>
  
-        <div class="cap-item">
+        <article class="cap-item">
           <div class="cap-icon"><svg class="ico" viewBox="0 0 384 512" aria-hidden="true" focusable="false"><path d="M192 0c-41.8 0-77.4 26.7-90.5 64H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H282.5C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM305 273L177 401c-9.4 9.4-24.6 9.4-33.9 0L79 337c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L271 239c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg></div>
           <h3>Validation & Regulatory-Ready Measurement</h3>
           <p>
             Gold-standard comparisons, reliability testing, synchronization, artifact handling, and transparent error reporting.
             Building the evidence base so performance claims are defensible for product and regulatory decisions.
           </p>
-        </div>
+        </article>
  
-        <div class="cap-item">
+        <article class="cap-item">
           <div class="cap-icon"><svg class="ico" viewBox="0 0 640 512" aria-hidden="true" focusable="false"><path d="M32 64c17.7 0 32 14.3 32 32l0 320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96C0 78.3 14.3 64 32 64zm214.6 73.4c12.5 12.5 12.5 32.8 0 45.3L205.3 224l229.5 0-41.4-41.4c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l96 96c12.5 12.5 12.5 32.8 0 45.3l-96 96c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L434.7 288l-229.5 0 41.4 41.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-96-96c-12.5-12.5-12.5-32.8 0-45.3l96-96c12.5-12.5 32.8-12.5 45.3 0zM640 96V416c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z"/></svg></div>
           <h3>Clinical-Technical Translation</h3>
           <p>
             Bridging clinical needs and technical implementation. Previously embedded in a product team as clinical consultant,
             translating end-user requirements into engineering specifications. Comfortable in both languages.
           </p>
-        </div>
+        </article>
       </div>
     </div>
   </section>
  
-  <section id="work" class="section-padding work-section">
+  <section id="work" class="section-padding work-section" tabindex="-1">
     <div class="container">
       <h2 class="section-title">Selected work</h2>
       <p class="section-subtitle">Spanning population health, device validation, multi-sensor fusion, and clinical measurement.</p>
  
-      <div class="case-study">
+      <article class="case-study">
         <div class="case-meta">
           <span class="meta-tag">Population Health</span>
           <div class="meta-stat">N = 10,000+</div>
@@ -783,9 +861,9 @@
             <span class="ttag">Quality Control</span>
           </div>
         </div>
-      </div>
+      </article>
  
-      <div class="case-study">
+      <article class="case-study">
         <div class="case-meta">
           <span class="meta-tag">Multi-Sensor Fusion</span>
           <div class="meta-stat">3 modalities</div>
@@ -807,9 +885,9 @@
             <span class="ttag">Open Data</span>
           </div>
         </div>
-      </div>
+      </article>
  
-      <div class="case-study">
+      <article class="case-study">
         <div class="case-meta">
           <span class="meta-tag">Wearables</span>
           <div class="meta-stat">RCT + Longitudinal</div>
@@ -833,9 +911,9 @@
             <span class="ttag">Biomechanics</span>
           </div>
         </div>
-      </div>
+      </article>
  
-      <div class="case-study">
+      <article class="case-study">
         <div class="case-meta">
           <span class="meta-tag">Validation</span>
           <div class="meta-stat">Reliability</div>
@@ -857,20 +935,20 @@
             <span class="ttag">Clinical Tools</span>
           </div>
         </div>
-      </div>
+      </article>
  
     </div>
   </section>
  
   <!-- Tools & Output -->
-  <section id="resources" class="section-padding resources-section">
+  <section id="resources" class="section-padding resources-section" tabindex="-1">
     <div class="container">
       <h2 class="section-title">Tools & output</h2>
       <p class="section-subtitle">Open data and research software I've released, my publications, and side projects.</p>
 
       <h3 class="resource-group">Open data &amp; research software</h3>
       <div class="resources-grid">
-        <div class="resource-card">
+        <article class="resource-card">
           <span class="tool-icon neutral"><svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M448 80v48c0 44.2-100.3 80-224 80S0 172.2 0 128V80C0 35.8 100.3 0 224 0S448 35.8 448 80zM393.2 214.7c20.8-7.4 39.9-16.9 54.8-28.6V288c0 44.2-100.3 80-224 80S0 332.2 0 288V186.1c14.9 11.8 34 21.2 54.8 28.6C99.7 230.7 159.5 240 224 240s124.3-9.3 169.2-25.3zM0 346.1c14.9 11.8 34 21.2 54.8 28.6C99.7 390.7 159.5 400 224 400s124.3-9.3 169.2-25.3c20.8-7.4 39.9-16.9 54.8-28.6V432c0 44.2-100.3 80-224 80S0 476.2 0 432V346.1z"/></svg></span>
           <h4>COMPWALK-ACL dataset</h4>
           <p>Multi-pace IMU gait kinematics from 92 participants: 25 healthy adults, 27 healthy adolescents, and 40 people with an ACL injury, 27 of them measured again three months after reconstruction. Slow, normal and fast walking. Open under CC BY 4.0; the trials are .mvnx files, which open in <a href="mvnx-viewer/">MVNX Viewer</a>.</p>
@@ -878,48 +956,48 @@
             <a class="resource-link" href="https://doi.org/10.5281/zenodo.15624356" target="_blank" rel="noopener"><span>Dataset on Zenodo</span><span class="sr-only"> (opens in new tab)</span> <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>
             <a class="resource-link" href="https://doi.org/10.1038/s41597-025-06307-8" target="_blank" rel="noopener"><span>Paper in <em>Scientific Data</em> (2025)</span><span class="sr-only"> (opens in new tab)</span> <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>
           </div>
-        </div>
-        <div class="resource-card tool-card">
+        </article>
+        <article class="resource-card tool-card">
           <span class="tool-icon"><svg viewBox="0 0 32 32" width="44" height="44" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="7" fill="#0f172a"/><path d="M12 9l11 7-11 7z" fill="#3b82f6"/></svg></span>
           <h4><a class="card-link" href="mvnx-viewer/">MVNX Viewer</a></h4>
           <p>A free browser viewer I built for .mvnx motion-capture files (Movella / Xsens MVN): 3D skeleton playback, joint-angle charts, foot contacts and centre of mass. Files are not uploaded.</p>
           <div class="resource-foot"><span class="resource-link" aria-hidden="true"><span>Open the viewer</span> <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></span></div>
-        </div>
+        </article>
       </div>
 
       <h3 class="resource-group">Publications &amp; side projects</h3>
       <div class="resources-grid">
-        <div class="resource-card">
+        <article class="resource-card">
           <span class="tool-icon neutral"><svg class="ico" viewBox="0 0 576 512" aria-hidden="true" focusable="false"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5V78.6c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8V454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm76.8 0C353 462 398.1 448 432 448c38.5 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5V83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11V456c0 11.4 11.7 19.3 22.4 15.5z"/></svg></span>
           <h4>25+ peer-reviewed publications</h4>
           <p>Research spanning wearable biomechanics, device validation, patient-reported outcomes, and population health. Editorial board member, BMJ Open Sport &amp; Exercise Medicine.</p>
           <div class="resource-foot">
             <a class="resource-link" href="https://scholar.google.com/citations?user=PSc2gH4AAAAJ" target="_blank" rel="noopener"><span>View on Google Scholar</span><span class="sr-only"> (opens in new tab)</span> <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg></a>
           </div>
-        </div>
-        <div class="resource-card tool-card">
+        </article>
+        <article class="resource-card tool-card">
           <span class="tool-icon"><svg viewBox="0 0 32 32" width="44" height="44" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="7" fill="#2B47C9"/><circle cx="16" cy="16" r="9.5" fill="none" stroke="#F3EBDD" stroke-width="1.8"/><circle cx="16" cy="16" r="5.4" fill="#F5A033"/></svg></span>
           <h4><a class="card-link" href="jefferson-curl/">Jefferson curl</a></h4>
           <p>The Jefferson curl beside the Romanian deadlift at the same load: an interactive film built from motion capture and surface EMG, with the muscle activity our 2026 study measured in 21 resistance-trained adults.</p>
           <div class="resource-foot"><span class="resource-link" aria-hidden="true"><span>See the lift, measured</span> <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></span></div>
-        </div>
-        <div class="resource-card tool-card">
+        </article>
+        <article class="resource-card tool-card">
           <span class="tool-icon"><img src="cuewand/img/cuewand-icon.svg" alt="" width="44" height="44"></span>
           <h4><a class="card-link" href="cuewand/">Cuewand</a></h4>
           <p>A side project I built and maintain: a free phone remote for PowerPoint on Windows, with Next and Back, speaker notes per animation step, a talk timer (or none, for a lesson) and a laser pointer. Nothing to install on the phone.</p>
           <div class="resource-foot"><span class="resource-link" aria-hidden="true"><span>Try the demo and download</span> <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></span></div>
-        </div>
-        <div class="resource-card tool-card">
+        </article>
+        <article class="resource-card tool-card">
           <span class="tool-icon"><svg viewBox="0 0 32 32" width="44" height="44" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="7" fill="#1230C8"/><rect x="6" y="14" width="20" height="4" rx="1" fill="#F6F3EC"/></svg></span>
           <h4><a class="card-link" href="jiu-jitsu-biomechanics/">Jiu-jitsu biomechanics in 3D</a></h4>
           <p>Two grappling positions reconstructed in 3D from single photos with computer vision (SAM 3, MoGe-2, SAM 3D Body): body models, estimated joint angles and an anatomical skeleton inside each body, to walk around in the browser.</p>
           <div class="resource-foot"><span class="resource-link" aria-hidden="true"><span>Open the 3D view</span> <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></span></div>
-        </div>
+        </article>
       </div>
     </div>
   </section>
  
-  <section id="contact" class="section-padding cta">
+  <section id="contact" class="section-padding cta" tabindex="-1">
     <div class="container">
       <h2>Let's talk.</h2>
       <p>
@@ -962,6 +1040,35 @@
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && l.classList.contains('open')) { setOpen(false); t.focus(); } });
       document.addEventListener('click', function (e) { if (!e.target.closest('nav')) setOpen(false); });
       document.querySelector('nav').addEventListener('focusout', function (e) { if (!e.relatedTarget || !e.target.closest('nav').contains(e.relatedTarget)) setOpen(false); });
+
+      // Current-section link. CSS does the highlight where scroll-target-group exists;
+      // this keeps aria-current in step, and does the highlight too where it does not.
+      var links = Array.prototype.slice.call(l.querySelectorAll('a[href^="#"]'));
+      function mark(current) {
+        links.forEach(function (a) {
+          if (a === current) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      }
+      if (window.CSS && CSS.supports('scroll-target-group: auto')) {
+        // read after the next frame: the browser updates :target-current after scrollend fires
+        var sync = function () { requestAnimationFrame(function () { requestAnimationFrame(function () { mark(l.querySelector('a:target-current')); }); }); };
+        sync();
+        document.addEventListener('scrollend', sync);
+        t.addEventListener('click', sync);
+      } else if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            var a = l.querySelector('a[href="#' + en.target.id + '"]');
+            if (!a) return;
+            a.classList.toggle('target-current', en.isIntersecting);
+            if (en.isIntersecting) mark(a); else if (a.getAttribute('aria-current')) a.removeAttribute('aria-current');
+          });
+        }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+        links.forEach(function (a) {
+          var target = document.getElementById(a.getAttribute('href').slice(1));
+          if (target) io.observe(target);
+        });
+      }
     })();
   </script>
  

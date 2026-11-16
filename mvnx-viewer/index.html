@@ -47,9 +47,7 @@
   ]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="fonts/inter-latin-wght-normal.woff2" crossorigin>
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -57,6 +55,10 @@
 }}
 </script>
 <style>
+  /* Inter (variable, Latin subset), served from this site. Licence: fonts/OFL.txt */
+  @font-face{ font-family:'Inter'; font-style:normal; font-display:swap; font-weight:100 900;
+    src:url(fonts/inter-latin-wght-normal.woff2) format("woff2");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
   :root{
     /* ===== SURFACE RAMP ===== */
     --e0:#0a0c10; --e1:#0e1117; --e2:#141923; --e3:#1b212d; --e4:#232b38; --inset:#0f1218;
@@ -102,6 +104,7 @@
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{ margin:0; min-height:100%; background:var(--e1); color:var(--ink); font-family:var(--font-sans);
+        font-size-adjust:from-font; /* fallback font keeps Inter's x-height while Inter loads */
         font-size:var(--fs-base); line-height:var(--lh); font-variant-numeric:tabular-nums; }
   ::selection{ background:var(--selection-bg); color:var(--selection-fg); }
   *{ scrollbar-width:thin; scrollbar-color:var(--scrollbar-thumb) transparent; }
@@ -355,7 +358,13 @@
     .jcard .rm{ opacity:1; }
     .tl .trimh{ width:30px; margin-left:-15px; }
   }
+/* page-to-page transition (default cross-fade); both pages opt in */
+@media (prefers-reduced-motion: no-preference){ @view-transition{ navigation:auto } }
 </style>
+<!-- Fetch a same-site page when its link is hovered, so it opens faster -->
+<script type="speculationrules">
+{ "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+</script>
 </head>
 <body>
 <div id="app">

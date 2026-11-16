@@ -401,7 +401,13 @@ h2,.qa h3,.act thead th{text-wrap:balance} .stand,.say,.more,.qa p,.cite,.fine,.
   .two,.res,.qa,.stills{grid-template-columns:1fr} .stills{gap:18px} .act .n{width:21%} .act .d{width:27%; font-size:0.8125rem}
   .paper{grid-template-columns:1fr} .hint{font-size:0.8125rem; white-space:normal; text-align:center; width:max-content}
 }
+/* page-to-page transition (default cross-fade); both pages opt in */
+@media (prefers-reduced-motion: no-preference){ @view-transition{ navigation:auto } }
 </style>
+<!-- Fetch a same-site page when its link is hovered, so it opens faster -->
+<script type="speculationrules">
+{ "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+</script>
 </head>
 <body>
 <div class="col">

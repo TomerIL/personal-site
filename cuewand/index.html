@@ -489,7 +489,13 @@
     html { scroll-behavior: auto; }
     .btn, .nav-links a { transition: none; }
   }
+/* page-to-page transition (default cross-fade); both pages opt in */
+@media (prefers-reduced-motion: no-preference){ @view-transition{ navigation:auto } }
 </style>
+<!-- Fetch a same-site page when its link is hovered, so it opens faster -->
+<script type="speculationrules">
+{ "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+</script>
 </head>
 <body>
 
