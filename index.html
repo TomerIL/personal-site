@@ -4,13 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0c1322" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#070B24" media="(prefers-color-scheme: dark)" />
   <meta name="description" content="Tomer Yona, PhD — wearable sensor measurement, validation and evidence generation. Open IMU gait data and free research tools." />
   <title>Tomer Yona, PhD — Wearable Sensors, Measurement & Evidence</title>
  
   <!-- Canonical URL -->
   <link rel="canonical" href="https://www.tomeryona.com/" />
+  <link rel="preload" as="font" type="font/woff2" href="fonts/archivo-latin-wdth-normal.woff2" crossorigin />
  
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -180,26 +181,29 @@
  
  
   <style>
+    /* Archivo (variable, Latin subset), served from this site. Licence: fonts/OFL.txt */
+    @font-face { font-family: "Archivo"; font-style: normal; font-display: swap; font-weight: 100 900; font-stretch: 62% 125%; src: url(fonts/archivo-latin-wdth-normal.woff2) format("woff2"); }
     :root {
       color-scheme: light dark;
-      --primary: #1e3a8a;
-      --accent: #2563eb;
-      --secondary: #0f172a;
-      --text: #334155;
-      --text-light: #64748b;
-      --bg: #ffffff;
-      --bg-alt: #f8fafc;
-      --border: #e2e8f0;
-      --border-strong: #cbd5e1;
-      --surface: #ffffff;
-      --surface-hover: #f8fafc;
-      --tint: #eff6ff;
-      --tint-border: #dbeafe;
-      --chip: #f1f5f9;
-      --btn-bg: #1e3a8a;
-      --btn-bg-hover: #2563eb;
-      --nav-bg: rgba(255, 255, 255, 0.98);
-      --hero-glow: #f1f5f9;
+      --primary: #1230C8;
+      --accent: #1230C8;
+      --secondary: #070B24;
+      --text: #262B45;
+      --text-light: #4A5070;
+      --bg: #F6F3EC;
+      --bg-alt: #EFEBE1;
+      --border: #D9D4C7;
+      --border-strong: #B4AD9C;
+      --surface: #FBF9F4;
+      --surface-hover: #F1EDE3;
+      --tint: #E4E8FB;
+      --tint-border: #C3CBF3;
+      --chip: #EBE6DA;
+      --btn-bg: #1230C8;
+      --btn-bg-hover: #0B1F8C;
+      --nav-bg: rgba(246, 243, 236, 0.97);
+      --hero-glow: #F6F3EC;
+      --label: #B8380A;
       /* motion: one duration scale and one curve for the whole page */
       --dur-fast: 130ms;
       --dur: 175ms;
@@ -208,24 +212,25 @@
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --primary: #bfdbfe;
-        --accent: #60a5fa;
-        --secondary: #f1f5f9;
-        --text: #cbd5e1;
-        --text-light: #94a3b8;
-        --bg: #0c1322;
-        --bg-alt: #101a2e;
-        --border: #26334d;
-        --border-strong: #475569;
-        --surface: #152038;
-        --surface-hover: #1b2947;
-        --tint: #172554;
-        --tint-border: #1e3a8a;
-        --chip: #1e293b;
-        --btn-bg: #2563eb;
-        --btn-bg-hover: #1d4ed8;
-        --nav-bg: rgba(12, 19, 34, 0.98);
-        --hero-glow: #14203a;
+        --primary: #AEBBFF;
+        --accent: #9DABFF;
+        --secondary: #F6F3EC;
+        --text: #D5D3DE;
+        --text-light: #A6A9C4;
+        --bg: #070B24;
+        --bg-alt: #0B1030;
+        --border: #262D57;
+        --border-strong: #454E85;
+        --surface: #10163A;
+        --surface-hover: #161D49;
+        --tint: #141C55;
+        --tint-border: #24309A;
+        --chip: #171E47;
+        --btn-bg: #2F4BE0;
+        --btn-bg-hover: #1230C8;
+        --nav-bg: rgba(7, 11, 36, 0.97);
+        --hero-glow: #070B24;
+        --label: #FF8A5C;
       }
       /* keeps dark project icons visible on a dark card */
       .tool-icon:not(.neutral) { box-shadow: 0 0 0 1px var(--border-strong); }
@@ -233,7 +238,8 @@
  
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+      font-size-adjust: from-font; /* fallback font keeps Archivo's x-height while it loads */
       line-height: 1.6;
       color: var(--text);
       background: var(--bg);
@@ -261,7 +267,8 @@
       color: var(--primary);
       text-decoration: none;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-stretch: 112%;
+      letter-spacing: 0.03em;
       white-space: nowrap;
     }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -328,7 +335,7 @@
       align-items: flex-start;
     }
  
-    .hero-content { flex: 1; max-width: 720px; }
+    .hero-content { flex: 1; max-width: 760px; }
  
     .hero-photo {
       flex-shrink: 0;
@@ -365,12 +372,13 @@
     .role-pill i { color: var(--accent); }
  
     h1 {
-      font-size: clamp(2rem, 1.1rem + 2.9vw, 3.2rem);
+      font-size: clamp(2.05rem, 1.05rem + 2.75vw, 3.25rem);
       font-weight: 800;
-      line-height: 1.08;
+      font-stretch: 110%;
+      line-height: 1.04;
       color: var(--secondary);
       margin-bottom: 1.4rem;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
  
     .hero-creds {
@@ -411,7 +419,6 @@
       font-weight: 700;
       font-size: 0.92rem;
       transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), translate var(--dur) var(--ease);
-      box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.18);
       border: 1px solid rgba(30, 58, 138, 0.25);
     }
     .btn:hover { background: var(--btn-bg-hover); }
@@ -458,6 +465,8 @@
     .section-title {
       margin-bottom: 0.75rem;
       font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.25rem);
+      font-weight: 800;
+      font-stretch: 112%;
       color: var(--secondary);
       letter-spacing: -0.02em;
     }
@@ -490,7 +499,7 @@
       display: block;
       font-size: 0.75rem;
       font-weight: 900;
-      color: var(--accent);
+      color: var(--label);
       text-transform: uppercase;
       letter-spacing: 0.06em;
       margin-bottom: 0.55rem;
@@ -505,6 +514,8 @@
  
     .case-content { flex: 1; }
     .case-title { font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--secondary); font-weight: 800; }
+    .case-title, .cap-item h3, .resource-card h4, .btn { font-stretch: 105%; }
+    .meta-tag, .resource-group { font-stretch: 110%; }
     .case-desc { color: var(--text-light); font-size: 0.98rem; margin-bottom: 1rem; line-height: 1.65; max-width: 68ch; }
     .case-desc strong { color: var(--secondary); }
     .tech-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
@@ -528,7 +539,7 @@
     .resource-group {
       font-size: 0.75rem;
       font-weight: 900;
-      color: var(--accent);
+      color: var(--label);
       text-transform: uppercase;
       letter-spacing: 0.06em;
       margin: 0 0 1rem;
@@ -597,7 +608,7 @@
  
     /* CTA Section */
     .cta { text-align: center; max-width: 760px; margin: 0 auto; }
-    .cta h2 { margin-bottom: 1.1rem; color: var(--primary); font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.1rem); letter-spacing: -0.02em; }
+    .cta h2 { margin-bottom: 1.1rem; color: var(--primary); font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.1rem); font-weight: 800; font-stretch: 112%; letter-spacing: -0.02em; }
     .cta p { color: var(--text-light); margin: 0 auto 1.6rem; max-width: 60ch; font-size: 1.05rem; line-height: 1.65; }
     .cta .btn { padding: 1rem 2.4rem; border-radius: 10px; }
  
@@ -684,7 +695,7 @@
       .hero-photo { order: -1; margin-top: 0; }
       .hero-creds .cred { display: block; white-space: normal; }
       .hero-creds .sep { display: none; }
-      .role-pill { font-size: 0.72rem; letter-spacing: 0.03em; }
+      .role-pill { font-size: 0.72rem; letter-spacing: 0.02em; font-stretch: 86%; }
       .section-padding { padding: 4rem 0; }
     }
 
