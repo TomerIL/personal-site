@@ -612,6 +612,74 @@
     .cta p { color: var(--text-light); margin: 0 auto 1.6rem; max-width: 60ch; font-size: 1.05rem; line-height: 1.65; }
     .cta .btn { padding: 1rem 2.4rem; border-radius: 10px; }
  
+    /* Copy-email control.
+       Adapted from the "Copy Button" motion component on DesignBookmark
+       (https://designbookmark.com/motion#db-copy-button): the same behaviour and the same
+       spring values, rebuilt with this page's colours, type and markup.
+       The address stays selectable; the button swaps its icon for a check, rolls the word
+       from Copy to Copied and springs its width to fit. */
+    .copy-field {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 100%;
+      margin-bottom: 1.4rem;
+      padding: 0.4rem 0.4rem 0.4rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .copy-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.98rem;
+      user-select: all;
+    }
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: none;
+      height: 36px;
+      padding: 0 0.75rem 0 0.6rem;
+      overflow: hidden;
+      background: var(--chip);
+      color: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color var(--dur) var(--ease);
+    }
+    .copy-btn:hover { border-color: var(--border-strong); }
+    .copy-ic { position: relative; flex: none; width: 18px; height: 18px; }
+    .copy-ic svg {
+      position: absolute;
+      inset: 0;
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .copy-ic .i-ok { color: var(--accent); stroke-width: 2.4; opacity: 0; transform: scale(0.4); }
+    .copy-roll { position: relative; display: block; height: 1.25rem; overflow: hidden; }
+    .copy-words { position: relative; display: block; }
+    .copy-words span { display: block; height: 1.25rem; line-height: 1.25rem; white-space: nowrap; }
+    /* the second word sits below the first and does not widen the button until it rolls in */
+    .copy-words span + span { position: absolute; left: 0; top: 100%; color: var(--accent); }
+    @media (pointer: coarse) {
+      .copy-btn { height: 44px; }
+    }
+
     /* Footer */
     footer a { display: inline-block; padding-block: 0.2rem; color: var(--text-light); font-weight: 600; }
     footer a:hover { color: var(--accent); }
@@ -1014,6 +1082,18 @@
       <p>
         Open to industry and applied research roles. The quickest route is email; my CV is available on request.
       </p>
+
+      <div class="copy-field">
+        <span class="copy-text">hello@tomeryona.com</span>
+        <button class="copy-btn" type="button" data-copy="hello@tomeryona.com" aria-label="Copy email address">
+          <span class="copy-ic" aria-hidden="true">
+            <svg class="i-copy" viewBox="0 0 24 24" focusable="false"><rect x="8.5" y="8.5" width="11" height="11" rx="3"/><path d="M15.5 8.5V7a2.5 2.5 0 0 0-2.5-2.5H7A2.5 2.5 0 0 0 4.5 7v6A2.5 2.5 0 0 0 7 15.5h1.5"/></svg>
+            <svg class="i-ok" viewBox="0 0 24 24" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="copy-roll" aria-hidden="true"><span class="copy-words"><span>Copy</span><span>Copied</span></span></span>
+        </button>
+        <span class="sr-only" role="status" aria-live="polite"></span>
+      </div>
  
       <div class="hero-cta" style="justify-content:center">
         <a href="mailto:hello@tomeryona.com" class="btn"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg>Get in touch</a>
@@ -1080,6 +1160,71 @@
           if (target) io.observe(target);
         });
       }
+    })();
+
+    /* Copy-email control.
+       Adapted from the "Copy Button" motion component on DesignBookmark
+       (https://designbookmark.com/motion#db-copy-button): the same behaviour and the same
+       spring values, rebuilt with this page's colours, type and markup.
+       Springs (stiffness, damping): word roll 260/20, icon swap 420/18, width 300/24.
+       The animation runs only while a spring is moving, and only after the copy succeeded. */
+    (function () {
+      var btn = document.querySelector('.copy-btn');
+      if (!btn) return;
+      var field = btn.closest('.copy-field'), text = field.querySelector('.copy-text'), status = field.querySelector('[role="status"]');
+      var iCopy = btn.querySelector('.i-copy'), iOk = btn.querySelector('.i-ok'), roll = btn.querySelector('.copy-roll'), words = btn.querySelector('.copy-words');
+      var a = words.children[0], b = words.children[1];
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+      function S(k, c) { return { x: 0, v: 0, t: 0, k: k, c: c }; }
+      function step(s, dt) { var acc = -s.k * (s.x - s.t) - s.c * s.v; s.v += acc * dt; s.x += s.v * dt; }
+      function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+      var R = S(260, 20), I = S(420, 18), W = S(300, 24), springs = [R, I, W];
+      var raf = 0, last = 0, timer = 0;
+
+      function render() {
+        var h = a.offsetHeight, i = clamp(I.x, -0.2, 1.2), i01 = clamp(i, 0, 1);
+        roll.style.width = W.x.toFixed(2) + 'px';
+        words.style.transform = 'translateY(' + (-h * R.x).toFixed(2) + 'px)';
+        iCopy.style.opacity = clamp(1 - i * 1.6, 0, 1).toFixed(3);
+        iCopy.style.transform = 'scale(' + (1 - 0.5 * i01).toFixed(3) + ') rotate(' + (-40 * i01).toFixed(1) + 'deg)';
+        iOk.style.opacity = clamp(i * 1.6 - 0.4, 0, 1).toFixed(3);
+        iOk.style.transform = 'scale(' + (0.4 + 0.6 * i).toFixed(3) + ')';
+      }
+      function rest() {
+        // back at "Copy": hand the sizing back to CSS so a font swap or zoom cannot leave a stale width
+        if (R.t === 0) { roll.style.width = ''; words.style.transform = ''; iCopy.style.cssText = ''; iOk.style.cssText = ''; }
+      }
+      function loop(now) {
+        var dt = Math.min((now - last) / 1000, 1 / 30); last = now;
+        for (var n = 0; n < 4; n++) springs.forEach(function (s) { step(s, dt / 4); });
+        var moving = springs.some(function (s) { return Math.abs(s.x - s.t) > 0.01 || Math.abs(s.v) > 0.01; });
+        if (moving) { render(); raf = requestAnimationFrame(loop); return; }
+        springs.forEach(function (s) { s.x = s.t; s.v = 0; });
+        render(); rest(); raf = 0;
+      }
+      function go(copied) {
+        if (!copied && R.t === 0) return;
+        if (copied && !raf && R.x === 0) W.x = a.offsetWidth;
+        R.t = I.t = copied ? 1 : 0;
+        W.t = copied ? b.offsetWidth : a.offsetWidth;
+        if (reduce.matches) { springs.forEach(function (s) { s.x = s.t; s.v = 0; }); render(); rest(); return; }
+        if (!raf) { last = performance.now(); raf = requestAnimationFrame(loop); }
+      }
+      function done() {
+        status.textContent = 'Email address copied';
+        go(true);
+        clearTimeout(timer);
+        timer = setTimeout(function () { status.textContent = ''; go(false); }, 1800);
+      }
+      function selectAddress() {
+        // no clipboard access: select the address so it can be copied by hand
+        var r = document.createRange(); r.selectNodeContents(text);
+        var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+      btn.addEventListener('click', function () {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) { selectAddress(); return; }
+        navigator.clipboard.writeText(btn.getAttribute('data-copy')).then(done, selectAddress);
+      });
     })();
   </script>
  
